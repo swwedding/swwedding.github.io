@@ -39,15 +39,22 @@ export default function Timeline({ activeEvent, onEventSelect }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [activeEvent, onEventSelect])
 
-  // When the active event changes to an event from a different day,
-  // switch the visible day panel automatically.
+  // When the active event changes to an event from a different day
+  // (e.g. via the scrubber), switch the visible day panel and scroll to the card.
   useEffect(() => {
     if (!activeEvent) return
     const dayIndex = schedule.days.findIndex(d =>
       d.events.some(e => e.id === activeEvent.id)
     )
-    if (dayIndex !== -1 && dayIndex !== activeDay) {
+    if (dayIndex === -1) return
+    if (dayIndex !== activeDay) {
       setActiveDay(dayIndex)
+      // Wait one tick for the new panel to render, then scroll to card
+      setTimeout(() => {
+        document
+          .querySelector(`[data-event-id="${activeEvent.id}"]`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }, 60)
     }
   }, [activeEvent]) // eslint-disable-line react-hooks/exhaustive-deps
 

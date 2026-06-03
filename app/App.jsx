@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import Hero from './components/Hero'
+import TimelineScrubber from './components/TimelineScrubber'
 import Timeline from './components/Timeline'
 import VenueMap from './components/VenueMap'
 import PhotoUpload from './components/PhotoUpload'
@@ -23,6 +24,11 @@ export default function App() {
   return (
     <div className="app">
       <Hero />
+
+      <TimelineScrubber
+        activeEvent={activeEvent}
+        onEventSelect={handleEventSelect}
+      />
 
       <main className="guide-section">
         <div className="guide-section__inner">

@@ -140,6 +140,204 @@ img { display: block; max-width: 100%; }
 }
 
 /* ================================================================
+   Timeline Scrubber — sticky bar at top
+   ================================================================ */
+
+.scrubber {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(44,40,37,0.07);
+  padding: 0 var(--sp-lg);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Bar ── */
+.scrubber__bar {
+  position: relative;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  height: 46px;
+  cursor: crosshair;
+  touch-action: none; /* allow pointer events during drag on mobile */
+}
+
+/* Horizontal track line */
+.scrubber__track {
+  position: absolute;
+  left: 0; right: 0;
+  top: 16px;
+  height: 1px;
+  background: var(--border);
+  pointer-events: none;
+}
+
+/* ── Day sections ── */
+.scrubber__day {
+  flex: 1;
+  position: relative;
+}
+
+/* Divider between days */
+.scrubber__day:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--border-light);
+}
+
+/* Day label in the lower portion */
+.scrubber__day-label {
+  position: absolute;
+  bottom: 5px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  pointer-events: none;
+}
+
+.scrubber__day-weekday {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.scrubber__day-date {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.scrubber__day-sub {
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+/* ── Event ticks ── */
+.scrubber__tick {
+  position: absolute;
+  top: 16px;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: width 0.15s, height 0.15s, background 0.15s, box-shadow 0.15s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hover/drag nearest */
+.scrubber__tick--cursor {
+  width: 7px;
+  height: 7px;
+  background: var(--gold-light);
+}
+
+/* Active (selected) event */
+.scrubber__tick--active {
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,150,90,0.22);
+  z-index: 3;
+}
+
+/* Wedding ceremony — sage highlight */
+.scrubber__tick--highlight { background: var(--sage-light); }
+.scrubber__tick--highlight.scrubber__tick--active {
+  background: var(--sage);
+  box-shadow: 0 0 0 3px rgba(122,140,110,0.22);
+}
+
+/* ── Playhead — gold vertical line ── */
+.scrubber__playhead {
+  position: absolute;
+  top: 4px;
+  bottom: 20px; /* stop above the day labels */
+  width: 2px;
+  background: var(--gold);
+  transform: translateX(-50%);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 4;
+  transition: left 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 8px rgba(184,150,90,0.45);
+}
+
+/* ── Tooltip — appears below the bar ── */
+.scrubber__tooltip {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.scrubber__tooltip-box {
+  position: absolute;
+  top: 50px; /* below the bar */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(44,40,37,0.9);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+
+.scrubber__tooltip-box::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: rgba(44,40,37,0.9);
+}
+
+.scrubber__tooltip-time {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.05em;
+}
+
+.scrubber__tooltip-name {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+/* ── Mobile ── */
+@media (max-width: 720px) {
+  .scrubber { padding: 0 var(--sp-md); }
+  .scrubber__day-date { font-size: 0.72rem; }
+  .scrubber__day-sub  { display: none; }
+}
+
+/* ================================================================
    Guide section — two-column layout
    ================================================================ */
 
