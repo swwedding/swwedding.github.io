@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coming Soon</title>
+  <title>S &amp; W</title>
+
   <style>
     * {
       margin: 0;
@@ -11,26 +12,42 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --ink: #3a312c;
+      --muted: #8a7a72;
+      --gold: #d6a83f;
+      --border: #eadfd6;
+    }
+
     body {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #fdf8f4;
-      font-family: 'Georgia', serif;
-      color: #5a4a42;
+      padding: 2rem;
+      background:
+        linear-gradient(rgba(247, 241, 235, 0.84), rgba(247, 241, 235, 0.84)),
+        url("roses-background.png");
+      background-size: cover;
+      background-position: center;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
     }
 
     .container {
+      width: min(100%, 430px);
       text-align: center;
-      padding: 2rem;
+      padding: 3rem 2.25rem;
+      background: rgba(255, 253, 249, 0.94);
+      border: 1px solid var(--border);
+      box-shadow: 0 22px 70px rgba(58, 49, 44, 0.12);
     }
 
     .ornament {
-      font-size: 1.5rem;
-      letter-spacing: 0.5rem;
-      color: #c9a96e;
-      margin-bottom: 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.45rem;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
     }
 
     h1 {
@@ -41,61 +58,54 @@
     }
 
     .ampersand {
-      color: #c9a96e;
+      color: var(--gold);
       font-style: italic;
+      letter-spacing: 0.04em;
     }
 
     .divider {
       width: 80px;
       height: 1px;
-      background-color: #c9a96e;
+      background-color: var(--gold);
       margin: 1.5rem auto;
     }
 
     p {
-      font-size: 1.1rem;
-      letter-spacing: 0.1em;
-      color: #8a7a72;
-      margin-bottom: 0.5rem;
+      font-size: 1.02rem;
+      letter-spacing: 0.08em;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
     }
 
-    .wip {
-      display: inline-block;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #b0a099;
-      border: 1px solid #d9cfc9;
-      padding: 0.5rem 1.2rem;
-      border-radius: 2px;
-    }
     .guide-btn {
       display: inline-block;
+      margin-top: 2rem;
       font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: white;
-      background: #c9a96e;
-      border: 1px solid #c9a96e;
+      background: var(--gold);
+      border: 1px solid var(--gold);
       padding: 0.6rem 1.8rem;
       border-radius: 2px;
       text-decoration: none;
       transition: background 0.2s, transform 0.15s;
     }
+
     .guide-btn:hover {
-      background: #b8965a;
+      background: #c49535;
       transform: translateY(-1px);
     }
-    .btn-row {
-      margin-top: 2rem;
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+      .container { padding: 2.5rem 1.5rem; }
+      p { font-size: 0.92rem; }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="ornament">&#10022; &#10022; &#10022;</div>
@@ -103,10 +113,7 @@
     <div class="divider"></div>
     <p>Something beautiful is coming soon.</p>
     <p>We can't wait to celebrate with you.</p>
-    <div class="btn-row">
-      <a href="./guide/" class="guide-btn">View Weekend Guide</a>
-      <span class="wip">Website in progress</span>
-    </div>
+    <a href="./guide/" class="guide-btn">View Weekend Guide</a>
   </div>
 </body>
 </html>
