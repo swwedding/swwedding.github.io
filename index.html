@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fdf8f4;
+      font-family: 'Georgia', serif;
+      color: #5a4a42;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .ornament {
+      font-size: 1.5rem;
+      letter-spacing: 0.5rem;
+      color: #c9a96e;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: normal;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .ampersand {
+      color: #c9a96e;
+      font-style: italic;
+    }
+
+    .divider {
+      width: 80px;
+      height: 1px;
+      background-color: #c9a96e;
+      margin: 1.5rem auto;
+    }
+
+    p {
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: #8a7a72;
+      margin-bottom: 0.5rem;
+    }
+
+    .wip {
+      display: inline-block;
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #b0a099;
+      border: 1px solid #d9cfc9;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="ornament">&#10022; &#10022; &#10022;</div>
+    <h1>S <span class="ampersand">&amp;</span> W</h1>
+    <div class="divider"></div>
+    <p>Something beautiful is coming soon.</p>
+    <p>We can't wait to celebrate with you.</p>
+    <span class="wip">Website in progress</span>
+  </div>
+</body>
+</html>
