@@ -67,64 +67,70 @@ export default function TimelineScrubber({ activeEvent, onEventSelect }) {
 
   return (
     <div className="scrubber" role="region" aria-label="Weekend timeline">
-      <div
-        ref={barRef}
-        className="scrubber__bar"
-        onPointerDown={e => {
-          e.preventDefault()
-          barRef.current.setPointerCapture(e.pointerId)
-          dragging.current = true
-          updateCursor(e.clientX, true)
-        }}
-        onPointerMove={e => updateCursor(e.clientX, dragging.current)}
-        onPointerUp={()     => { dragging.current = false }}
-        onPointerLeave={()  => { if (!dragging.current) setCursor(null) }}
-        onPointerCancel={() => { dragging.current = false; setCursor(null) }}
-      >
-        {/* ── Horizontal track ── */}
-        <div className="scrubber__track" aria-hidden="true" />
+      <div className="scrubber__inner">
+        {/* ── Interactive tick bar ── */}
+        <div
+          ref={barRef}
+          className="scrubber__bar"
+          onPointerDown={e => {
+            e.preventDefault()
+            barRef.current.setPointerCapture(e.pointerId)
+            dragging.current = true
+            updateCursor(e.clientX, true)
+          }}
+          onPointerMove={e => updateCursor(e.clientX, dragging.current)}
+          onPointerUp={()     => { dragging.current = false }}
+          onPointerLeave={()  => { if (!dragging.current) setCursor(null) }}
+          onPointerCancel={() => { dragging.current = false; setCursor(null) }}
+        >
+          {/* Horizontal track */}
+          <div className="scrubber__track" aria-hidden="true" />
 
-        {/* ── Day sections ── */}
-        {schedule.days.map((day, d) => (
-          <div key={day.id} className="scrubber__day">
-            {/* Label */}
-            <div className="scrubber__day-label" aria-hidden="true">
+          {/* Day sections — ticks only */}
+          {schedule.days.map((day, d) => (
+            <div key={day.id} className="scrubber__day">
+              {day.events.map((ev, i) => {
+                const left = (PAD + (i / Math.max(day.events.length - 1, 1)) * (1 - 2 * PAD)) * 100
+                return (
+                  <div
+                    key={ev.id}
+                    className={[
+                      'scrubber__tick',
+                      activeEvent?.id  === ev.id ? 'scrubber__tick--active'    : '',
+                      cursor?.event.id === ev.id ? 'scrubber__tick--cursor'    : '',
+                      ev.highlight               ? 'scrubber__tick--highlight' : '',
+                    ].filter(Boolean).join(' ')}
+                    style={{ left: `${left}%` }}
+                    title={`${ev.time} · ${ev.name}`}
+                    aria-hidden="true"
+                  />
+                )
+              })}
+            </div>
+          ))}
+
+          {/* Gold playhead */}
+          {activePos !== null && (
+            <div
+              className="scrubber__playhead"
+              style={{ left: `${activePos}%` }}
+              aria-hidden="true"
+            />
+          )}
+        </div>
+
+        {/* ── Day labels row — below the bar ── */}
+        <div className="scrubber__labels" aria-hidden="true">
+          {schedule.days.map(day => (
+            <div key={day.id} className="scrubber__day-label">
               <span className="scrubber__day-weekday">{day.label}</span>
               <span className="scrubber__day-date">{day.date}</span>
               {day.subtitle && (
                 <span className="scrubber__day-sub">{day.subtitle}</span>
               )}
             </div>
-
-            {/* Event ticks */}
-            {day.events.map((ev, i) => {
-              const left = (PAD + (i / Math.max(day.events.length - 1, 1)) * (1 - 2 * PAD)) * 100
-              return (
-                <div
-                  key={ev.id}
-                  className={[
-                    'scrubber__tick',
-                    activeEvent?.id  === ev.id ? 'scrubber__tick--active'    : '',
-                    cursor?.event.id === ev.id ? 'scrubber__tick--cursor'    : '',
-                    ev.highlight               ? 'scrubber__tick--highlight' : '',
-                  ].filter(Boolean).join(' ')}
-                  style={{ left: `${left}%` }}
-                  title={`${ev.time} · ${ev.name}`}
-                  aria-hidden="true"
-                />
-              )
-            })}
-          </div>
-        ))}
-
-        {/* ── Gold playhead — active event ── */}
-        {activePos !== null && (
-          <div
-            className="scrubber__playhead"
-            style={{ left: `${activePos}%` }}
-            aria-hidden="true"
-          />
-        )}
+          ))}
+        </div>
 
         {/* ── Floating tooltip — follows hover / drag ── */}
         {tooltipTarget && (

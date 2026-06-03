@@ -155,22 +155,26 @@ img { display: block; max-width: 100%; }
   -webkit-user-select: none;
 }
 
-/* ── Bar ── */
-.scrubber__bar {
+.scrubber__inner {
   position: relative;
   max-width: var(--max-w);
   margin: 0 auto;
+}
+
+/* ── Bar (ticks + track + playhead only) ── */
+.scrubber__bar {
+  position: relative;
   display: flex;
-  height: 46px;
+  height: 30px;
   cursor: crosshair;
-  touch-action: none; /* allow pointer events during drag on mobile */
+  touch-action: none;
 }
 
 /* Horizontal track line */
 .scrubber__track {
   position: absolute;
   left: 0; right: 0;
-  top: 16px;
+  top: 14px;
   height: 1px;
   background: var(--border);
   pointer-events: none;
@@ -187,22 +191,25 @@ img { display: block; max-width: 100%; }
   content: '';
   position: absolute;
   right: 0;
-  top: 6px;
-  bottom: 6px;
+  top: 4px;
+  bottom: 4px;
   width: 1px;
   background: var(--border-light);
 }
 
-/* Day label in the lower portion */
-.scrubber__day-label {
-  position: absolute;
-  bottom: 5px;
-  left: 8px;
-  right: 8px;
+/* ── Labels row below the bar ── */
+.scrubber__labels {
   display: flex;
-  align-items: baseline;
-  gap: 5px;
-  pointer-events: none;
+  padding: 4px 0 8px;
+}
+
+.scrubber__day-label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 6px;
+  overflow: hidden;
 }
 
 .scrubber__day-weekday {
@@ -212,6 +219,9 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .scrubber__day-date {
@@ -219,6 +229,9 @@ img { display: block; max-width: 100%; }
   font-size: 0.82rem;
   font-weight: 400;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .scrubber__day-sub {
@@ -270,7 +283,7 @@ img { display: block; max-width: 100%; }
 .scrubber__playhead {
   position: absolute;
   top: 4px;
-  bottom: 20px; /* stop above the day labels */
+  bottom: 4px;
   width: 2px;
   background: var(--gold);
   transform: translateX(-50%);
@@ -281,7 +294,7 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 8px rgba(184,150,90,0.45);
 }
 
-/* ── Tooltip — appears below the bar ── */
+/* ── Tooltip — appears below bar + labels ── */
 .scrubber__tooltip {
   position: absolute;
   top: 0;
@@ -292,7 +305,7 @@ img { display: block; max-width: 100%; }
 
 .scrubber__tooltip-box {
   position: absolute;
-  top: 50px; /* below the bar */
+  top: 72px; /* below bar (30px) + labels (~34px) + gap */
   left: 50%;
   transform: translateX(-50%);
   background: rgba(44,40,37,0.9);
@@ -333,21 +346,7 @@ img { display: block; max-width: 100%; }
 /* ── Mobile ── */
 @media (max-width: 720px) {
   .scrubber { padding: 0 var(--sp-md); }
-  .scrubber__bar { height: 52px; }
-  .scrubber__day-label {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1px;
-    overflow: hidden;
-  }
-  .scrubber__day-weekday {
-    font-size: 0.55rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  .scrubber__day-date { font-size: 0.65rem; white-space: nowrap; }
+  .scrubber__day-date { font-size: 0.72rem; }
   .scrubber__day-sub  { display: none; }
 }
 
