@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Vite dev cache
+app/.vite/
+
+# NOTE: The guide/ folder is the built output.
+# Commit it so GitHub Pages can serve it directly from the main branch.
+# If you set up a CI/CD pipeline (GitHub Actions) to build on push,
+# you can uncomment the line below to ignore it in version control:
+# guide/

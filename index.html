@@ -61,7 +61,6 @@
 
     .wip {
       display: inline-block;
-      margin-top: 2rem;
       font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -69,6 +68,31 @@
       border: 1px solid #d9cfc9;
       padding: 0.5rem 1.2rem;
       border-radius: 2px;
+    }
+    .guide-btn {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: white;
+      background: #c9a96e;
+      border: 1px solid #c9a96e;
+      padding: 0.6rem 1.8rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .guide-btn:hover {
+      background: #b8965a;
+      transform: translateY(-1px);
+    }
+    .btn-row {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -79,7 +103,10 @@
     <div class="divider"></div>
     <p>Something beautiful is coming soon.</p>
     <p>We can't wait to celebrate with you.</p>
-    <span class="wip">Website in progress</span>
+    <div class="btn-row">
+      <a href="./guide/" class="guide-btn">View Weekend Guide</a>
+      <span class="wip">Website in progress</span>
+    </div>
   </div>
 </body>
 </html>
