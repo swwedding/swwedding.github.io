@@ -7,6 +7,33 @@
 export const schedule = {
   days: [
     {
+      id: 'sunday',
+      label: 'Sunday',
+      date: 'June 28',
+      subtitle: null,
+      events: [
+        {
+          id: 'sun-1',
+          time: '6:00 PM',
+          name: 'Families Arrive',
+          description: null,
+          location: 'parking',
+          locationLabel: 'Parking / Arrival Area',
+          highlight: false,
+        },
+        {
+          id: 'sun-2',
+          time: '10:00 PM onward',
+          name: 'Rest',
+          description: null,
+          location: 'rooms',
+          locationLabel: 'Gîte & Chalet',
+          highlight: false,
+        },
+      ],
+    },
+
+    {
       id: 'monday',
       label: 'Monday',
       date: 'June 29',
