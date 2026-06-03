@@ -1,21 +1,7 @@
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 
 export default function TimelineEventCard({ event, dayIndex, isActive, onSelect }) {
   const cardRef = useRef(null)
-
-  // Mobile: when this card becomes active, briefly show the map then scroll back.
-  useEffect(() => {
-    if (!isActive || window.innerWidth > 720) return
-
-    const mapEl = document.querySelector('.map-col')
-    if (mapEl) {
-      mapEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      const timer = setTimeout(() => {
-        cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      }, 900)
-      return () => clearTimeout(timer)
-    }
-  }, [isActive])
 
   const handleKey = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
