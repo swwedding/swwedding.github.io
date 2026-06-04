@@ -7,7 +7,7 @@
 //   3. Set role to "Editor" (so guests can upload files).
 //   4. Copy the link and paste it below.
 // ─────────────────────────────────────────────────────────────────
-const UPLOAD_LINK = 'GOOGLE_DRIVE_UPLOAD_LINK_HERE'
+const UPLOAD_LINK = 'https://weduploader.com/upload/wfF4IYgURL2oszsQ'
 
 // Upload icon (inline SVG — no extra dependency needed)
 function UploadIcon() {
