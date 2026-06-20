@@ -1,0 +1,275 @@
+/* ================================================================
+   S & W Wedding — Team Pages
+   Shared stylesheet for all standalone team pages.
+   Fonts loaded via Google Fonts in each page's <head>.
+   ================================================================ */
+
+:root {
+  --bg:           #faf8f5;
+  --bg-warm:      #f3ede3;
+  --bg-card:      #ffffff;
+  --text:         #2c2825;
+  --text-muted:   #7a6e67;
+  --text-light:   #a99e97;
+  --gold:         #b8965a;
+  --gold-light:   #d4b47a;
+  --gold-pale:    #f5eddc;
+  --sage:         #7a8c6e;
+  --border:       #e4ddd4;
+  --border-light: #ede8e2;
+
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans:  'Jost', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+img  { display: block; max-width: 100%; }
+a    { color: inherit; }
+
+/* ── Page wrapper ────────────────────────────────────────────── */
+.page {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 2.75rem 1.75rem 5rem;
+}
+
+/* ── Back link ───────────────────────────────────────────────── */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  text-decoration: none;
+  margin-bottom: 3rem;
+  transition: color 0.2s;
+}
+.back:hover { color: var(--gold); }
+
+/* ── Team header ─────────────────────────────────────────────── */
+.team-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.sigil-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.sigil {
+  width: 720px;
+  height: 720px;
+  object-fit: contain;
+  filter: sepia(8%) contrast(1.05);
+}
+
+.ornament {
+  font-family: var(--serif);
+  color: var(--gold);
+  letter-spacing: 0.7rem;
+  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 1.25rem;
+}
+
+.table-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 0.5rem;
+}
+
+.team-name {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.divider {
+  width: 50px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1rem auto;
+}
+
+.motto {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.standing {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  margin-top: 0.8rem;
+}
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 1.75rem;
+  margin-bottom: 1.125rem;
+}
+
+/* ── Section label ───────────────────────────────────────────── */
+.label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 0.8rem;
+}
+
+/* ── Roster ──────────────────────────────────────────────────── */
+.roster {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.roster li {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.roster li::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  flex-shrink: 0;
+}
+
+/* ── Identity ────────────────────────────────────────────────── */
+.identity {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.78;
+}
+
+/* ── Quote ───────────────────────────────────────────────────── */
+.quote {
+  border-left: 2px solid var(--gold-light);
+  padding: 0.25rem 0 0.25rem 1.1rem;
+  margin: 0;
+}
+
+.quote p {
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 0.5rem;
+}
+
+.quote cite {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+}
+
+/* ── Conversation starters ───────────────────────────────────── */
+.starters {
+  list-style: none;
+  counter-reset: starters;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.starters li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  counter-increment: starters;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.starters li::before {
+  content: counter(starters);
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  color: var(--gold-light);
+  flex-shrink: 0;
+  min-width: 12px;
+  text-align: right;
+}
+
+/* ── Team challenge ──────────────────────────────────────────── */
+.challenge {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.68;
+  background: var(--bg-warm);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 1.1rem 1.25rem;
+}
+
+/* ── Page footer ─────────────────────────────────────────────── */
+.page-footer {
+  text-align: center;
+  margin-top: 3.5rem;
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .page { padding: 2rem 1.25rem 4rem; }
+  .card { padding: 1.25rem; }
+  .motto { font-size: 1rem; }
+}
