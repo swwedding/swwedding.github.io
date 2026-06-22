@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Schedule · S &amp; W Wedding</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg:           #faf8f5;
+      --bg-warm:      #f3ede3;
+      --bg-card:      #ffffff;
+      --text:         #2c2825;
+      --text-muted:   #7a6e67;
+      --text-light:   #a99e97;
+      --gold:         #b8965a;
+      --gold-light:   #d4b47a;
+      --gold-pale:    #f5eddc;
+      --sage:         #7a8c6e;
+      --sage-light:   #c4d0b8;
+      --border:       #e4ddd4;
+      --border-light: #ede8e2;
+      --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --sans:  'Jost', 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    .page {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 2.75rem 1.75rem 5rem;
+    }
+
+    /* Back link */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: color 0.2s;
+    }
+    .back:hover { color: var(--gold); }
+
+    /* Page header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .ornament {
+      font-family: var(--serif);
+      color: var(--gold);
+      letter-spacing: 0.7rem;
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 1.25rem;
+    }
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .page-sub {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .divider {
+      width: 50px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1rem auto;
+    }
+
+    /* Day section */
+    .day {
+      margin-bottom: 2.5rem;
+    }
+    .day-heading {
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-name {
+      font-family: var(--serif);
+      font-size: 1.7rem;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .day-badge {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* Event row */
+    .events {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .event {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-left: 3px solid transparent;
+      border-radius: 3px;
+      padding: 0.75rem 1.25rem;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+    }
+    .event--highlight {
+      border-left-color: var(--sage);
+      background: #f8faf6;
+    }
+    .event__time {
+      font-family: var(--sans);
+      font-size: 0.67rem;
+      color: var(--text-light);
+      letter-spacing: 0.04em;
+      padding-top: 3px;
+      line-height: 1.4;
+    }
+    .event__name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .event--highlight .event__name { color: var(--sage); }
+    .event__desc {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .event__loc {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-top: 3px;
+    }
+    .event__loc-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .event--highlight .event__loc-dot { background: var(--sage-light); }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      margin-top: 3.5rem;
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 520px) {
+      .page { padding: 2rem 1.25rem 4rem; }
+      .event { grid-template-columns: 1fr; gap: 3px; }
+      .event__time { padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <a class="back" href="./">← Weekend Guide</a>
+
+    <header class="page-header">
+      <span class="ornament">✦ ✦ ✦</span>
+      <h1 class="page-title">Full Schedule</h1>
+      <p class="page-sub">Bastide d'Astres · Provence</p>
+      <div class="divider"></div>
+    </header>
+
+    <!-- ── Sunday ─────────────────────────────────────────────── -->
+    <section class="day">
+      <div class="day-heading">
+        <div class="day-name">Sunday, June 28</div>
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event__time">6:00 PM</div>
+          <div>
+            <div class="event__name">Families Arrive</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Parking / Arrival Area</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">10:00 PM onward</div>
+          <div>
+            <div class="event__name">Rest</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Gîte &amp; Chalet</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Monday ─────────────────────────────────────────────── -->
+    <section class="day">
+      <div class="day-heading">
+        <div class="day-name">Monday, June 29</div>
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event__time">10:00 AM</div>
+          <div>
+            <div class="event__name">Breakfast</div>
+            <div class="event__desc">Bastide guests only · self-catered</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Main Bastide</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">12:00 – 2:30 PM</div>
+          <div>
+            <div class="event__name">Pool Party</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Pool Area</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">3:30 – 6:00 PM</div>
+          <div>
+            <div class="event__name">Wedding Rehearsal</div>
+            <div class="event__desc">Coordinator walk-through · For 10 people</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Ceremony Lawn</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">6:00 – 7:30 PM</div>
+          <div>
+            <div class="event__name">Welcome Cocktails</div>
+            <div class="event__desc">Apéritif on the terrace</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Bastide Terrace</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">7:30 – 8:00 PM</div>
+          <div>
+            <div class="event__name">Drive to Aix-en-Provence</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Parking · Departure</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">8:00 – 9:30 PM</div>
+          <div>
+            <div class="event__name">Dinner in Provence</div>
+            <div class="event__desc">Offsite restaurant reservation</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Aix-en-Provence</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">10:30 PM onward</div>
+          <div>
+            <div class="event__name">Rest</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Guest Rooms</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Tuesday ────────────────────────────────────────────── -->
+    <section class="day">
+      <div class="day-heading">
+        <div class="day-name">Tuesday, June 30</div>
+        <span class="day-badge">Wedding Day</span>
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event__time">10:00 AM</div>
+          <div>
+            <div class="event__name">Breakfast</div>
+            <div class="event__desc">Bastide guests only · self-catered</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Main Bastide</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">12:00 – 2:30 PM</div>
+          <div>
+            <div class="event__name">Family Prepares Lunch</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Bastide Kitchen</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">3:00 – 5:30 PM</div>
+          <div>
+            <div class="event__name">Styling &amp; Preparation</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Guest Rooms</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">5:30 PM</div>
+          <div>
+            <div class="event__name">Photography Begins</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Bastide Grounds</div>
+          </div>
+        </div>
+        <div class="event event--highlight">
+          <div class="event__time">6:00 PM</div>
+          <div>
+            <div class="event__name">Wedding Ceremony</div>
+            <div class="event__desc">60 guests · Photography included</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Ceremony Lawn</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">6:30 PM</div>
+          <div>
+            <div class="event__name">Champagne Cascade</div>
+            <div class="event__desc">Cocktail hour begins</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Cocktail Terrace</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">7:00 PM</div>
+          <div>
+            <div class="event__name">Apéritif &amp; Drinks</div>
+            <div class="event__desc">Bites and cocktails on the terrace</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Cocktail Terrace</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">7:30 PM</div>
+          <div>
+            <div class="event__name">First Seating</div>
+            <div class="event__desc">Photoshoot continues</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Reception Area</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">8:00 PM</div>
+          <div>
+            <div class="event__name">Appetizer &amp; Speeches</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Dinner Area</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">8:30 PM</div>
+          <div>
+            <div class="event__name">Main Meal &amp; Speeches</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Dinner Area</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">9:00 PM</div>
+          <div>
+            <div class="event__name">Dessert &amp; Wedding Cake</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Dinner Area</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">9:30 PM</div>
+          <div>
+            <div class="event__name">Wedding Dance</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Orangerie</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">10:00 PM – 3:00 AM</div>
+          <div>
+            <div class="event__name">Dance Party</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Orangerie</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Wednesday ──────────────────────────────────────────── -->
+    <section class="day">
+      <div class="day-heading">
+        <div class="day-name">Wednesday, July 1</div>
+      </div>
+      <div class="events">
+        <div class="event">
+          <div class="event__time">10:00 AM</div>
+          <div>
+            <div class="event__name">Sleep In</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Guest Rooms</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">11:00 AM – 12:30 PM</div>
+          <div>
+            <div class="event__name">Breakfast</div>
+            <div class="event__desc">Bastide guests only · self-catered</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Main Bastide</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">1:30 PM</div>
+          <div>
+            <div class="event__name">Families Check Out</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Guest Rooms</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">3:00 PM</div>
+          <div>
+            <div class="event__name">Couple Checks Out</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Guest Rooms</div>
+          </div>
+        </div>
+        <div class="event">
+          <div class="event__time">3:30 PM onward</div>
+          <div>
+            <div class="event__name">Departure &amp; Free Time</div>
+            <div class="event__loc"><span class="event__loc-dot"></span>Parking · Departure</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      Bastide d'Astres · Provence · June 29 – July 1, 2026
+    </footer>
+
+  </div>
+</body>
+</html>
