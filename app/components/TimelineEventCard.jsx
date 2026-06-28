@@ -28,7 +28,10 @@ export default function TimelineEventCard({ event, dayIndex, isActive, onSelect 
     >
       <div className="event-card__time">{event.time}</div>
       <div className="event-card__body">
-        <div className="event-card__name">{event.name}</div>
+        <div className="event-card__name">
+          {event.emoji && <span className="event-card__emoji" aria-hidden="true">{event.emoji}</span>}
+          {event.name}
+        </div>
         {event.description && (
           <div className="event-card__desc">{event.description}</div>
         )}

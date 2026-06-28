@@ -532,6 +532,13 @@ img { display: block; max-width: 100%; }
 .event-card--active .event-card__name { color: var(--gold); }
 .event-card--highlight.event-card--active .event-card__name { color: var(--sage); }
 
+.event-card__emoji {
+  margin-right: 0.4em;
+  font-style: normal;
+  font-size: 1em;
+  line-height: 1;
+}
+
 .event-card__desc {
   font-family: var(--sans);
   font-size: 0.73rem;
