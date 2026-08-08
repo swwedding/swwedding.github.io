@@ -7,419 +7,205 @@
 <title>⛏️ Prehistoric Crafting</title>
 <style>
 :root {
-  --bg:       #0f0c08;
-  --bg2:      #1a1510;
-  --bg3:      #241c12;
-  --stone:    #3a3020;
-  --clay:     #7a5230;
-  --amber:    #c8821a;
-  --gold:     #daa830;
-  --fire:     #e06020;
-  --herb:     #5a8a40;
-  --gem:      #3a7a68;
-  --text:     #ddc898;
-  --dim:      #786048;
-  --dim2:     #a08850;
-  --club-c:   #4a8a3a;
-  --heart-c:  #b04040;
-  --spade-c:  #5878a0;
-  --diamond-c:#a88a28;
-  --r: 8px;
-  --t: .16s ease;
+  --bg:#0f0c08;--bg2:#1a1510;--bg3:#241c12;--stone:#3a3020;--clay:#7a5230;
+  --amber:#c8821a;--gold:#daa830;--fire:#e06020;--herb:#5a8a40;--gem:#3a7a68;
+  --text:#ddc898;--dim:#786048;--dim2:#a08850;
+  --club-c:#4a8a3a;--heart-c:#b04040;--spade-c:#5878a0;--diamond-c:#a88a28;
+  --r:8px;--t:.16s ease;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { height: 100%; }
-body {
-  min-height: 100svh; height: 100svh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, sans-serif;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-}
-.hidden { display: none !important; }
-button { font-family: inherit; cursor: pointer; }
-input  { font-family: inherit; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100svh;height:100svh;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+.hidden{display:none!important}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
 
-/* ── SETUP ── */
-#setup {
-  flex: 1; overflow-y: auto;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 2rem 1.4rem;
-  background: radial-gradient(ellipse at center, #1e1608 0%, #0f0c08 70%);
-}
-.big-title {
-  font-size: clamp(2rem, 9vw, 3.5rem);
-  font-weight: 900; text-align: center; line-height: 1.1;
-  letter-spacing: .08em; color: var(--gold);
-  text-shadow: 0 0 30px rgba(218,168,48,.35), 0 2px 0 rgba(0,0,0,.7);
-  margin-bottom: 1.8rem;
-}
-.setup-card {
-  background: var(--bg2); border: 1.5px solid var(--stone);
-  border-radius: 14px; padding: 1.6rem; width: 100%; max-width: 360px;
-  display: flex; flex-direction: column; gap: .9rem;
-}
-.lbl { font-size: .7rem; text-transform: uppercase; letter-spacing: .15em; color: var(--dim2); margin-bottom: .3rem; }
-.s-input {
-  background: var(--bg3); border: 1.5px solid var(--stone); color: var(--text);
-  font-size: 1.3rem; font-weight: bold; letter-spacing: .06em;
-  padding: .65rem .9rem; border-radius: var(--r); width: 100%; outline: none;
-  transition: border-color var(--t);
-}
-.s-input:focus { border-color: var(--amber); }
-.seed-rng-btn {
-  background: var(--bg3); border: 1.5px solid var(--stone); color: var(--dim2);
-  font-size: .88rem; padding: .6rem; border-radius: var(--r); width: 100%;
-  transition: all var(--t);
-}
-.seed-rng-btn:hover { border-color: var(--amber); color: var(--amber); }
-.setup-start {
-  width: 100%;
-  background: var(--amber); border: none; color: #000;
-  font-size: 1rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
-  padding: .9rem; border-radius: var(--r);
-  box-shadow: 0 0 20px rgba(200,130,26,.35);
-  transition: all var(--t);
-}
-.setup-start:hover { background: var(--gold); }
-.setup-cont {
-  width: 100%;
-  background: var(--clay); border: 1.5px solid var(--amber); color: var(--gold);
-  font-size: .95rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase;
-  padding: .85rem; border-radius: var(--r);
-  transition: all var(--t); display: flex; flex-direction: column; gap: .1rem;
-}
-.setup-cont small { font-size: .65rem; font-weight: 400; letter-spacing: .04em; opacity: .8; }
-.setup-cont:hover { background: var(--amber); color: #000; }
-.or-divider { text-align: center; font-size: .72rem; color: var(--dim); letter-spacing: .14em; }
+/* SETUP */
+#setup{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.4rem;background:radial-gradient(ellipse at center,#1e1608 0%,#0f0c08 70%)}
+.big-title{font-size:clamp(2rem,9vw,3.5rem);font-weight:900;text-align:center;line-height:1.1;letter-spacing:.08em;color:var(--gold);text-shadow:0 0 30px rgba(218,168,48,.35),0 2px 0 rgba(0,0,0,.7);margin-bottom:1.8rem}
+.setup-card{background:var(--bg2);border:1.5px solid var(--stone);border-radius:14px;padding:1.6rem;width:100%;max-width:360px;display:flex;flex-direction:column;gap:.9rem}
+.lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:var(--dim2);margin-bottom:.3rem}
+.s-input{background:var(--bg3);border:1.5px solid var(--stone);color:var(--text);font-size:1.3rem;font-weight:bold;letter-spacing:.06em;padding:.65rem .9rem;border-radius:var(--r);width:100%;outline:none;transition:border-color var(--t)}
+.s-input:focus{border-color:var(--amber)}
+.seed-rng-btn{background:var(--bg3);border:1.5px solid var(--stone);color:var(--dim2);font-size:.88rem;padding:.6rem;border-radius:var(--r);width:100%;transition:all var(--t)}
+.seed-rng-btn:hover{border-color:var(--amber);color:var(--amber)}
+.setup-start{width:100%;background:var(--amber);border:none;color:#000;font-size:1rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:.9rem;border-radius:var(--r);box-shadow:0 0 20px rgba(200,130,26,.35);transition:all var(--t)}
+.setup-start:hover{background:var(--gold)}
+.setup-cont{width:100%;background:var(--clay);border:1.5px solid var(--amber);color:var(--gold);font-size:.95rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:.85rem;border-radius:var(--r);transition:all var(--t);display:flex;flex-direction:column;gap:.1rem}
+.setup-cont small{font-size:.65rem;font-weight:400;letter-spacing:.04em;opacity:.8}
+.setup-cont:hover{background:var(--amber);color:#000}
+.or-divider{text-align:center;font-size:.72rem;color:var(--dim);letter-spacing:.14em}
 
-/* ── GAME ── */
-#game { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+/* GAME */
+#game{flex:1;min-height:0;display:flex;flex-direction:column}
+#g-header{flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--stone);padding:.55rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.world-title{font-size:.95rem;font-weight:900;letter-spacing:.08em;color:var(--gold)}
+.world-seed{font-size:.65rem;color:var(--dim2);letter-spacing:.12em;margin-top:.1rem;cursor:pointer;user-select:none}
+.hdr-btns{display:flex;gap:.2rem}
+.hdr-btn{background:none;border:none;color:var(--dim2);font-size:1.2rem;padding:.3rem .4rem;transition:color var(--t)}
+.hdr-btn:hover{color:var(--text)}
 
-#g-header {
-  flex-shrink: 0;
-  background: var(--bg2); border-bottom: 1px solid var(--stone);
-  padding: .55rem 1rem;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.world-title { font-size: .95rem; font-weight: 900; letter-spacing: .08em; color: var(--gold); }
-.world-seed  { font-size: .65rem; color: var(--dim2); letter-spacing: .12em; margin-top: .1rem; }
-.hdr-btns { display: flex; gap: .2rem; }
-.hdr-btn {
-  background: none; border: none; color: var(--dim2); font-size: 1.2rem; padding: .3rem .4rem;
-  transition: color var(--t);
-}
-.hdr-btn:hover { color: var(--text); }
+/* EXPERIMENT */
+#exp-panel{flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--stone);padding:.85rem 1rem .75rem}
+.exp-lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.18em;color:var(--dim2);margin-bottom:.6rem}
+.exp-row{display:flex;align-items:stretch;gap:.4rem;margin-bottom:.65rem}
+.input-btn{flex:1;min-height:68px;background:var(--bg3);border:2px solid var(--stone);color:var(--dim);border-radius:var(--r);font-size:.85rem;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:border-color var(--t)}
+.input-btn:hover{border-color:var(--amber)}
+.input-btn.has-val{border-color:var(--clay);color:var(--text)}
+.ib-rank{font-size:1.5rem;font-weight:900;line-height:1}
+.ib-sub{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em}
+.ib-emoji{font-size:1.4rem;line-height:1}
+.ib-name{font-size:.75rem;font-weight:bold;padding:0 4px}
+.plus-sep{display:flex;align-items:center;padding:0 .2rem;color:var(--dim);font-size:1.2rem}
+.exp-btn{width:100%;background:var(--stone);border:2px solid var(--stone);color:var(--dim2);font-size:.95rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:.7rem;border-radius:var(--r);transition:all var(--t)}
+.exp-btn:not(:disabled):hover{background:var(--clay);border-color:var(--amber);color:var(--gold)}
+.exp-btn:disabled{opacity:.35;cursor:not-allowed}
+.exp-btn.ready{background:linear-gradient(135deg,var(--clay),#9a6040);border-color:var(--amber);color:var(--gold);box-shadow:0 0 14px rgba(200,130,26,.25)}
 
-/* ── EXPERIMENT PANEL ── */
-#exp-panel {
-  flex-shrink: 0;
-  background: var(--bg2); border-bottom: 1px solid var(--stone);
-  padding: .85rem 1rem .75rem;
-}
-.exp-lbl { font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--dim2); margin-bottom: .6rem; }
-.exp-row { display: flex; align-items: stretch; gap: .4rem; margin-bottom: .65rem; }
-.input-btn {
-  flex: 1; min-height: 68px;
-  background: var(--bg3); border: 2px solid var(--stone); color: var(--dim);
-  border-radius: var(--r); font-size: .85rem; text-align: center;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 3px; transition: border-color var(--t);
-}
-.input-btn:hover { border-color: var(--amber); }
-.input-btn.has-val { border-color: var(--clay); color: var(--text); }
-.ib-rank  { font-size: 1.5rem; font-weight: 900; line-height: 1; }
-.ib-sub   { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; }
-.ib-emoji { font-size: 1.4rem; line-height: 1; }
-.ib-name  { font-size: .75rem; font-weight: bold; padding: 0 4px; }
-.plus-sep { display: flex; align-items: center; padding: 0 .2rem; color: var(--dim); font-size: 1.2rem; }
-.exp-btn {
-  width: 100%;
-  background: var(--stone); border: 2px solid var(--stone); color: var(--dim2);
-  font-size: .95rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
-  padding: .7rem; border-radius: var(--r); transition: all var(--t);
-}
-.exp-btn:not(:disabled):hover { background: var(--clay); border-color: var(--amber); color: var(--gold); }
-.exp-btn:disabled { opacity: .35; cursor: not-allowed; }
-.exp-btn.ready {
-  background: linear-gradient(135deg, var(--clay), #9a6040);
-  border-color: var(--amber); color: var(--gold);
-  box-shadow: 0 0 14px rgba(200,130,26,.25);
-}
+/* RESULT */
+#result-panel{flex-shrink:0;padding:.7rem 1rem;border-bottom:1px solid var(--stone);text-align:center}
+.res-none{font-size:.95rem;letter-spacing:.08em}
+.res-quality{color:var(--amber)}.res-warm{color:#7aba50}.res-hint{color:var(--dim2)}.res-cold{color:var(--dim)}
+.res-known{background:var(--bg3);border:1px solid var(--stone);border-radius:var(--r);padding:.65rem 1rem}
+.res-known-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.14em;color:var(--dim)}
+.res-known-name{font-size:1rem;font-weight:bold;color:var(--amber);margin-top:.15rem}
 
-/* ── RESULT PANEL ── */
-#result-panel {
-  flex-shrink: 0;
-  padding: .7rem 1rem;
-  border-bottom: 1px solid var(--stone);
-  text-align: center;
-}
-.res-none { font-size: .95rem; color: var(--dim2); letter-spacing: .08em; }
-.res-known {
-  background: var(--bg3); border: 1px solid var(--stone); border-radius: var(--r);
-  padding: .65rem 1rem;
-}
-.res-known-lbl  { font-size: .65rem; text-transform: uppercase; letter-spacing: .14em; color: var(--dim); }
-.res-known-name { font-size: 1rem; font-weight: bold; color: var(--amber); margin-top: .15rem; }
+/* GAME BODY */
+#game-body{flex:1;overflow-y:auto;min-height:0}
+#game-body::-webkit-scrollbar{width:4px}
+#game-body::-webkit-scrollbar-thumb{background:var(--stone)}
 
-/* ── SCROLL BODY ── */
-#game-body { flex: 1; overflow-y: auto; min-height: 0; }
-#game-body::-webkit-scrollbar { width: 4px; }
-#game-body::-webkit-scrollbar-thumb { background: var(--stone); }
+/* TECH TREE */
+#tree-section{padding:.85rem 1rem 1.2rem}
+.section-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.18em;color:var(--dim2);margin-bottom:.7rem}
+#tree-scroll{overflow:auto;position:relative;background:var(--bg2);border:1px solid var(--stone);border-radius:var(--r);min-height:160px}
+#tree-scroll::-webkit-scrollbar{height:4px;width:4px}
+#tree-scroll::-webkit-scrollbar-thumb{background:var(--stone)}
+#tree-container{position:relative}
+.tree-node{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;text-align:center;gap:3px;padding:6px 4px;transition:border-color .3s,box-shadow .3s}
+.suit-node{background:var(--bg3);border:1.5px solid var(--stone)}
+.tn-suit{font-size:1.3rem;line-height:1;font-weight:bold}
+.tn-sub{font-size:.56rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim2)}
+.item-node{background:var(--bg3);border:1.5px solid var(--clay)}
+.item-node.new-node{animation:node-appear .55s cubic-bezier(.175,.885,.32,1.275) forwards;border-color:var(--gold);box-shadow:0 0 16px rgba(218,168,48,.5)}
+@keyframes node-appear{from{transform:scale(0) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.tn-emoji{font-size:1.25rem;line-height:1}
+.tn-name{font-size:.54rem;font-weight:bold;color:var(--text);line-height:1.2}
+.tn-tier{font-size:.48rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
 
-/* ── TECH TREE ── */
-#tree-section { padding: .85rem 1rem 1.2rem; }
-.section-title {
-  font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--dim2);
-  margin-bottom: .7rem;
-}
-#tree-scroll {
-  overflow: auto; position: relative;
-  background: var(--bg2); border: 1px solid var(--stone); border-radius: var(--r);
-  min-height: 160px;
-}
-#tree-scroll::-webkit-scrollbar { height: 4px; width: 4px; }
-#tree-scroll::-webkit-scrollbar-thumb { background: var(--stone); }
-#tree-container { position: relative; }
+/* LOG */
+#log-section{padding:0 1rem 1.2rem}
+#log-toggle{background:none;border:none;color:var(--dim2);font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;display:flex;align-items:center;gap:.3rem;transition:color var(--t)}
+#log-toggle:hover{color:var(--text)}
+#log-list{margin-top:.6rem;display:flex;flex-direction:column;gap:.4rem}
+.log-item{background:var(--bg2);border:1px solid var(--stone);border-radius:var(--r);padding:.55rem .75rem}
+.log-n{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)}
+.log-inputs{font-size:.8rem;color:var(--dim2);font-family:monospace;margin:.15rem 0}
+.log-result{font-size:.84rem}
+.log-result.disc{color:var(--gold);font-weight:bold}
+.log-result.none{color:var(--dim)}
+.log-result.known{color:var(--amber)}
 
-/* Tree nodes */
-.tree-node {
-  position: absolute;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border-radius: 8px; text-align: center; gap: 3px; padding: 6px 4px;
-  transition: border-color .3s, box-shadow .3s;
-}
-.suit-node {
-  background: var(--bg3); border: 1.5px solid var(--stone);
-}
-.tn-suit { font-size: 1.3rem; line-height: 1; font-weight: bold; }
-.tn-sub  { font-size: .56rem; text-transform: uppercase; letter-spacing: .08em; color: var(--dim2); }
-.item-node {
-  background: var(--bg3); border: 1.5px solid var(--clay);
-}
-.item-node.new-node {
-  animation: node-appear .55s cubic-bezier(.175,.885,.32,1.275) forwards;
-  border-color: var(--gold);
-  box-shadow: 0 0 16px rgba(218,168,48,.5);
-}
-@keyframes node-appear {
-  from { transform: scale(0) rotate(-10deg); opacity: 0; }
-  to   { transform: scale(1) rotate(0); opacity: 1; }
-}
-.tn-emoji { font-size: 1.25rem; line-height: 1; }
-.tn-name  { font-size: .54rem; font-weight: bold; color: var(--text); line-height: 1.2; }
-.tn-tier  { font-size: .48rem; color: var(--dim); text-transform: uppercase; letter-spacing: .06em; }
+/* PICKER */
+#picker-ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+#picker-drw{background:var(--bg2);border-top:2px solid var(--stone);border-radius:16px 16px 0 0;width:100%;max-width:560px;max-height:75svh;overflow:hidden;display:flex;flex-direction:column}
+.picker-hdr{display:flex;align-items:center;padding:.75rem 1rem;border-bottom:1px solid var(--stone);flex-shrink:0}
+.picker-tabs{display:flex;gap:.4rem;flex:1}
+.ptab{background:none;border:1.5px solid var(--stone);color:var(--dim2);font-size:.82rem;font-weight:bold;padding:.42rem .85rem;border-radius:20px;transition:all var(--t)}
+.ptab.active{border-color:var(--amber);color:var(--amber)}
+.pick-close{background:none;border:none;color:var(--dim2);font-size:1.25rem;padding:.2rem .4rem;transition:color var(--t)}
+.pick-close:hover{color:var(--text)}
+.picker-body{flex:1;overflow-y:auto;padding:.75rem 1rem 1rem}
+.picker-body::-webkit-scrollbar{width:3px}
+.picker-body::-webkit-scrollbar-thumb{background:var(--stone)}
+.suit-sec{margin-bottom:.9rem}
+.suit-hdr{font-size:.65rem;text-transform:uppercase;letter-spacing:.14em;margin-bottom:.4rem}
+.suit-hdr.club{color:var(--club-c)}.suit-hdr.heart{color:var(--heart-c)}.suit-hdr.spade{color:var(--spade-c)}.suit-hdr.diamond{color:var(--diamond-c)}
+.card-grid{display:flex;flex-wrap:wrap;gap:.35rem}
+.card-tile{background:var(--bg3);border:1.5px solid var(--stone);border-radius:6px;padding:.45rem .35rem;min-width:44px;text-align:center;cursor:pointer;transition:border-color var(--t);display:flex;flex-direction:column;align-items:center;gap:1px}
+.card-tile:hover{border-color:var(--amber)}
+.ct-rank{font-size:.95rem;font-weight:900;line-height:1}
+.ct-suit{font-size:.7rem;line-height:1}
+.card-tile.club .ct-rank,.card-tile.club .ct-suit{color:var(--club-c)}
+.card-tile.heart .ct-rank,.card-tile.heart .ct-suit{color:var(--heart-c)}
+.card-tile.spade .ct-rank,.card-tile.spade .ct-suit{color:var(--spade-c)}
+.card-tile.diamond .ct-rank,.card-tile.diamond .ct-suit{color:var(--diamond-c)}
+.item-grid{display:flex;flex-wrap:wrap;gap:.5rem}
+.item-tile{background:var(--bg3);border:1.5px solid var(--clay);border-radius:8px;padding:.6rem .5rem;text-align:center;cursor:pointer;transition:border-color var(--t);flex:1;min-width:80px;max-width:110px}
+.item-tile:hover{border-color:var(--amber)}
+.it-emoji{font-size:1.25rem;display:block}
+.it-name{font-size:.68rem;color:var(--text);margin-top:.15rem}
+.no-items{color:var(--dim2);font-size:.85rem;text-align:center;padding:1.2rem}
 
-/* ── DISCOVERY LOG SECTION ── */
-#log-section { padding: 0 1rem 1.2rem; }
-#log-toggle {
-  background: none; border: none; color: var(--dim2); font-size: .7rem;
-  text-transform: uppercase; letter-spacing: .14em;
-  display: flex; align-items: center; gap: .3rem; transition: color var(--t);
-}
-#log-toggle:hover { color: var(--text); }
-#log-list { margin-top: .6rem; display: flex; flex-direction: column; gap: .4rem; }
-.log-item {
-  background: var(--bg2); border: 1px solid var(--stone);
-  border-radius: var(--r); padding: .55rem .75rem;
-}
-.log-n { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); }
-.log-inputs { font-size: .8rem; color: var(--dim2); font-family: monospace; margin: .15rem 0; }
-.log-result { font-size: .84rem; }
-.log-result.disc { color: var(--gold); font-weight: bold; }
-.log-result.none { color: var(--dim); }
-.log-result.known { color: var(--amber); }
+/* DISCOVERY */
+#disc-ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:.9rem;text-align:center;overflow-y:auto}
+.disc-banner{font-size:clamp(.78rem,2.5vw,.9rem);text-transform:uppercase;letter-spacing:.3em;color:var(--amber);animation:dfi .5s ease}
+.disc-emoji{font-size:clamp(4rem,18vw,6.5rem);line-height:1;animation:dpop .65s .08s both cubic-bezier(.175,.885,.32,1.275);filter:drop-shadow(0 0 22px rgba(255,140,50,.5))}
+.disc-name{font-size:clamp(1.5rem,7vw,2.4rem);font-weight:900;color:var(--gold);letter-spacing:.06em;animation:dfi .5s .15s both}
+.disc-recipe{font-size:.8rem;color:var(--dim2);letter-spacing:.06em;font-family:monospace;animation:dfi .5s .22s both}
+.disc-desc{font-size:.9rem;color:var(--text);line-height:1.6;max-width:320px;font-style:italic;animation:dfi .5s .28s both}
+.disc-power{font-size:.76rem;color:var(--amber);max-width:320px;line-height:1.5;animation:dfi .5s .34s both}
+.disc-tags{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center;animation:dfi .5s .38s both}
+.disc-tag{background:var(--bg3);border:1px solid var(--stone);border-radius:20px;padding:.18rem .55rem;font-size:.6rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.08em}
+.disc-continue{background:var(--amber);border:none;color:#000;font-size:.9rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 2.2rem;border-radius:var(--r);animation:dfi .5s .45s both;transition:background var(--t)}
+.disc-continue:hover{background:var(--gold)}
+@keyframes dfi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dpop{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
 
-/* ── INPUT PICKER SHEET ── */
-#picker-ov {
-  position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-}
-#picker-drw {
-  background: var(--bg2); border-top: 2px solid var(--stone);
-  border-radius: 16px 16px 0 0;
-  width: 100%; max-width: 560px;
-  max-height: 75svh; overflow: hidden;
-  display: flex; flex-direction: column;
-}
-.picker-hdr {
-  display: flex; align-items: center; padding: .75rem 1rem;
-  border-bottom: 1px solid var(--stone); flex-shrink: 0;
-}
-.picker-tabs { display: flex; gap: .4rem; flex: 1; }
-.ptab {
-  background: none; border: 1.5px solid var(--stone); color: var(--dim2);
-  font-size: .82rem; font-weight: bold; padding: .42rem .85rem;
-  border-radius: 20px; transition: all var(--t);
-}
-.ptab.active { border-color: var(--amber); color: var(--amber); }
-.pick-close {
-  background: none; border: none; color: var(--dim2); font-size: 1.25rem; padding: .2rem .4rem;
-  transition: color var(--t);
-}
-.pick-close:hover { color: var(--text); }
-.picker-body { flex: 1; overflow-y: auto; padding: .75rem 1rem 1rem; }
-.picker-body::-webkit-scrollbar { width: 3px; }
-.picker-body::-webkit-scrollbar-thumb { background: var(--stone); }
+/* WIN */
+#win-ov{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;gap:1rem;text-align:center;overflow-y:auto}
+.win-star{font-size:clamp(4.5rem,20vw,7rem);line-height:1;animation:win-spin 6s linear infinite;filter:drop-shadow(0 0 28px rgba(255,215,50,.7))}
+@keyframes win-spin{from{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.08)}to{transform:rotate(360deg) scale(1)}}
+.win-title{font-size:clamp(1.6rem,7vw,2.8rem);font-weight:900;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;text-shadow:0 0 30px rgba(218,168,48,.5);animation:dfi .6s .1s both}
+.win-sub{font-size:clamp(.85rem,3vw,1rem);color:var(--amber);text-transform:uppercase;letter-spacing:.22em;animation:dfi .5s .2s both}
+.win-desc{font-size:.92rem;color:var(--text);line-height:1.7;max-width:320px;font-style:italic;animation:dfi .5s .3s both}
+.win-stats{background:var(--bg2);border:1px solid var(--stone);border-radius:var(--r);padding:.7rem 1.4rem;font-size:.82rem;color:var(--dim2);line-height:1.8;animation:dfi .5s .38s both}
+.win-stats strong{color:var(--gold)}
+.win-btns{display:flex;flex-direction:column;gap:.6rem;width:100%;max-width:280px;animation:dfi .5s .46s both}
+.win-new{background:var(--gold);border:none;color:#000;font-size:.95rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:.85rem;border-radius:var(--r);transition:background var(--t)}
+.win-new:hover{background:var(--amber)}
+.win-keep{background:none;border:1.5px solid var(--stone);color:var(--dim2);font-size:.85rem;padding:.7rem;border-radius:var(--r);transition:all var(--t)}
+.win-keep:hover{border-color:var(--dim2);color:var(--text)}
 
-/* card grid */
-.suit-sec { margin-bottom: .9rem; }
-.suit-hdr {
-  font-size: .65rem; text-transform: uppercase; letter-spacing: .14em;
-  margin-bottom: .4rem;
-}
-.suit-hdr.club    { color: var(--club-c); }
-.suit-hdr.heart   { color: var(--heart-c); }
-.suit-hdr.spade   { color: var(--spade-c); }
-.suit-hdr.diamond { color: var(--diamond-c); }
-.card-grid { display: flex; flex-wrap: wrap; gap: .35rem; }
-.card-tile {
-  background: var(--bg3); border: 1.5px solid var(--stone);
-  border-radius: 6px; padding: .45rem .35rem; min-width: 44px; text-align: center;
-  cursor: pointer; transition: border-color var(--t);
-  display: flex; flex-direction: column; align-items: center; gap: 1px;
-}
-.card-tile:hover { border-color: var(--amber); }
-.ct-rank { font-size: .95rem; font-weight: 900; line-height: 1; }
-.ct-suit { font-size: .7rem; line-height: 1; }
-.card-tile.club    .ct-rank, .card-tile.club    .ct-suit { color: var(--club-c); }
-.card-tile.heart   .ct-rank, .card-tile.heart   .ct-suit { color: var(--heart-c); }
-.card-tile.spade   .ct-rank, .card-tile.spade   .ct-suit { color: var(--spade-c); }
-.card-tile.diamond .ct-rank, .card-tile.diamond .ct-suit { color: var(--diamond-c); }
+/* NEW WORLD */
+#nw-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+#nw-card{background:var(--bg2);border:1.5px solid var(--stone);border-radius:14px;padding:1.5rem;width:100%;max-width:340px;display:flex;flex-direction:column;gap:.85rem}
+#nw-card h3{font-size:1rem;font-weight:bold;color:var(--amber)}
+#nw-card p{font-size:.82rem;color:var(--dim2);line-height:1.65}
+.nw-btns{display:flex;gap:.5rem}
+.nw-cancel{flex:1;background:none;border:1.5px solid var(--stone);color:var(--dim2);font-size:.88rem;padding:.65rem;border-radius:var(--r);transition:all var(--t)}
+.nw-cancel:hover{border-color:var(--dim2);color:var(--text)}
+.nw-confirm{flex:1;background:var(--clay);border:1.5px solid var(--amber);color:var(--gold);font-size:.88rem;font-weight:bold;padding:.65rem;border-radius:var(--r);transition:all var(--t)}
+.nw-confirm:hover{background:var(--amber);color:#000}
 
-/* item grid */
-.item-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
-.item-tile {
-  background: var(--bg3); border: 1.5px solid var(--clay);
-  border-radius: 8px; padding: .6rem .5rem; text-align: center;
-  cursor: pointer; transition: border-color var(--t); flex: 1; min-width: 80px; max-width: 110px;
-}
-.item-tile:hover { border-color: var(--amber); }
-.it-emoji { font-size: 1.25rem; display: block; }
-.it-name  { font-size: .68rem; color: var(--text); margin-top: .15rem; }
-.no-items { color: var(--dim2); font-size: .85rem; text-align: center; padding: 1.2rem; }
+/* HINT TOAST */
+#hint-toast{position:fixed;bottom:1.6rem;left:50%;transform:translateX(-50%);background:var(--bg2);border:1.5px solid var(--amber);border-radius:20px;padding:.75rem 1.3rem;font-size:.88rem;color:var(--text);max-width:min(88vw,360px);box-shadow:0 4px 24px rgba(0,0,0,.55);z-index:400;text-align:center;line-height:1.55;animation:hint-in .3s ease;transition:opacity .55s ease}
+#hint-toast.fading{opacity:0}
+@keyframes hint-in{from{opacity:0;transform:translateX(-50%) translateY(18px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
-/* ── DISCOVERY OVERLAY ── */
-#disc-ov {
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,.92);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 2rem 1.5rem; gap: .9rem; text-align: center;
-  overflow-y: auto;
-}
-.disc-banner {
-  font-size: clamp(.78rem, 2.5vw, .9rem);
-  text-transform: uppercase; letter-spacing: .3em; color: var(--amber);
-  animation: dfi .5s ease;
-}
-.disc-emoji {
-  font-size: clamp(4rem, 18vw, 6.5rem); line-height: 1;
-  animation: dpop .65s .08s both cubic-bezier(.175,.885,.32,1.275);
-  filter: drop-shadow(0 0 22px rgba(255,140,50,.5));
-}
-.disc-name {
-  font-size: clamp(1.5rem, 7vw, 2.4rem);
-  font-weight: 900; color: var(--gold); letter-spacing: .06em;
-  animation: dfi .5s .15s both;
-}
-.disc-recipe {
-  font-size: .8rem; color: var(--dim2); letter-spacing: .06em; font-family: monospace;
-  animation: dfi .5s .22s both;
-}
-.disc-desc {
-  font-size: .9rem; color: var(--text); line-height: 1.6;
-  max-width: 320px; font-style: italic;
-  animation: dfi .5s .28s both;
-}
-.disc-power {
-  font-size: .76rem; color: var(--amber); max-width: 320px; line-height: 1.5;
-  animation: dfi .5s .34s both;
-}
-.disc-tags {
-  display: flex; flex-wrap: wrap; gap: .3rem; justify-content: center;
-  animation: dfi .5s .38s both;
-}
-.disc-tag {
-  background: var(--bg3); border: 1px solid var(--stone);
-  border-radius: 20px; padding: .18rem .55rem;
-  font-size: .6rem; color: var(--dim2); text-transform: uppercase; letter-spacing: .08em;
-}
-.disc-continue {
-  background: var(--amber); border: none; color: #000;
-  font-size: .9rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
-  padding: .8rem 2.2rem; border-radius: var(--r);
-  animation: dfi .5s .45s both;
-  transition: background var(--t);
-}
-.disc-continue:hover { background: var(--gold); }
-@keyframes dfi {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes dpop {
-  from { transform: scale(0) rotate(-20deg); opacity: 0; }
-  to   { transform: scale(1) rotate(0); opacity: 1; }
-}
+/* DEBUG */
+#dbg-ov{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:1rem}
+#dbg-panel{background:#0a0e12;border:2px solid #2a4a2a;border-radius:12px;width:100%;max-width:680px;max-height:88svh;display:flex;flex-direction:column;overflow:hidden;font-family:monospace}
+.dbg-hdr{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;border-bottom:1px solid #1a3a1a;flex-shrink:0}
+.dbg-hdr span{font-size:.85rem;color:#4a9a4a;letter-spacing:.12em;text-transform:uppercase}
+.dbg-hdr button{background:none;border:none;color:#4a6a4a;font-size:1.2rem;cursor:pointer}
+#dbg-body{flex:1;overflow-y:auto;padding:.8rem 1rem;font-size:.72rem;color:#7a9a7a;line-height:1.7}
+#dbg-body::-webkit-scrollbar{width:3px}
+#dbg-body::-webkit-scrollbar-thumb{background:#1a3a1a}
+.dbg-actions{display:flex;flex-wrap:wrap;gap:.5rem;padding:.7rem 1rem;border-top:1px solid #1a3a1a;flex-shrink:0}
+.dbg-btn{background:#0a1a0a;border:1px solid #2a4a2a;color:#4a9a4a;font-family:monospace;font-size:.72rem;padding:.4rem .8rem;border-radius:4px;cursor:pointer;transition:all .15s}
+.dbg-btn:hover{border-color:#4a9a4a;color:#8ada8a}
+.dbg-section{margin-bottom:.8rem}
+.dbg-title{color:#8ada8a;border-bottom:1px solid #1a3a1a;padding-bottom:.2rem;margin-bottom:.4rem;letter-spacing:.1em}
+.dbg-item{color:#5a7a5a;padding-left:.5rem}
+.dbg-required{color:#9ada6a}.dbg-rare{color:#da9a4a}.dbg-warn{color:#da4a4a}.dbg-ok{color:#4ada4a}
 
-/* ── NEW WORLD MODAL ── */
-#nw-ov {
-  position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 300;
-  display: flex; align-items: center; justify-content: center; padding: 1.5rem;
-}
-#nw-card {
-  background: var(--bg2); border: 1.5px solid var(--stone); border-radius: 14px;
-  padding: 1.5rem; width: 100%; max-width: 340px;
-  display: flex; flex-direction: column; gap: .85rem;
-}
-#nw-card h3 { font-size: 1rem; font-weight: bold; color: var(--amber); }
-#nw-card p  { font-size: .82rem; color: var(--dim2); line-height: 1.65; }
-.nw-btns { display: flex; gap: .5rem; }
-.nw-cancel {
-  flex: 1; background: none; border: 1.5px solid var(--stone); color: var(--dim2);
-  font-size: .88rem; padding: .65rem; border-radius: var(--r); transition: all var(--t);
-}
-.nw-cancel:hover { border-color: var(--dim2); color: var(--text); }
-.nw-confirm {
-  flex: 1; background: var(--clay); border: 1.5px solid var(--amber); color: var(--gold);
-  font-size: .88rem; font-weight: bold; padding: .65rem; border-radius: var(--r); transition: all var(--t);
-}
-.nw-confirm:hover { background: var(--amber); color: #000; }
-
-@media (max-width: 380px) {
-  .card-tile { min-width: 38px; padding: .38rem .28rem; }
-  .ct-rank { font-size: .85rem; }
-}
-
-/* ── HINT TOAST ── */
-#hint-toast {
-  position: fixed; bottom: 1.6rem; left: 50%; transform: translateX(-50%);
-  background: var(--bg2); border: 1.5px solid var(--amber);
-  border-radius: 20px; padding: .75rem 1.3rem;
-  font-size: .88rem; color: var(--text); max-width: min(88vw, 360px);
-  box-shadow: 0 4px 24px rgba(0,0,0,.55);
-  z-index: 400; text-align: center; line-height: 1.55;
-  animation: hint-in .3s ease;
-  transition: opacity .55s ease;
-}
-#hint-toast.fading { opacity: 0; }
-@keyframes hint-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(18px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
-/* ── RESULT WARMTH COLOURS ── */
-.res-quality { color: var(--amber); }
-.res-warm    { color: #7aba50; }
-.res-hint    { color: var(--dim2); }
-.res-cold    { color: var(--dim); }
+@media(max-width:380px){.card-tile{min-width:38px;padding:.38rem .28rem}.ct-rank{font-size:.85rem}}
 </style>
 </head>
 <body>
 
-<!-- ══ SETUP ══ -->
+<!-- SETUP -->
 <div id="setup">
   <div class="big-title">⛏️<br>PREHISTORIC<br>CRAFTING</div>
   <div class="setup-card">
@@ -430,16 +216,14 @@ input  { font-family: inherit; }
       </button>
       <div class="or-divider">— or start a new world —</div>
     </div>
-    <div>
-      <div class="lbl">World Seed</div>
-      <input type="number" id="seed-input" class="s-input" value="12345" min="1" max="999999" />
-    </div>
+    <div><div class="lbl">World Seed</div>
+    <input type="number" id="seed-input" class="s-input" value="12345" min="1" max="999999"/></div>
     <button class="seed-rng-btn" onclick="randomSeed()">🎲 Random Seed</button>
     <button class="setup-start" onclick="startWorld()">⛏ Begin New World</button>
   </div>
 </div>
 
-<!-- ══ GAME ══ -->
+<!-- GAME -->
 <div id="game" class="hidden">
   <div id="g-header">
     <div>
@@ -447,35 +231,25 @@ input  { font-family: inherit; }
       <div class="world-seed" id="world-seed-lbl"></div>
     </div>
     <div class="hdr-btns">
-      <button class="hdr-btn" onclick="showHint()"       title="Hint">💡</button>
+      <button class="hdr-btn" onclick="showHint()" title="Hint">💡</button>
       <button class="hdr-btn" onclick="newWorldPrompt()" title="New World">🌍</button>
     </div>
   </div>
-
   <div id="exp-panel">
     <div class="exp-lbl">Experiment</div>
     <div class="exp-row">
-      <button class="input-btn" id="btn-a" onclick="openPicker('a')">
-        <span style="color:var(--dim);font-size:.8rem">Select A</span>
-      </button>
+      <button class="input-btn" id="btn-a" onclick="openPicker('a')"><span style="color:var(--dim);font-size:.78rem">Select A</span></button>
       <div class="plus-sep">+</div>
-      <button class="input-btn" id="btn-b" onclick="openPicker('b')">
-        <span style="color:var(--dim);font-size:.8rem">Select B</span>
-      </button>
+      <button class="input-btn" id="btn-b" onclick="openPicker('b')"><span style="color:var(--dim);font-size:.78rem">Select B</span></button>
     </div>
     <button class="exp-btn" id="exp-btn" onclick="runExperiment()" disabled>⚗️ Experiment</button>
   </div>
-
   <div id="result-panel" class="hidden"></div>
-
   <div id="game-body">
     <div id="tree-section">
       <div class="section-title">🌳 Technology Tree</div>
-      <div id="tree-scroll">
-        <div id="tree-container"></div>
-      </div>
+      <div id="tree-scroll"><div id="tree-container"></div></div>
     </div>
-
     <div id="log-section">
       <button id="log-toggle" onclick="toggleLog()">▶ Experiment Log (<span id="log-cnt">0</span>)</button>
       <div id="log-list" class="hidden"></div>
@@ -483,7 +257,7 @@ input  { font-family: inherit; }
   </div>
 </div>
 
-<!-- ══ PICKER ══ -->
+<!-- PICKER -->
 <div id="picker-ov" class="hidden" onclick="closePicker()">
   <div id="picker-drw" onclick="event.stopPropagation()">
     <div class="picker-hdr">
@@ -497,7 +271,7 @@ input  { font-family: inherit; }
   </div>
 </div>
 
-<!-- ══ DISCOVERY ══ -->
+<!-- DISCOVERY -->
 <div id="disc-ov" class="hidden">
   <div class="disc-banner">✨ Discovery! ✨</div>
   <div class="disc-emoji" id="disc-emoji"></div>
@@ -509,15 +283,26 @@ input  { font-family: inherit; }
   <button class="disc-continue" onclick="continueAfterDisc()">Continue →</button>
 </div>
 
-<!-- ══ NEW WORLD ══ -->
+<!-- WIN -->
+<div id="win-ov" class="hidden">
+  <div class="win-star">✨</div>
+  <div class="win-sub">The Great Work Is Complete</div>
+  <div class="win-title">Philosopher's Stone</div>
+  <div class="win-desc">You have transmuted Prima Materia with the hidden catalyst and forged the Philosopher's Stone. Nothing in the universe is beyond your understanding now.</div>
+  <div class="win-stats" id="win-stats"></div>
+  <div class="win-btns">
+    <button class="win-new"  onclick="winNewWorld()">🌍 New World</button>
+    <button class="win-keep" onclick="winKeepPlaying()">Keep Exploring</button>
+  </div>
+</div>
+
+<!-- NEW WORLD -->
 <div id="nw-ov" class="hidden">
   <div id="nw-card">
     <h3>🌍 Start a New World?</h3>
     <p>All discoveries and logs will be erased. Enter a new seed, or keep the current one.</p>
-    <div>
-      <div class="lbl">New Seed</div>
-      <input type="number" id="nw-seed" class="s-input" style="margin-top:.3rem" />
-    </div>
+    <div><div class="lbl">New Seed</div>
+    <input type="number" id="nw-seed" class="s-input" style="margin-top:.3rem"/></div>
     <div class="nw-btns">
       <button class="nw-cancel"  onclick="closeNW()">Cancel</button>
       <button class="nw-confirm" onclick="confirmNewWorld()">Start Fresh</button>
@@ -525,791 +310,1084 @@ input  { font-family: inherit; }
   </div>
 </div>
 
+<!-- DEBUG (secret: click world-seed label 5×) -->
+<div id="dbg-ov" class="hidden">
+  <div id="dbg-panel">
+    <div class="dbg-hdr">
+      <span>🔬 Debug Panel</span>
+      <button onclick="closeDebug()">✕</button>
+    </div>
+    <div id="dbg-body"></div>
+    <div class="dbg-actions">
+      <button class="dbg-btn" onclick="dbgRandomWorld()">🎲 Random World</button>
+      <button class="dbg-btn" onclick="dbgRevealWorld()">👁 Reveal World</button>
+      <button class="dbg-btn" onclick="dbgValidate100()">✅ Validate 100 Worlds</button>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ══════════════════════════════════════════════
-   BASE RECIPE LIBRARY
-   Tiers are topological (max prereq tier + 1)
-   so no same-row edges in the tech tree.
-══════════════════════════════════════════════ */
-const BASE_RECIPES = [
-  /* ─── TIER 1: card + card ─── */
-  {
-    id:'sharp_stone', name:'Sharp Stone', emoji:'🗡️', tier:1, category:'tool',
-    tags:['sharp','cutting','stone','tool'],
-    recipe:{ type:'card_card', suitA:'spade', suitB:'spade', minimumTotal:10 },
-    description:'You learned to fracture flint against itself, producing a keen cutting edge.',
-    power:'Unlocks knife and spear crafting.'
-  },
-  {
-    id:'grinding_stone', name:'Grinding Stone', emoji:'🪨', tier:1, category:'tool',
-    tags:['stone','grinding','tool','processing'],
-    recipe:{ type:'card_card', suitA:'spade', suitB:'spade', minimumTotal:16 },
-    description:'Two heavy stones worked together create a smooth grinding surface.',
-    power:'Unlocks food processing and furnace building.'
-  },
-  {
-    id:'fire', name:'Fire', emoji:'🔥', tier:1, category:'force',
-    tags:['heat','energy','transformation','light'],
-    recipe:{ type:'card_card', suitA:'spade', suitB:'club', minimumTotal:11 },
-    description:'Rapid friction between hard stone and dry wood produces the first flame.',
-    power:'Unlocks cooking, light, and heat technologies.'
-  },
-  {
-    id:'cordage', name:'Cordage', emoji:'🧶', tier:1, category:'material',
-    tags:['binding','fiber','flexible','tool'],
-    recipe:{ type:'card_card', suitA:'club', suitB:'club', minimumTotal:8 },
-    description:'Twisted plant fibers become strong, flexible rope.',
-    power:'Unlocks binding and construction technologies.'
-  },
-  {
-    id:'poultice', name:'Poultice', emoji:'🌿', tier:1, category:'medicine',
-    tags:['medicine','herb','healing','paste'],
-    recipe:{ type:'card_card', suitA:'heart', suitB:'club', minimumTotal:8 },
-    description:'Crushed herbs mixed with organic material soothes wounds and reduces fever.',
-    power:'Unlocks medicine technologies.'
-  },
-  {
-    id:'clay', name:'Clay', emoji:'🟤', tier:1, category:'material',
-    tags:['earth','malleable','raw','container-material'],
-    recipe:{ type:'card_card', suitA:'spade', suitB:'diamond', minimumTotal:9 },
-    description:'Mineral-rich earth mixed with water becomes workable clay.',
-    power:'Unlocks vessel and building technologies.'
-  },
+/* ════════════════════════════════════════════════════
+   TEMPLATE LIBRARY  — 65 templates, stable IDs
+   Seeds choose: recipe variant, name synonym, desc,
+   power, and threshold variation.
+════════════════════════════════════════════════════ */
+const TEMPLATE_LIBRARY = [
+  /* ── GROUP A: Pure card+card (always reachable from any hand) ── */
+  {id:'sharp_stone',
+   names:['Sharp Stone','Flint Edge','Stone Blade','Chipped Flint','Knapped Flint'],
+   emojis:['🗡️','🪨'],
+   descs:['You learned to fracture flint along its grain, exposing a keen edge.','Stone shatters under precise pressure, revealing a blade sharper than any thorn.'],
+   tags:['sharp','cutting','stone','tool'],rare:false,
+   recipes:[{type:'card_card',suitA:'spade',suitB:'spade',minimumTotal:10},{type:'card_card',suitA:'spade',suitB:'diamond',minimumTotal:9}],
+   powers:['Unlocks knife and spear crafting.','Stone yields its edge to those who understand it.']},
 
-  /* ─── TIER 2: card + item ─── */
-  {
-    id:'stone_knife', name:'Stone Knife', emoji:'🔪', tier:2, category:'tool',
-    tags:['sharp','cutting','tool','weapon'],
-    recipe:{ type:'card_item', cardSuit:'club', minimumCardValue:3, item:'sharp_stone' },
-    description:'A flint edge wrapped in organic cordage to form a handle.',
-    power:'Unlocks hide working and advanced cutting.'
-  },
-  {
-    id:'spear', name:'Spear', emoji:'🏹', tier:2, category:'weapon',
-    tags:['sharp','shaft','weapon','hunting','tool'],
-    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:5, item:'sharp_stone' },
-    description:'A sharp stone point lashed to a long, sturdy shaft becomes a spear.',
-    power:'Unlocks hunting technologies.'
-  },
-  {
-    id:'cooked_food', name:'Cooked Food', emoji:'🍖', tier:2, category:'food',
-    tags:['food','heat','nutrition','cooked'],
-    recipe:{ type:'card_item', cardSuit:'club', minimumCardValue:3, item:'fire' },
-    description:'Heat transforms raw organic matter into safer, more nutritious food.',
-    power:'Unlocks food preservation technologies.'
-  },
-  {
-    id:'torch', name:'Torch', emoji:'🕯️', tier:2, category:'tool',
-    tags:['fire','light','tool','heat'],
-    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:3, item:'fire' },
-    description:'A shaft of resinous timber set ablaze carries fire anywhere you go.',
-    power:'Unlocks night activities and extended warmth.'
-  },
-  {
-    id:'basket', name:'Basket', emoji:'🧺', tier:2, category:'container',
-    tags:['container','weaving','storage','fiber'],
-    recipe:{ type:'card_item', cardSuit:'club', minimumCardValue:5, item:'cordage' },
-    description:'Woven plant cordage shaped into a vessel for carrying and storing.',
-    power:'Unlocks food gathering and storage.'
-  },
-  {
-    id:'shelter', name:'Shelter', emoji:'🛖', tier:2, category:'structure',
-    tags:['structure','protection','construction','organic'],
-    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:6, item:'cordage' },
-    description:'Heavy timber lashed with cordage forms a weatherproof structure.',
-    power:'Unlocks long-term settlement technologies.'
-  },
-  {
-    id:'clay_vessel', name:'Clay Vessel', emoji:'🫙', tier:2, category:'container',
-    tags:['container','clay','storage','vessel'],
-    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:4, item:'clay' },
-    description:'Shaped and sun-dried clay hardens into a simple storage vessel.',
-    power:'Unlocks liquid storage and medicine.'
-  },
-  {
-    id:'furnace', name:'Furnace', emoji:'🔆', tier:2, category:'structure',
-    tags:['heat','structure','smelting','advanced'],
-    recipe:{ type:'item_item', itemA:'fire', itemB:'grinding_stone' },
-    description:'Stone slabs arranged around a fire create an enclosed heat chamber.',
-    power:'Unlocks metallurgy and advanced material working.'
-  },
+  {id:'grinding_stone',
+   names:['Grinding Stone','Millstone','Flat Stone','Grinding Basin','Stone Mortar'],
+   emojis:['🪨','⚖️'],
+   descs:['Two heavy stones worked together create a smooth surface for grinding.','Reduction is the path to essence — the grinding stone knows this.'],
+   tags:['stone','grinding','tool','processing'],rare:false,
+   recipes:[{type:'card_card',suitA:'spade',suitB:'spade',minimumTotal:16},{type:'card_card',suitA:'spade',suitB:'diamond',minimumTotal:14}],
+   powers:['Unlocks food processing and furnace construction.','Patience and pressure reveal what is hidden inside.']},
 
-  /* ─── TIER 3: item + item (and one card+item) ─── */
-  {
-    id:'pottery', name:'Pottery', emoji:'🏺', tier:3, category:'container',
-    tags:['container','heat-resistant','storage','craft'],
-    recipe:{ type:'item_item', itemA:'fire', itemB:'clay_vessel' },
-    description:'Firing clay vessels creates durable, heat-safe pottery.',
-    power:'Unlocks cooking vessels and advanced chemistry.'
-  },
-  {
-    id:'hunting', name:'Hunting', emoji:'🎯', tier:3, category:'skill',
-    tags:['skill','food','weapon','survival','technique'],
-    recipe:{ type:'item_item', itemA:'spear', itemB:'torch' },
-    description:'Armed with spear and torch, you can track and take large prey at night.',
-    power:'Unlocks animal materials and advanced food sources.'
-  },
-  {
-    id:'food_preservation', name:'Food Preservation', emoji:'🥫', tier:3, category:'skill',
-    tags:['food','storage','technique','survival'],
-    recipe:{ type:'item_item', itemA:'cooked_food', itemB:'basket' },
-    description:'Storing prepared food in sealed containers keeps it edible on long journeys.',
-    power:'Unlocks settlement and trade technologies.'
-  },
-  {
-    id:'medicine', name:'Medicine', emoji:'💊', tier:3, category:'skill',
-    tags:['healing','herb','advanced','knowledge'],
-    recipe:{ type:'item_item', itemA:'poultice', itemB:'clay_vessel' },
-    description:'Precise herb preparations stored in clay vessels become potent remedies.',
-    power:'Unlocks advanced healing and alchemy.'
-  },
-  {
-    id:'metallurgy', name:'Metallurgy', emoji:'⚙️', tier:3, category:'skill',
-    tags:['metal','heat','advanced-material','craft'],
-    recipe:{ type:'card_item', cardSuit:'diamond', minimumCardValue:7, item:'furnace' },
-    description:'High-quality ore smelted in the furnace yields workable metal.',
-    power:'Unlocks advanced tools, weapons, and Prima Materia.'
-  },
+  {id:'fire',
+   names:['Fire','Controlled Flame','Hearth Fire','Sacred Flame','Ember'],
+   emojis:['🔥','🕯️'],
+   descs:['Rapid friction between hard stone and dry wood produces the first flame.','For the first time, flame obeys you.','The ember catches. You have learned to create life from friction.'],
+   tags:['heat','energy','transformation','light'],rare:false,
+   recipes:[{type:'card_card',suitA:'spade',suitB:'club',minimumTotal:11},{type:'card_card',suitA:'spade',suitB:'spade',minimumTotal:13},{type:'card_card',suitA:'diamond',suitB:'club',minimumTotal:10}],
+   powers:['Unlocks cooking, light, and heat technologies.','Fundamental to all advanced discovery.']},
 
-  /* ─── TIER 4 ─── */
-  {
-    id:'distillation', name:'Distillation', emoji:'⚗️', tier:4, category:'skill',
-    tags:['liquid','purification','advanced','chemistry'],
-    recipe:{ type:'item_item', itemA:'pottery', itemB:'fire' },
-    description:'Heating liquids through sealed pottery concentrates and purifies their essence.',
-    power:'Unlocks alchemy and advanced chemistry.'
-  },
+  {id:'cordage',
+   names:['Cordage','Twine','Plant Fiber Rope','Binding Fiber','Reed Rope','Woven Fiber'],
+   emojis:['🧶','🪢'],
+   descs:['Twisted plant fibers become strong, flexible rope.','Strand by strand, something fragile becomes binding.'],
+   tags:['binding','fiber','flexible','tool'],rare:false,
+   recipes:[{type:'card_card',suitA:'club',suitB:'club',minimumTotal:8},{type:'card_card',suitA:'club',suitB:'heart',minimumTotal:7}],
+   powers:['Unlocks binding and construction technologies.','The foundation of weaving and structure.']},
 
-  /* ─── TIER 5 ─── */
-  {
-    id:'alchemy', name:'Alchemy', emoji:'🧪', tier:5, category:'knowledge',
-    tags:['transformation','advanced','chemistry','knowledge'],
-    recipe:{ type:'item_item', itemA:'distillation', itemB:'medicine' },
-    description:'The fusion of material science and deep biological knowledge transcends craft.',
-    power:'Unlocks Prima Materia — the final discovery.'
-  },
+  {id:'poultice',
+   names:['Poultice','Herbal Paste','Healing Salve','Medicinal Mash','Herb Compress','Wound Paste'],
+   emojis:['🌿','💚'],
+   descs:['Crushed herbs mixed with organic matter soothes wounds and reduces fever.','The right plants, crushed together, speak to the body in its own language.'],
+   tags:['medicine','herb','healing','paste'],rare:false,
+   recipes:[{type:'card_card',suitA:'heart',suitB:'club',minimumTotal:8},{type:'card_card',suitA:'heart',suitB:'heart',minimumTotal:9}],
+   powers:['Unlocks medicine technologies.','Plants hold the first pharmacy.']},
 
-  /* ─── TIER 6 ─── */
-  {
-    id:'prima_materia', name:'Prima Materia', emoji:'✨', tier:6, category:'knowledge',
-    tags:['ultimate','transformation','pure','essence'],
-    recipe:{ type:'item_item', itemA:'alchemy', itemB:'metallurgy' },
-    description:'The primordial substance from which all matter springs forth. The world bends to your knowledge.',
-    power:'You have mastered the ancient arts. There is nothing left to discover.'
-  },
+  {id:'clay',
+   names:['Clay','Wet Clay','Earth Clay','Raw Clay','River Clay','Mineral Clay'],
+   emojis:['🟤','🏔️'],
+   descs:['Mineral-rich earth mixed with water becomes workable clay.','Between stone and earth lies a substance that yields and holds.'],
+   tags:['earth','malleable','raw','container-material'],rare:false,
+   recipes:[{type:'card_card',suitA:'spade',suitB:'diamond',minimumTotal:9},{type:'card_card',suitA:'spade',suitB:'spade',minimumTotal:7}],
+   powers:['Unlocks vessel and building technologies.','Earth that bends is earth that serves.']},
+
+  {id:'resin',
+   names:['Resin','Tree Sap','Pine Pitch','Natural Adhesive','Sticky Pitch','Bark Tar'],
+   emojis:['🍯','💧'],
+   descs:['The tree bleeds a substance that hardens and binds.','Natural pitch from ancient trees becomes glue, sealant, and waterproofing.'],
+   tags:['adhesive','organic','waterproofing','binding'],rare:false,
+   recipes:[{type:'card_card',suitA:'club',suitB:'diamond',minimumTotal:8},{type:'card_card',suitA:'club',suitB:'club',minimumTotal:12}],
+   powers:['Unlocks waterproofing and advanced adhesion.','Binds materials that would otherwise refuse to join.']},
+
+  {id:'pigment',
+   names:['Pigment','Ochre Paint','Mineral Pigment','Cave Paint','Red Ochre','Earth Pigment'],
+   emojis:['🎨','🟠'],
+   descs:['Ground mineral mixed with fat becomes paint that lasts thousands of years.','Color transferred to stone and hide: the first permanent mark.'],
+   tags:['color','art','mineral','symbol'],rare:false,
+   recipes:[{type:'card_card',suitA:'diamond',suitB:'spade',minimumTotal:8},{type:'card_card',suitA:'diamond',suitB:'diamond',minimumTotal:10}],
+   powers:['Unlocks art, writing, and symbolic technologies.','Color is memory made visible.']},
+
+  {id:'dried_herbs',
+   names:['Dried Herbs','Herb Bundle','Pressed Plants','Sun-dried Herbs','Preserved Leaves'],
+   emojis:['🌾','🍀'],
+   descs:['Sunlight and time transform fresh plants into potent, storable medicine.','Drying concentrates the plant\'s hidden essence.'],
+   tags:['herb','medicine','preserved','organic'],rare:false,
+   recipes:[{type:'card_card',suitA:'heart',suitB:'heart',minimumTotal:8},{type:'card_card',suitA:'heart',suitB:'diamond',minimumTotal:8}],
+   powers:['Unlocks advanced medicinal preparations.','Time itself becomes an ingredient.']},
+
+  {id:'bone_shard',
+   names:['Bone Shard','Split Bone','Bone Fragment','Splinter Bone','Bone Tool Blank'],
+   emojis:['🦴','⬛'],
+   descs:['Split along the grain, bone reveals a hard, sharp inner surface.','The skeleton holds more utility than the flesh ever did.'],
+   tags:['bone','sharp','tool-material','organic'],rare:false,
+   recipes:[{type:'card_card',suitA:'club',suitB:'spade',minimumTotal:9},{type:'card_card',suitA:'club',suitB:'diamond',minimumTotal:10}],
+   powers:['Unlocks bone tools and needles.','The animal gives more than sustenance.']},
+
+  {id:'hide',
+   names:['Hide','Animal Hide','Raw Pelt','Scraped Hide','Cured Skin'],
+   emojis:['🥩','🦺'],
+   descs:['Scraped and stretched animal skin becomes a durable material.','What once protected the animal can now protect you.'],
+   tags:['organic','material','animal','clothing-material'],rare:false,
+   recipes:[{type:'card_card',suitA:'club',suitB:'club',minimumTotal:11},{type:'card_card',suitA:'club',suitB:'heart',minimumTotal:10}],
+   powers:['Unlocks clothing and container technologies.','The animal continues to serve beyond its life.']},
+
+  /* ── GROUP B: One item required ── */
+  {id:'wooden_shaft',
+   names:['Wooden Shaft','Long Pole','Straight Branch','Worked Timber','Shaped Stave'],
+   emojis:['🪵','📏'],
+   descs:['A straight branch worked smooth with stone tools becomes a structural element.','Wood, once shaped, holds almost any tool tip you can imagine.'],
+   tags:['wood','shaft','structural','tool-component'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'spade',minimumCardValue:3,item:'sharp_stone'},{type:'card_item',cardSuit:'club',minimumCardValue:4,item:'sharp_stone'}],
+   powers:['Enables hafted tools and weapons.','The shaft is the skeleton of most complex tools.']},
+
+  {id:'charcoal',
+   names:['Charcoal','Burnt Wood','Carbon Ash','Wood Char','Black Coal'],
+   emojis:['⬛','🖤'],
+   descs:['Wood smothered in fire without air transforms into concentrated carbon.','What fire cannot fully consume becomes more powerful than what it started.'],
+   tags:['carbon','fuel','material','pigment-source'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'club',minimumCardValue:3,item:'fire'},{type:'card_item',cardSuit:'spade',minimumCardValue:4,item:'fire'}],
+   powers:['Enables hotter fire and smelting technologies.','Carbon is the foundation of advanced material working.']},
+
+  {id:'torch',
+   names:['Torch','Fire Stick','Burning Brand','Tallow Torch','Resin Torch'],
+   emojis:['🕯️','🔦'],
+   descs:['A shaft of resinous timber set ablaze carries fire anywhere you go.','Portable flame changes the darkness forever.'],
+   tags:['fire','light','tool','heat'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'spade',minimumCardValue:3,item:'fire'},{type:'item_item',itemA:'fire',itemB:'resin'},{type:'item_item',itemA:'wooden_shaft',itemB:'fire'}],
+   powers:['Unlocks night activities and extended warmth.','Light is power over what the dark conceals.']},
+
+  {id:'basket',
+   names:['Basket','Woven Basket','Carrying Vessel','Wicker Basket','Fiber Bowl'],
+   emojis:['🧺','📦'],
+   descs:['Woven plant cordage shaped into a vessel for carrying and storing.','The interlocked pattern of cordage creates something stronger than its parts.'],
+   tags:['container','weaving','storage','fiber'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'club',minimumCardValue:5,item:'cordage'},{type:'card_item',cardSuit:'heart',minimumCardValue:4,item:'cordage'}],
+   powers:['Unlocks food gathering and storage.','The container precedes civilization.']},
+
+  {id:'cooked_food',
+   names:['Cooked Food','Roasted Meat','Prepared Meal','Fired Grain','Smoked Provisions'],
+   emojis:['🍖','🫕'],
+   descs:['Heat transforms raw organic matter into safer, more nutritious food.','Fire rewrites the chemistry of what you eat.'],
+   tags:['food','heat','nutrition','cooked'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'club',minimumCardValue:3,item:'fire'},{type:'card_item',cardSuit:'heart',minimumCardValue:2,item:'fire'}],
+   powers:['Unlocks food preservation technologies.','The body grows stronger when fire prepares the feast.']},
+
+  {id:'clay_vessel',
+   names:['Clay Vessel','Clay Pot','Earthen Bowl','Formed Clay','Unfired Vessel'],
+   emojis:['🫙','🪣'],
+   descs:['Shaped and sun-dried clay hardens into a simple storage vessel.','Hands and patience give earth a new purpose.'],
+   tags:['container','clay','storage','vessel'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'spade',minimumCardValue:4,item:'clay'},{type:'card_item',cardSuit:'club',minimumCardValue:3,item:'clay'},{type:'item_item',itemA:'clay',itemB:'grinding_stone'}],
+   powers:['Unlocks liquid storage and medicine.','Containment precedes chemistry.']},
+
+  {id:'bone_tool',
+   names:['Bone Tool','Carved Bone','Bone Awl','Worked Bone','Bone Scraper'],
+   emojis:['🦴','🪛'],
+   descs:['Animal bone carved and shaped into a pointed or edged tool.','Bone lasts longer than wood, bends less than stone, cuts more finely than either.'],
+   tags:['bone','tool','sharp','worked'],rare:false,
+   recipes:[{type:'item_item',itemA:'bone_shard',itemB:'sharp_stone'},{type:'item_item',itemA:'bone_shard',itemB:'grinding_stone'},{type:'card_item',cardSuit:'spade',minimumCardValue:3,item:'bone_shard'}],
+   powers:['Unlocks needle making and fine craft.','Precision tools from the bones of the world.']},
+
+  {id:'needle',
+   names:['Needle','Bone Needle','Sewing Awl','Hide Piercer','Thread Needle'],
+   emojis:['🪡','📍'],
+   descs:['A bone splinter worked to a fine point with a drilled eye holds thread.','The smallest tool that changes everything about what you can wear.'],
+   tags:['tool','bone','sewing','precise'],rare:false,
+   recipes:[{type:'item_item',itemA:'bone_tool',itemB:'cordage'},{type:'item_item',itemA:'bone_shard',itemB:'stone_knife'},{type:'item_item',itemA:'bone_tool',itemB:'sharp_stone'}],
+   powers:['Unlocks clothing and textile technologies.','The eye of the needle threads civilizations together.']},
+
+  {id:'stone_knife',
+   names:['Stone Knife','Flint Knife','Cutting Edge','Flint Blade','Hand Knife'],
+   emojis:['🔪','⚔️'],
+   descs:['A flint edge wrapped in organic cordage to form a handle.','The knife changes everything: what you eat, how you build, what you can make.'],
+   tags:['sharp','cutting','tool','weapon'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'club',minimumCardValue:3,item:'sharp_stone'},{type:'item_item',itemA:'sharp_stone',itemB:'cordage'}],
+   powers:['Unlocks hide working and advanced cutting.','Opens the path to more precise tool-making.']},
+
+  {id:'spear',
+   names:['Spear','Hunting Spear','Throwing Spear','War Spear','Javelin'],
+   emojis:['🏹','🔱'],
+   descs:['A sharp stone point lashed to a long, sturdy shaft becomes a spear.','The spear extends your reach and your will across distance.'],
+   tags:['sharp','shaft','weapon','hunting','tool'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'spade',minimumCardValue:5,item:'sharp_stone'},{type:'item_item',itemA:'sharp_stone',itemB:'wooden_shaft'},{type:'item_item',itemA:'stone_knife',itemB:'wooden_shaft'},{type:'item_item',itemA:'bone_shard',itemB:'wooden_shaft'}],
+   powers:['Unlocks hunting technologies.','Distance becomes a weapon.']},
+
+  {id:'shelter',
+   names:['Shelter','Lean-to','Crude Shelter','Wattle Hut','Branch Lodge'],
+   emojis:['🛖','⛺'],
+   descs:['Timber and cordage lashed together form a weatherproof structure.','A place to return to changes what you can plan.'],
+   tags:['structure','protection','construction','organic'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'spade',minimumCardValue:6,item:'cordage'},{type:'item_item',itemA:'cordage',itemB:'wooden_shaft'},{type:'card_item',cardSuit:'club',minimumCardValue:7,item:'cordage'}],
+   powers:['Unlocks long-term settlement technologies.','The first decision to stay.']},
+
+  {id:'mortar_pestle',
+   names:['Mortar & Pestle','Grinding Bowl','Stone Mortar','Pounding Bowl','Crushing Stone'],
+   emojis:['🥣','⚗️'],
+   descs:['Bowl and stone work together to reduce seeds, pigments, and herbs to powder.','What cannot be cut can be crushed; what cannot be crushed yields to time.'],
+   tags:['tool','grinding','processing','medicine'],rare:false,
+   recipes:[{type:'item_item',itemA:'grinding_stone',itemB:'clay_vessel'},{type:'item_item',itemA:'grinding_stone',itemB:'clay'},{type:'item_item',itemA:'sharp_stone',itemB:'grinding_stone'}],
+   powers:['Unlocks fine herbal medicine and pigment work.','Reduction is the beginning of refinement.']},
+
+  {id:'fishing_hook',
+   names:['Fishing Hook','Bone Hook','Thorn Hook','Stone Hook','Barbed Hook'],
+   emojis:['🪝','🎣'],
+   descs:['A curved bone carved to catch, not cut.','One small curve changes what the river yields.'],
+   tags:['tool','fishing','bone','hunting'],rare:false,
+   recipes:[{type:'item_item',itemA:'bone_shard',itemB:'cordage'},{type:'item_item',itemA:'bone_tool',itemB:'resin'},{type:'item_item',itemA:'sharp_stone',itemB:'cordage'}],
+   powers:['Unlocks fishing technologies.','The river offers much to those who ask the right way.']},
+
+  {id:'axe',
+   names:['Axe','Hand Axe','Stone Axe','Chopping Tool','Splitting Axe'],
+   emojis:['🪓','⚒️'],
+   descs:['A heavy, broad stone head hafted to a handle delivers force over an edge.','Mass and edge together exceed either alone.'],
+   tags:['tool','cutting','heavy','woodworking'],rare:false,
+   recipes:[{type:'item_item',itemA:'sharp_stone',itemB:'wooden_shaft'},{type:'item_item',itemA:'grinding_stone',itemB:'cordage'}],
+   powers:['Unlocks woodworking and heavy construction.','The axe shapes the world to your design.']},
+
+  {id:'trap',
+   names:['Trap','Snare Trap','Deadfall','Animal Snare','Pit Trap'],
+   emojis:['🪤','🕸️'],
+   descs:['Patience woven into cordage: the animal finds the trap before you find the animal.','The cunning of the hunter made permanent in fiber and tension.'],
+   tags:['hunting','tool','patience','mechanical'],rare:false,
+   recipes:[{type:'item_item',itemA:'cordage',itemB:'wooden_shaft'},{type:'item_item',itemA:'cordage',itemB:'stone_knife'}],
+   powers:['Enables passive hunting while pursuing other activities.','Time and cunning become tools themselves.']},
+
+  /* ── GROUP C: Advanced tools & early technologies ── */
+  {id:'bow',
+   names:['Bow','Primitive Bow','Hunting Bow','Short Bow','Recurve Bow'],
+   emojis:['🏹','🎯'],
+   descs:['Bent wood and cordage store and release energy across greater distance.','Distance and accuracy combined in something you can carry.'],
+   tags:['weapon','hunting','ranged','mechanical'],rare:false,
+   recipes:[{type:'item_item',itemA:'wooden_shaft',itemB:'cordage'},{type:'item_item',itemA:'spear',itemB:'cordage'}],
+   powers:['Long-range hunting. Unlocks net and snare techniques.','What you can reach without touching.']},
+
+  {id:'clothing',
+   names:['Clothing','Hide Garment','Woven Cloth','Animal Skin Wrap','Fiber Tunic'],
+   emojis:['👕','🧥'],
+   descs:['Needle and thread unite what the animal gave and what the plant offered.','Clothing is the first layer of civilization you wear on your body.'],
+   tags:['clothing','protection','organic','crafted'],rare:false,
+   recipes:[{type:'item_item',itemA:'hide',itemB:'needle'},{type:'item_item',itemA:'cordage',itemB:'needle'},{type:'item_item',itemA:'hide',itemB:'stone_knife'}],
+   powers:['Unlocks cold-weather survival and trade.','The body becomes a canvas for ingenuity.']},
+
+  {id:'pottery',
+   names:['Pottery','Fired Pottery','Ceramic Vessel','Kiln-fired Clay','Fired Earthenware'],
+   emojis:['🏺','🎭'],
+   descs:['Firing clay vessels creates durable, heat-safe pottery.','What the earth gave soft, fire makes permanent.'],
+   tags:['container','heat-resistant','storage','craft'],rare:false,
+   recipes:[{type:'item_item',itemA:'fire',itemB:'clay_vessel'},{type:'item_item',itemA:'clay',itemB:'fire'},{type:'item_item',itemA:'clay_vessel',itemB:'charcoal'}],
+   powers:['Unlocks cooking vessels and advanced chemistry.','Permanence in a world of impermanence.']},
+
+  {id:'kiln',
+   names:['Kiln','Fire Pit','Clay Oven','Firing Chamber','Pit Kiln'],
+   emojis:['🔆','🌡️'],
+   descs:['Enclosed fire reaches higher temperatures and holds them longer.','Containment transforms: what fire alone cannot do, the kiln achieves.'],
+   tags:['structure','heat','processing','advanced'],rare:false,
+   recipes:[{type:'item_item',itemA:'fire',itemB:'clay'},{type:'item_item',itemA:'charcoal',itemB:'clay'}],
+   powers:['Unlocks fired pottery and proto-metallurgy.','Higher heat unlocks the next layer of transformation.']},
+
+  {id:'hunting',
+   names:['Hunting','Big Game Hunting','Coordinated Hunt','Night Hunt','Tracking'],
+   emojis:['🎯','🦌'],
+   descs:['Armed with spear and torch, you can track and take large prey at night.','The hunt becomes a strategy: approach, patience, moment.'],
+   tags:['skill','food','weapon','survival','technique'],rare:false,
+   recipes:[{type:'item_item',itemA:'spear',itemB:'torch'},{type:'item_item',itemA:'bow',itemB:'torch'},{type:'item_item',itemA:'spear',itemB:'trap'}],
+   powers:['Unlocks animal materials and advanced food sources.','The coordinated hunt feeds more than one.']},
+
+  {id:'fishing',
+   names:['Fishing','River Fishing','Angling','Deep Water Fishing','Net Fishing'],
+   emojis:['🎣','🐟'],
+   descs:['Hook, line, and patience unlock what the river offers freely.','Water holds a different kind of abundance than the land.'],
+   tags:['skill','food','water','technique'],rare:false,
+   recipes:[{type:'item_item',itemA:'fishing_hook',itemB:'cordage'},{type:'item_item',itemA:'fishing_hook',itemB:'wooden_shaft'}],
+   powers:['Unlocks aquatic exploration and fish preservation.','River and ocean add their abundance to yours.']},
+
+  {id:'food_preservation',
+   names:['Food Preservation','Stored Food','Dried Provisions','Smoked Reserve','Salted Stock'],
+   emojis:['🥫','🍱'],
+   descs:['Storing prepared food in sealed containers keeps it edible on long journeys.','Surplus is the foundation of civilization.'],
+   tags:['food','storage','technique','survival'],rare:false,
+   recipes:[{type:'item_item',itemA:'cooked_food',itemB:'basket'},{type:'item_item',itemA:'cooked_food',itemB:'clay_vessel'},{type:'item_item',itemA:'cooked_food',itemB:'pottery'}],
+   powers:['Unlocks settlement and trade technologies.','What spoils quickly can be made to last.']},
+
+  {id:'medicine',
+   names:['Medicine','Herbal Medicine','Healing Preparation','Curative Extract','Remedy'],
+   emojis:['💊','🌡️'],
+   descs:['Precise herb preparations stored in vessels become potent remedies.','Knowledge of what heals grows through trial, error, and memory.'],
+   tags:['healing','herb','advanced','knowledge'],rare:false,
+   recipes:[{type:'item_item',itemA:'poultice',itemB:'clay_vessel'},{type:'item_item',itemA:'dried_herbs',itemB:'mortar_pestle'},{type:'item_item',itemA:'poultice',itemB:'fire'},{type:'item_item',itemA:'poultice',itemB:'pottery'}],
+   powers:['Unlocks advanced healing and alchemy.','The plant pharmacy grows with knowledge.']},
+
+  {id:'weaving',
+   names:['Weaving','Textile Work','Loom Weaving','Fiber Craft','Thread Work'],
+   emojis:['🧵','🪡'],
+   descs:['The over-under pattern transforms loose fibers into a strong, flat surface.','Weaving is mathematics made tangible: every thread a variable.'],
+   tags:['craft','textile','fiber','skill'],rare:false,
+   recipes:[{type:'item_item',itemA:'needle',itemB:'cordage'},{type:'item_item',itemA:'needle',itemB:'hide'}],
+   powers:['Unlocks advanced clothing and trade goods.','Pattern making applied to material opens infinite possibility.']},
+
+  {id:'fermentation',
+   names:['Fermentation','Brewing','Natural Ferment','Wild Yeast Craft','Controlled Rot'],
+   emojis:['🍺','🫗'],
+   descs:['Sealed organic material undergoes transformation by invisible agents.','The discovery that certain spoilage is not decay but transformation.'],
+   tags:['chemistry','food','transformation','organic'],rare:false,
+   recipes:[{type:'item_item',itemA:'cooked_food',itemB:'clay_vessel'},{type:'item_item',itemA:'basket',itemB:'dried_herbs'},{type:'card_item',cardSuit:'heart',minimumCardValue:5,item:'pottery'}],
+   powers:['Unlocks alcohol and advanced chemical preparation.','Transformation through patient waiting.']},
+
+  {id:'agriculture',
+   names:['Agriculture','Farming','Crop Cultivation','Seed Planting','Field Work'],
+   emojis:['🌾','🌱'],
+   descs:['The radical idea: do not follow the plants, make the plants follow you.','Agriculture is the wager that next season will come and can be prepared for.'],
+   tags:['skill','food','settlement','technique'],rare:false,
+   recipes:[{type:'item_item',itemA:'shelter',itemB:'cooked_food'},{type:'item_item',itemA:'bone_tool',itemB:'cooked_food'},{type:'item_item',itemA:'axe',itemB:'shelter'}],
+   powers:['Unlocks settled civilization and food surplus.','The seasons become predictable tools.']},
+
+  /* ── GROUP D: Advanced Technologies ── */
+  {id:'furnace',
+   names:['Furnace','Smelting Pit','Primitive Forge','Stone Furnace','Ore Furnace'],
+   emojis:['🔆','🌋'],
+   descs:['Stone slabs arranged around a fire create an enclosed heat chamber.','The furnace is the first machine: fire made deliberate and extreme.'],
+   tags:['heat','structure','smelting','advanced'],rare:false,
+   recipes:[{type:'item_item',itemA:'fire',itemB:'grinding_stone'},{type:'item_item',itemA:'kiln',itemB:'charcoal'},{type:'item_item',itemA:'pottery',itemB:'charcoal'}],
+   powers:['Unlocks metallurgy and advanced material working.','Higher heat than any previous process.']},
+
+  {id:'distillation',
+   names:['Distillation','Vapor Extraction','Essence Extraction','Purification','Alchemical Distillation'],
+   emojis:['⚗️','🌫️'],
+   descs:['Heating liquids through sealed pottery concentrates and purifies their essence.','Vapor rises, condenses, and falls purer than it began.'],
+   tags:['liquid','purification','advanced','chemistry'],rare:false,
+   recipes:[{type:'item_item',itemA:'pottery',itemB:'fire'},{type:'item_item',itemA:'fermentation',itemB:'fire'},{type:'item_item',itemA:'pottery',itemB:'charcoal'}],
+   powers:['Unlocks alchemy and advanced chemistry.','Purification as a technology.']},
+
+  {id:'metallurgy',
+   names:['Metallurgy','Ore Working','Smelting','Metal Craft','Raw Metal Working'],
+   emojis:['⚙️','⛏️'],
+   descs:['High-quality ore smelted in the furnace yields workable metal.','Stone gives way to metal as the dominant tool material.'],
+   tags:['metal','heat','advanced-material','craft'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'diamond',minimumCardValue:7,item:'furnace'},{type:'item_item',itemA:'furnace',itemB:'charcoal'},{type:'item_item',itemA:'furnace',itemB:'grinding_stone'}],
+   powers:['Unlocks advanced tools, weapons, and Prima Materia.','Metal is the language the furnace speaks.']},
+
+  {id:'glass',
+   names:['Glass','Fused Silica','Molten Glass','Mineral Glass','Sand Glass'],
+   emojis:['🔮','💎'],
+   descs:['Mineral sands fused at extreme heat become a transparent solid.','The furnace turns earth into something water cannot match for clarity.'],
+   tags:['material','transparent','advanced','mineral'],rare:false,
+   recipes:[{type:'card_item',cardSuit:'diamond',minimumCardValue:6,item:'furnace'},{type:'item_item',itemA:'metallurgy',itemB:'clay'}],
+   powers:['Unlocks optics and advanced vessel making.','Clarity as a technology.']},
+
+  {id:'writing',
+   names:['Writing','Script','Symbol System','Inscription','Pictograms'],
+   emojis:['✍️','📜'],
+   descs:['Marks that mean the same thing to different people, now and later.','Memory escapes the body and lives in clay and pigment.'],
+   tags:['knowledge','symbol','communication','advanced'],rare:false,
+   recipes:[{type:'item_item',itemA:'pigment',itemB:'clay_vessel'},{type:'item_item',itemA:'pigment',itemB:'hide'},{type:'item_item',itemA:'charcoal',itemB:'pottery'}],
+   powers:['Unlocks navigation and advanced knowledge storage.','Information outlives its author.']},
+
+  {id:'navigation',
+   names:['Navigation','Wayfinding','Star Reading','Map Making','Dead Reckoning'],
+   emojis:['🧭','⭐'],
+   descs:['Stars, landmarks, and memory combine into a system for finding your way anywhere.','The sky becomes a map when you learn how to read it.'],
+   tags:['knowledge','travel','stars','skill'],rare:false,
+   recipes:[{type:'item_item',itemA:'shelter',itemB:'writing'},{type:'item_item',itemA:'pottery',itemB:'writing'}],
+   powers:['Unlocks trade routes and distant exploration.','The world grows smaller when you can track it.']},
+
+  /* ── GROUP E: Proto-Alchemy ── */
+  {id:'advanced_medicine',
+   names:['Advanced Medicine','Pharmacology','Refined Remedy','Complex Tincture','Healing Science'],
+   emojis:['💊','🧬'],
+   descs:['Precision preparations refined by distillation exceed any crude remedy.','The body\'s chemistry becomes a system you can study and address.'],
+   tags:['healing','advanced','chemistry','knowledge'],rare:false,
+   recipes:[{type:'item_item',itemA:'medicine',itemB:'distillation'},{type:'item_item',itemA:'mortar_pestle',itemB:'distillation'},{type:'item_item',itemA:'medicine',itemB:'pottery'}],
+   powers:['Unlocks alchemy and the path to Prima Materia.','The body as a system to be understood.']},
+
+  {id:'essence',
+   names:['Essence','Pure Extract','Vital Essence','Concentrated Spirit','Primal Extract'],
+   emojis:['💫','🌟'],
+   descs:['Repeated distillation isolates the vital principle of a material.','What remains after everything inessential is removed.'],
+   tags:['purification','advanced','alchemy','pure'],rare:false,
+   recipes:[{type:'item_item',itemA:'distillation',itemB:'dried_herbs'},{type:'item_item',itemA:'advanced_medicine',itemB:'distillation'},{type:'item_item',itemA:'distillation',itemB:'resin'}],
+   powers:['Unlocks Prima Materia and final alchemy.','The pure thing behind all impure things.']},
+
+  {id:'philosophers_mercury',
+   names:['Philosopher\'s Mercury','Quicksilver Essence','Liquid Metal Spirit','Mercury Principle','First Mercury'],
+   emojis:['💧','⚡'],
+   descs:['The volatile, fluid principle extracted from metals through alchemical process.','Mercury: the spirit of transformation, the principle that flows and changes.'],
+   tags:['alchemy','metal','principle','advanced'],rare:false,
+   recipes:[{type:'item_item',itemA:'distillation',itemB:'metallurgy'},{type:'item_item',itemA:'metallurgy',itemB:'essence'},{type:'card_item',cardSuit:'diamond',minimumCardValue:8,item:'distillation'}],
+   powers:['One of the three primes. Required for Prima Materia in some worlds.','Volatile, transforming, essential.']},
+
+  {id:'philosophers_sulfur',
+   names:['Philosopher\'s Sulfur','Combustion Principle','Fire Spirit','Sulfur Essence','Primal Fire Essence'],
+   emojis:['🔥','🌋'],
+   descs:['The fixed, fiery principle that gives matter its specific identity.','The fire inside the material: not literal flame but the principle of combustion.'],
+   tags:['alchemy','fire','principle','advanced'],rare:false,
+   recipes:[{type:'item_item',itemA:'furnace',itemB:'medicine'},{type:'item_item',itemA:'distillation',itemB:'fire'},{type:'item_item',itemA:'essence',itemB:'fire'}],
+   powers:['One of the three primes. Required for Prima Materia in some worlds.','The fixed soul of every combustible thing.']},
+
+  {id:'philosophers_salt',
+   names:['Philosopher\'s Salt','Base Principle','Earth Salt','Prime Salt','Mineral Salt'],
+   emojis:['🧂','⬜'],
+   descs:['The fixed, stable principle representing the body of matter.','What remains when everything else has been distilled away.'],
+   tags:['alchemy','earth','principle','stable'],rare:false,
+   recipes:[{type:'item_item',itemA:'grinding_stone',itemB:'metallurgy'},{type:'item_item',itemA:'pottery',itemB:'charcoal'},{type:'card_item',cardSuit:'diamond',minimumCardValue:7,item:'distillation'}],
+   powers:['One of the three primes. Connects the material to the spiritual.','The stable body beneath all change.']},
+
+  {id:'elixir',
+   names:['Elixir','Life Elixir','Vital Fluid','Alchemical Elixir','Philosopher\'s Elixir'],
+   emojis:['🍶','✨'],
+   descs:['The alchemical preparation that perfects what it touches.','What the physician always sought but only the alchemist approaches.'],
+   tags:['alchemy','medicine','purification','advanced'],rare:false,
+   recipes:[{type:'item_item',itemA:'essence',itemB:'advanced_medicine'},{type:'item_item',itemA:'distillation',itemB:'advanced_medicine'},{type:'item_item',itemA:'essence',itemB:'medicine'}],
+   powers:['Unlocks Prima Materia and the final transformation.','Life itself concentrated in a vessel.']},
+
+  {id:'quintessence',
+   names:['Quintessence','Fifth Element','Aether','Pure Being','Universal Substrate'],
+   emojis:['⭐','🌟'],
+   descs:['Beyond earth, water, fire, and air lies a fifth element that underlies all.','The substrate in which all change occurs but which itself never changes.'],
+   tags:['alchemy','element','pure','theoretical'],rare:false,
+   recipes:[{type:'item_item',itemA:'distillation',itemB:'essence'},{type:'item_item',itemA:'elixir',itemB:'distillation'}],
+   powers:['Final step before Prima Materia in some paths.','The element that makes the other four possible.']},
+
+  /* ── GROUP F: Alchemy ── */
+  {id:'alchemy',
+   names:['Alchemy','Transmutation Art','Alchemical Science','Great Work','Hermetic Art'],
+   emojis:['🧪','⚗️'],
+   descs:['The fusion of material science and deep biological knowledge transcends craft.','Alchemy is not magic. It is chemistry before chemistry had a name.'],
+   tags:['transformation','advanced','chemistry','knowledge'],rare:false,
+   recipes:[{type:'item_item',itemA:'distillation',itemB:'medicine'},{type:'item_item',itemA:'philosophers_mercury',itemB:'philosophers_sulfur'},{type:'item_item',itemA:'essence',itemB:'metallurgy'},{type:'item_item',itemA:'distillation',itemB:'advanced_medicine'}],
+   powers:['Unlocks Prima Materia — the final discovery.','Transformation understood becomes transformation controlled.']},
+
+  {id:'transmutation',
+   names:['Transmutation','Elemental Change','Material Transformation','Base Conversion','True Transmutation'],
+   emojis:['🔄','🌀'],
+   descs:['What was base is now noble. What was lead is now gold.','Transmutation changes not just the surface but the nature of the material.'],
+   tags:['alchemy','transformation','advanced','change'],rare:false,
+   recipes:[{type:'item_item',itemA:'alchemy',itemB:'metallurgy'},{type:'item_item',itemA:'alchemy',itemB:'furnace'},{type:'item_item',itemA:'philosophers_mercury',itemB:'philosophers_salt'}],
+   powers:['Final step before Prima Materia in some paths.','Nothing is fixed. Everything changes.']},
+
+  /* ── Prima Materia — always the win condition ── */
+  {id:'prima_materia',
+   names:['Prima Materia'],
+   emojis:['✨'],
+   descs:['The primordial substance from which all matter springs forth. The world bends to your knowledge.','You have returned to the beginning. All things emerge from and return to this.'],
+   tags:['ultimate','transformation','pure','essence'],rare:false,
+   recipes:[
+     {type:'item_item',itemA:'alchemy',itemB:'metallurgy'},
+     {type:'item_item',itemA:'alchemy',itemB:'essence'},
+     {type:'item_item',itemA:'transmutation',itemB:'quintessence'},
+     {type:'item_item',itemA:'philosophers_mercury',itemB:'philosophers_sulfur'},
+     {type:'item_item',itemA:'elixir',itemB:'metallurgy'},
+     {type:'item_item',itemA:'alchemy',itemB:'transmutation'},
+   ],
+   powers:['You have mastered the ancient arts. There is nothing left to discover.','The alpha and omega of matter itself.']},
+
+  /* ── RARE DISCOVERIES ── */
+  {id:'incense',rare:true,
+   names:['Incense','Sacred Smoke','Aromatic Smoke','Ritual Incense','Temple Smoke'],
+   emojis:['🌫️','🪷'],
+   descs:['Certain herbs and resins release fragrant smoke when burned.','The smoke carries prayers and thoughts upward.'],
+   tags:['ritual','smoke','herb','rare'],
+   recipes:[{type:'item_item',itemA:'resin',itemB:'fire'},{type:'item_item',itemA:'dried_herbs',itemB:'fire'}],
+   powers:['Rituals become more effective. Earn one bonus hint.','The sacred and the chemical are the same smoke.']},
+
+  {id:'dye',rare:true,
+   names:['Natural Dye','Plant Dye','Mineral Dye','Pigment Dye','Indigo Dye'],
+   emojis:['🎨','🌈'],
+   descs:['Certain minerals and plants yield colors that permanently mark cloth.','Identity in color: what you wear announces what you are.'],
+   tags:['color','cloth','art','rare'],
+   recipes:[{type:'item_item',itemA:'pigment',itemB:'cordage'},{type:'item_item',itemA:'pigment',itemB:'pottery'},{type:'item_item',itemA:'pigment',itemB:'clay_vessel'}],
+   powers:['Unlocks advanced textile craft and trade value.','Color is identity made visible.']},
+
+  {id:'bone_flute',rare:true,
+   names:['Bone Flute','Spirit Whistle','Hollow Bone Pipe','Ritual Flute','Wind Instrument'],
+   emojis:['🎵','🎶'],
+   descs:['A hollow bone with precisely placed holes produces controllable tone.','The first song came from the same bone that held the first tool.'],
+   tags:['music','art','bone','rare'],
+   recipes:[{type:'item_item',itemA:'bone_shard',itemB:'sharp_stone'},{type:'item_item',itemA:'bone_tool',itemB:'cordage'}],
+   powers:['Music changes how the group cooperates. +1 hint per discovery.','Tone from bone: the oldest instrument ever found.']},
+
+  {id:'alcohol',rare:true,
+   names:['Alcohol','Fermented Drink','Sacred Brew','Mead','Ritual Spirits'],
+   emojis:['🍺','🥃'],
+   descs:['Fermented grain or fruit yields a liquid that changes the mind.','The discovery that stored food can become something altogether different.'],
+   tags:['chemistry','food','ritual','rare'],
+   recipes:[{type:'item_item',itemA:'fermentation',itemB:'clay_vessel'},{type:'item_item',itemA:'fermentation',itemB:'pottery'}],
+   powers:['Ritual bonding increases group effectiveness.','The ferment that changes both the drink and the drinker.']},
+
+  {id:'perfume',rare:true,
+   names:['Perfume','Aromatic Essence','Scented Oil','Ritual Scent','Flower Water'],
+   emojis:['🌸','🌺'],
+   descs:['Resin and herb combined through distillation capture scent in oil.','Fragrance is the sense closest to memory.'],
+   tags:['scent','ritual','luxury','rare'],
+   recipes:[{type:'item_item',itemA:'resin',itemB:'dried_herbs'},{type:'item_item',itemA:'distillation',itemB:'resin'}],
+   powers:['Trade value increases substantially.','Luxury precedes currency.']},
+
+  {id:'soap',rare:true,
+   names:['Soap','Cleansing Agent','Ash Lye','Fat Soap','Mineral Soap'],
+   emojis:['🧼','🫧'],
+   descs:['Wood ash mixed with animal fat produces a cleansing agent.','The first chemical reaction discovered by accident and preserved by utility.'],
+   tags:['cleaning','chemistry','health','rare'],
+   recipes:[{type:'item_item',itemA:'charcoal',itemB:'hide'},{type:'item_item',itemA:'resin',itemB:'fire'}],
+   powers:['Disease spreads less readily. Medicine becomes more effective.','Cleanliness as technology.']},
+
+  {id:'mirror',rare:true,
+   names:['Mirror','Polished Surface','Metal Mirror','Reflecting Pool','Scrying Surface'],
+   emojis:['🪞','💎'],
+   descs:['A metal surface polished to reflection shows you your own face for the first time.','Reflection is the first self-knowledge the material world offers.'],
+   tags:['metal','ritual','reflection','rare'],
+   recipes:[{type:'item_item',itemA:'metallurgy',itemB:'grinding_stone'},{type:'item_item',itemA:'glass',itemB:'pigment'}],
+   powers:['Unlocks self-knowledge and advanced optics.','The face you see is the face the world sees.']},
+
+  {id:'obsidian_glass',rare:true,
+   names:['Obsidian Glass','Volcanic Glass','Black Glass','Natural Glass','Fire Glass'],
+   emojis:['🖤','💎'],
+   descs:['Volcanic rock fused by ancient fires has edges sharper than any knapped flint.','The sharpest cutting edge nature produces before metallurgy.'],
+   tags:['glass','cutting','volcanic','rare'],
+   recipes:[{type:'item_item',itemA:'furnace',itemB:'sharp_stone'},{type:'card_item',cardSuit:'diamond',minimumCardValue:8,item:'fire'}],
+   powers:['Provides cutting tools sharper than any stone knife.','Nature\'s sharpest edge, unlocked by extreme heat.']},
+
+  {id:'ceremonial_mask',rare:true,
+   names:['Ceremonial Mask','Ritual Mask','Spirit Mask','Ancestor Face','Sacred Mask'],
+   emojis:['🎭','😶'],
+   descs:['Painted clay or carved wood shaped into a face for ritual use.','The mask allows the wearer to become something other than what they are.'],
+   tags:['ritual','art','clay','rare'],
+   recipes:[{type:'item_item',itemA:'clay',itemB:'pigment'},{type:'item_item',itemA:'pottery',itemB:'pigment'}],
+   powers:['Ritual effectiveness increases. Group morale improves.','The face behind the face.']},
+
+  {id:'ink',rare:true,
+   names:['Ink','Writing Pigment','Charcoal Ink','Plant Ink','Mineral Ink'],
+   emojis:['🖋️','⬛'],
+   descs:['Charcoal or pigment mixed with resin creates a fluid that marks surfaces permanently.','What the hand writes, the ink preserves.'],
+   tags:['writing','pigment','knowledge','rare'],
+   recipes:[{type:'item_item',itemA:'pigment',itemB:'resin'},{type:'item_item',itemA:'charcoal',itemB:'clay_vessel'}],
+   powers:['Enables records, maps, and the transfer of knowledge.','Memory that survives the rememberer.']},
+
+  {id:'net',rare:true,
+   names:['Fishing Net','Net','Woven Net','Drag Net','Catch Net'],
+   emojis:['🕸️','🎣'],
+   descs:['Cordage woven into a net harvests what individual hooks cannot reach.','Cooperation made material: the net does what no single line can do.'],
+   tags:['fishing','tool','cooperative','rare'],
+   recipes:[{type:'item_item',itemA:'cordage',itemB:'fishing_hook'},{type:'item_item',itemA:'cordage',itemB:'basket'}],
+   powers:['Doubles fishing yield. Unlocks deep water fishing.','The net multiplies what the single hook catches.']},
 ];
 
-/* ══════════════════════════════════════════════
-   SEEDED RNG  (LCG)
-══════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════
+   SEEDED RNG + UTILITIES
+════════════════════════════════════════════════════ */
 function seededRng(seed) {
-  let s = (seed >>> 0) || 1;
-  return function () {
-    s = (Math.imul(1664525, s) + 1013904223) >>> 0;
-    return s / 0x100000000;
-  };
+  let s=(seed>>>0)||1;
+  return ()=>{ s=(Math.imul(1664525,s)+1013904223)>>>0; return s/0x100000000; };
 }
-
-/* ══════════════════════════════════════════════
-   WORLD GENERATION
-   Slight threshold variance per seed (±2 total, ±1 card value)
-══════════════════════════════════════════════ */
-let worldRecipes = [];
-
-function generateWorld(seed) {
-  const rng = seededRng(seed);
-  return BASE_RECIPES.map(r => {
-    const copy = JSON.parse(JSON.stringify(r));
-    const roll = rng();                            // 0..1
-    const dv   = Math.floor(roll * 5) - 2;        // -2..+2
-    if (copy.recipe.type === 'card_card') {
-      copy.recipe.minimumTotal = Math.max(4, copy.recipe.minimumTotal + dv);
-    } else if (copy.recipe.type === 'card_item') {
-      const delta = dv >= 2 ? 1 : dv <= -2 ? -1 : 0;
-      copy.recipe.minimumCardValue = Math.max(2, Math.min(9, copy.recipe.minimumCardValue + delta));
-    }
-    return copy;
-  });
+function shuffle(arr,rng) {
+  const a=[...arr];
+  for (let i=a.length-1;i>0;i--) { const j=Math.floor(rng()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
 }
-
-/* ══════════════════════════════════════════════
-   GAME STATE
-══════════════════════════════════════════════ */
-let G = { seed: 12345, discovered: [], log: [], experimentN: 0 };
-
-/* ══════════════════════════════════════════════
-   PERSISTENCE
-══════════════════════════════════════════════ */
-const LS_KEY = 'pcraft_v1';
-
-function saveGame() {
-  try { localStorage.setItem(LS_KEY, JSON.stringify(G)); } catch {}
-}
-function loadGame() {
-  try {
-    const d = JSON.parse(localStorage.getItem(LS_KEY));
-    if (d && d.seed) {
-      G = d;
-      if (!Array.isArray(G.discovered))  G.discovered  = [];
-      if (!Array.isArray(G.log))         G.log          = [];
-      if (!G.experimentN)                G.experimentN  = 0;
-      return true;
-    }
-  } catch {}
-  return false;
-}
-
-/* ══════════════════════════════════════════════
-   RECIPE ENGINE
-══════════════════════════════════════════════ */
-function getPrereqIds(recipe) {
-  const r = recipe.recipe;
-  if (r.type === 'card_card') {
-    return r.suitA === r.suitB ? ['suit_' + r.suitA] : ['suit_' + r.suitA, 'suit_' + r.suitB];
-  }
-  if (r.type === 'card_item')  return ['suit_' + r.cardSuit, r.item];
-  if (r.type === 'item_item')  return [r.itemA, r.itemB];
+function getItemDeps(recipe) {
+  if (recipe.type==='card_card') return [];
+  if (recipe.type==='card_item') return [recipe.item];
+  if (recipe.type==='item_item') return [recipe.itemA,recipe.itemB];
   return [];
 }
+function recipeKey(r) {
+  if (r.type==='card_card') return `cc:${[r.suitA,r.suitB].sort()}`;
+  if (r.type==='card_item') return `ci:${r.cardSuit}:${r.item}`;
+  if (r.type==='item_item') return `ii:${[r.itemA,r.itemB].sort()}`;
+  return '';
+}
 
-function matchesRecipe(a, b, recipe) {
-  const r = recipe.recipe;
-  if (r.type === 'card_card') {
-    if (a.type !== 'card' || b.type !== 'card') return false;
-    const suits  = [a.suit, b.suit].sort().join(',');
-    const rSuits = [r.suitA, r.suitB].sort().join(',');
-    if (suits !== rSuits) return false;
-    return (a.value + b.value) >= r.minimumTotal;
+/* ════════════════════════════════════════════════════
+   WORLD GENERATION
+   1. Build guaranteed prima_materia path (recursive)
+   2. Add optional branches
+   3. Add rare discoveries
+   4. Assign names/emojis/descs/thresholds
+   5. Validate — retry up to 12× if unreachable
+════════════════════════════════════════════════════ */
+let worldRecipes=[];
+
+function generateWorld(seed) {
+  for (let attempt=0;attempt<12;attempt++) {
+    const rng=seededRng(seed+attempt*999983);
+    const world=tryGenerate(rng);
+    if (world&&validateWorld(world)) return world;
   }
-  if (r.type === 'card_item') {
-    let card, item;
-    if      (a.type === 'card' && b.type === 'item') { card = a; item = b; }
-    else if (b.type === 'card' && a.type === 'item') { card = b; item = a; }
+  console.warn('All generation attempts failed for seed',seed);
+  return tryGenerate(seededRng(seed))||[];
+}
+
+function tryGenerate(rng) {
+  const LIB={};
+  TEMPLATE_LIBRARY.forEach(t=>{ LIB[t.id]=t; });
+
+  const inWorld=new Set(), chosen={}, usedKeys=new Set();
+
+  function addTemplate(id,depth) {
+    if (inWorld.has(id)) return true;
+    if (depth>20||!LIB[id]) return false;
+    const recipes=shuffle(LIB[id].recipes,rng);
+    for (const recipe of recipes) {
+      const key=recipeKey(recipe);
+      if (usedKeys.has(key)) continue;
+      const deps=getItemDeps(recipe);
+      inWorld.add(id); chosen[id]=recipe; usedKeys.add(key);
+      let ok=true;
+      for (const dep of deps) { if (!inWorld.has(dep)&&!addTemplate(dep,depth+1)){ok=false;break;} }
+      if (ok) return true;
+      inWorld.delete(id); delete chosen[id]; usedKeys.delete(key);
+    }
+    return false;
+  }
+
+  if (!addTemplate('prima_materia',0)) return null;
+  const requiredIds=new Set(inWorld);
+
+  // Optional branches
+  const optionals=shuffle(TEMPLATE_LIBRARY.filter(t=>!inWorld.has(t.id)&&!t.rare),rng);
+  const targetSize=26+Math.floor(rng()*9);
+  for (const tmpl of optionals) {
+    if (inWorld.size>=targetSize) break;
+    for (const recipe of tmpl.recipes) {
+      const key=recipeKey(recipe);
+      if (usedKeys.has(key)) continue;
+      if (!getItemDeps(recipe).every(d=>inWorld.has(d))) continue;
+      inWorld.add(tmpl.id); chosen[tmpl.id]=recipe; usedKeys.add(key); break;
+    }
+  }
+
+  // Rare discoveries (1-3)
+  const rares=shuffle(TEMPLATE_LIBRARY.filter(t=>t.rare),rng);
+  let rareAdded=0, rareTarget=1+Math.floor(rng()*3);
+  for (const tmpl of rares) {
+    if (rareAdded>=rareTarget) break;
+    for (const recipe of tmpl.recipes) {
+      const key=recipeKey(recipe);
+      if (usedKeys.has(key)) continue;
+      if (!getItemDeps(recipe).every(d=>inWorld.has(d))) continue;
+      inWorld.add(tmpl.id); chosen[tmpl.id]=recipe; usedKeys.add(key); rareAdded++; break;
+    }
+  }
+
+  // Compute topological tiers
+  const tierMemo={};
+  function tier(id) {
+    if (tierMemo[id]!==undefined) return tierMemo[id];
+    if (!chosen[id]) return tierMemo[id]=0;
+    const deps=getItemDeps(chosen[id]);
+    return tierMemo[id]=deps.length===0?1:Math.max(...deps.map(tier))+1;
+  }
+
+  // Assign display properties + threshold variance
+  const result=[...inWorld].map(id=>{
+    const tmpl=LIB[id], recipe={...chosen[id]};
+    if (recipe.minimumTotal!==undefined)     recipe.minimumTotal=Math.max(4,recipe.minimumTotal+Math.floor(rng()*5)-2);
+    if (recipe.minimumCardValue!==undefined) recipe.minimumCardValue=Math.max(2,Math.min(9,recipe.minimumCardValue+Math.floor(rng()*3)-1));
+    return {
+      id,
+      name:        tmpl.names[Math.floor(rng()*tmpl.names.length)],
+      emoji:       tmpl.emojis[Math.floor(rng()*tmpl.emojis.length)],
+      tier:        tier(id),
+      description: tmpl.descs[Math.floor(rng()*tmpl.descs.length)],
+      power:       tmpl.powers[Math.floor(rng()*tmpl.powers.length)],
+      tags:        tmpl.tags,
+      recipe,
+      isRequired:  requiredIds.has(id),
+      isRare:      tmpl.rare,
+    };
+  });
+
+  // Philosopher's Stone bonus: exact catalyst card, seeded per world
+  const PS_SUITS=['club','heart','spade','diamond'];
+  const psSuit=PS_SUITS[Math.floor(rng()*4)], psValue=2+Math.floor(rng()*9);
+  const pmTier=(result.find(r=>r.id==='prima_materia')?.tier||8);
+  result.push({
+    id:'philosophers_stone',
+    name:"Philosopher's Stone",
+    emoji:'💎',
+    tier:pmTier+1,
+    description:'From Prima Materia and the hidden catalyst, the Stone emerges. The final secret of the universe, held in your hands.',
+    power:'The Great Work is complete. All matter is yours to command.',
+    tags:['ultimate','alchemy','legendary','stone'],
+    recipe:{type:'exact_card_item',cardSuit:psSuit,exactCardValue:psValue,item:'prima_materia'},
+    isRequired:true,
+    isRare:false,
+  });
+  return result;
+}
+
+/* ════════════════════════════════════════════════════
+   VALIDATION — BFS from raw cards
+════════════════════════════════════════════════════ */
+function validateWorld(recipes) {
+  if (!recipes||!recipes.find(r=>r.id==='philosophers_stone')) return false;
+  const known=new Set(['suit_club','suit_heart','suit_spade','suit_diamond']);
+  let changed=true;
+  while (changed) {
+    changed=false;
+    for (const r of recipes) {
+      if (known.has(r.id)) continue;
+      if (getPrereqIds(r.recipe).every(p=>known.has(p))) { known.add(r.id); changed=true; }
+    }
+  }
+  return known.has('philosophers_stone');
+}
+
+/* ════════════════════════════════════════════════════
+   RECIPE ENGINE
+════════════════════════════════════════════════════ */
+function getPrereqIds(recipe) {
+  if (recipe.type==='card_card') return [...new Set(['suit_'+recipe.suitA,'suit_'+recipe.suitB])];
+  if (recipe.type==='card_item') return ['suit_'+recipe.cardSuit,recipe.item];
+  if (recipe.type==='item_item') return [recipe.itemA,recipe.itemB];
+  if (recipe.type==='exact_card_item') return ['suit_'+recipe.cardSuit,recipe.item];
+  return [];
+}
+function matchesRecipe(a,b,recipe) {
+  const r=recipe;
+  if (r.type==='card_card') {
+    if (a.type!=='card'||b.type!=='card') return false;
+    return [a.suit,b.suit].sort().join(',')===[ r.suitA,r.suitB].sort().join(',')&&(a.value+b.value)>=r.minimumTotal;
+  }
+  if (r.type==='card_item') {
+    let card,item;
+    if (a.type==='card'&&b.type==='item'){card=a;item=b;}
+    else if(b.type==='card'&&a.type==='item'){card=b;item=a;}
     else return false;
-    return card.suit === r.cardSuit && card.value >= r.minimumCardValue && item.id === r.item;
+    return card.suit===r.cardSuit&&card.value>=r.minimumCardValue&&item.id===r.item;
   }
-  if (r.type === 'item_item') {
-    if (a.type !== 'item' || b.type !== 'item') return false;
-    const ids  = [a.id, b.id].sort().join(',');
-    const rIds = [r.itemA, r.itemB].sort().join(',');
-    return ids === rIds;
+  if (r.type==='item_item') {
+    if (a.type!=='item'||b.type!=='item') return false;
+    return [a.id,b.id].sort().join(',') === [r.itemA,r.itemB].sort().join(',');
+  }
+  if (r.type==='exact_card_item') {
+    let card,item;
+    if (a.type==='card'&&b.type==='item'){card=a;item=b;}
+    else if(b.type==='card'&&a.type==='item'){card=b;item=a;}
+    else return false;
+    return card.suit===r.cardSuit&&card.value===r.exactCardValue&&item.id===r.item;
   }
   return false;
 }
-
-function evaluateExperiment(a, b) {
-  const matches = worldRecipes.filter(r => matchesRecipe(a, b, r));
+function evaluateExperiment(a,b) {
+  const matches=worldRecipes.filter(r=>matchesRecipe(a,b,r.recipe));
   if (!matches.length) return null;
-  // Prefer highest threshold recipe to resolve card_card overlaps (e.g. grinding_stone > sharp_stone)
-  matches.sort((x, y) => {
-    const tx = x.recipe.minimumTotal || x.recipe.minimumCardValue || 0;
-    const ty = y.recipe.minimumTotal || y.recipe.minimumCardValue || 0;
-    return ty - tx;
-  });
+  matches.sort((x,y)=>(y.recipe.minimumTotal||y.recipe.minimumCardValue||0)-(x.recipe.minimumTotal||x.recipe.minimumCardValue||0));
   return matches[0];
 }
 
-/* ══════════════════════════════════════════════
-   INPUT STATE
-══════════════════════════════════════════════ */
-let selA = null;
-let selB = null;
-let _pickerFor   = 'a';
-let _pickerTab   = 'cards';
-let _pendingDisc = null;
+/* ════════════════════════════════════════════════════
+   GAME STATE + PERSISTENCE
+════════════════════════════════════════════════════ */
+let G={seed:12345,discovered:[],log:[],experimentN:0};
+const LS_KEY='pcraft_v2';
+function saveGame(){try{localStorage.setItem(LS_KEY,JSON.stringify(G));}catch{}}
+function loadGame(){
+  try{
+    const d=JSON.parse(localStorage.getItem(LS_KEY));
+    if(d&&d.seed){G=d;if(!Array.isArray(G.discovered))G.discovered=[];if(!Array.isArray(G.log))G.log=[];if(!G.experimentN)G.experimentN=0;return true;}
+  }catch{}return false;
+}
 
-const SUIT_SYM  = { club:'♣', heart:'♥', spade:'♠', diamond:'♦' };
-const SUIT_NAME = { club:'Organic', heart:'Herbs', spade:'Material', diamond:'Minerals' };
-const SUIT_DESC = {
-  club:    '♣ Organic / Wood / Bone / Fiber',
-  heart:   '♥ Herbs / Medicine / Plants',
-  spade:   '♠ Stone / Wood / Clay / Structure',
-  diamond: '♦ Ore / Gems / Minerals',
-};
+/* ════════════════════════════════════════════════════
+   INPUT STATE
+════════════════════════════════════════════════════ */
+let selA=null,selB=null,_pickerFor='a',_pickerTab='cards',_pendingDisc=null;
+const SUIT_SYM={club:'♣',heart:'♥',spade:'♠',diamond:'♦'};
+const SUIT_NAME={club:'Organic',heart:'Herbs',spade:'Material',diamond:'Minerals'};
+const SUIT_DESC={club:'♣ Organic / Wood / Bone / Fiber',heart:'♥ Herbs / Medicine / Plants',spade:'♠ Stone / Wood / Clay / Structure',diamond:'♦ Ore / Gems / Minerals'};
 
 function shortLabel(sel) {
   if (!sel) return '—';
-  if (sel.type === 'card') return `${sel.value}${SUIT_SYM[sel.suit]}`;
-  const r = worldRecipes.find(x => x.id === sel.id);
-  return r ? `${r.emoji} ${r.name}` : sel.id;
+  if (sel.type==='card') return `${sel.value}${SUIT_SYM[sel.suit]}`;
+  const r=worldRecipes.find(x=>x.id===sel.id);
+  return r?`${r.emoji} ${r.name}`:sel.id;
 }
-
 function renderInputBtn(which) {
-  const sel = which === 'a' ? selA : selB;
-  const el  = document.getElementById('btn-' + which);
-  if (!sel) {
-    el.innerHTML = `<span style="color:var(--dim);font-size:.78rem">Select ${which.toUpperCase()}</span>`;
-    el.classList.remove('has-val');
-    return;
-  }
+  const sel=which==='a'?selA:selB, el=document.getElementById('btn-'+which);
+  if (!sel){el.innerHTML=`<span style="color:var(--dim);font-size:.78rem">Select ${which.toUpperCase()}</span>`;el.classList.remove('has-val');return;}
   el.classList.add('has-val');
-  if (sel.type === 'card') {
-    const sc = sel.suit;
-    el.innerHTML = `
-      <div class="ib-rank" style="color:var(--${sc}-c)">${sel.value}${SUIT_SYM[sc]}</div>
-      <div class="ib-sub"  style="color:var(--${sc}-c)">${SUIT_NAME[sc]}</div>`;
-  } else {
-    const r = worldRecipes.find(x => x.id === sel.id);
-    el.innerHTML = `<div class="ib-emoji">${r.emoji}</div><div class="ib-name">${r.name}</div>`;
-  }
+  if (sel.type==='card'){const sc=sel.suit;el.innerHTML=`<div class="ib-rank" style="color:var(--${sc}-c)">${sel.value}${SUIT_SYM[sc]}</div><div class="ib-sub" style="color:var(--${sc}-c)">${SUIT_NAME[sc]}</div>`;}
+  else{const r=worldRecipes.find(x=>x.id===sel.id);el.innerHTML=`<div class="ib-emoji">${r.emoji}</div><div class="ib-name">${r.name}</div>`;}
 }
+function updateExpBtn(){const ready=selA!==null&&selB!==null,btn=document.getElementById('exp-btn');btn.disabled=!ready;btn.classList.toggle('ready',ready);}
 
-function updateExpBtn() {
-  const ready = selA !== null && selB !== null;
-  const btn   = document.getElementById('exp-btn');
-  btn.disabled = !ready;
-  btn.classList.toggle('ready', ready);
-}
-
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    INPUT PICKER
-══════════════════════════════════════════════ */
-function openPicker(which) {
-  _pickerFor = which;
-  _pickerTab = 'cards';
-  document.getElementById('ptab-cards').classList.add('active');
-  document.getElementById('ptab-items').classList.remove('active');
-  renderPickerBody();
-  document.getElementById('picker-ov').classList.remove('hidden');
-}
-function closePicker() {
-  document.getElementById('picker-ov').classList.add('hidden');
-}
-function showPickTab(tab) {
-  _pickerTab = tab;
-  document.getElementById('ptab-cards').classList.toggle('active', tab === 'cards');
-  document.getElementById('ptab-items').classList.toggle('active', tab === 'items');
-  renderPickerBody();
-}
-
-function renderPickerBody() {
-  const body = document.getElementById('picker-body');
-  if (_pickerTab === 'cards') {
-    const suits = ['club','heart','spade','diamond'];
-    body.innerHTML = suits.map(s => `
-      <div class="suit-sec">
-        <div class="suit-hdr ${s}">${SUIT_DESC[s]}</div>
-        <div class="card-grid">
-          ${[2,3,4,5,6,7,8,9,10].map(v => `
-            <div class="card-tile ${s}" onclick="pickCard('${s}',${v})">
-              <div class="ct-rank">${v}</div>
-              <div class="ct-suit">${SUIT_SYM[s]}</div>
-            </div>`).join('')}
-        </div>
-      </div>`).join('');
-  } else {
-    if (!G.discovered.length) {
-      body.innerHTML = '<div class="no-items">No discoveries yet.<br>Experiment with raw cards first!</div>';
-      return;
-    }
-    const items = G.discovered.map(id => worldRecipes.find(r => r.id === id)).filter(Boolean);
-    body.innerHTML = `<div class="item-grid">${items.map(r => `
-      <div class="item-tile" onclick="pickItem('${r.id}')">
-        <span class="it-emoji">${r.emoji}</span>
-        <div class="it-name">${r.name}</div>
-      </div>`).join('')}</div>`;
+════════════════════════════════════════════════════ */
+function openPicker(which){_pickerFor=which;_pickerTab='cards';document.getElementById('ptab-cards').classList.add('active');document.getElementById('ptab-items').classList.remove('active');renderPickerBody();document.getElementById('picker-ov').classList.remove('hidden');}
+function closePicker(){document.getElementById('picker-ov').classList.add('hidden');}
+function showPickTab(tab){_pickerTab=tab;document.getElementById('ptab-cards').classList.toggle('active',tab==='cards');document.getElementById('ptab-items').classList.toggle('active',tab==='items');renderPickerBody();}
+function renderPickerBody(){
+  const body=document.getElementById('picker-body');
+  if (_pickerTab==='cards'){
+    body.innerHTML=['club','heart','spade','diamond'].map(s=>`<div class="suit-sec"><div class="suit-hdr ${s}">${SUIT_DESC[s]}</div><div class="card-grid">${[2,3,4,5,6,7,8,9,10].map(v=>`<div class="card-tile ${s}" onclick="pickCard('${s}',${v})"><div class="ct-rank">${v}</div><div class="ct-suit">${SUIT_SYM[s]}</div></div>`).join('')}</div></div>`).join('');
+  }else{
+    if (!G.discovered.length){body.innerHTML='<div class="no-items">No discoveries yet.<br>Experiment with raw cards first!</div>';return;}
+    const items=G.discovered.map(id=>worldRecipes.find(r=>r.id===id)).filter(Boolean);
+    body.innerHTML=`<div class="item-grid">${items.map(r=>`<div class="item-tile" onclick="pickItem('${r.id}')"><span class="it-emoji">${r.emoji}</span><div class="it-name">${r.name}</div></div>`).join('')}</div>`;
   }
 }
+function pickCard(suit,value){if(_pickerFor==='a')selA={type:'card',suit,value};else selB={type:'card',suit,value};renderInputBtn(_pickerFor);updateExpBtn();closePicker();}
+function pickItem(id){if(_pickerFor==='a')selA={type:'item',id};else selB={type:'item',id};renderInputBtn(_pickerFor);updateExpBtn();closePicker();}
 
-function pickCard(suit, value) {
-  if (_pickerFor === 'a') selA = { type:'card', suit, value };
-  else                    selB = { type:'card', suit, value };
-  renderInputBtn(_pickerFor);
-  updateExpBtn();
-  closePicker();
-}
-function pickItem(id) {
-  if (_pickerFor === 'a') selA = { type:'item', id };
-  else                    selB = { type:'item', id };
-  renderInputBtn(_pickerFor);
-  updateExpBtn();
-  closePicker();
-}
-
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    EXPERIMENT
-══════════════════════════════════════════════ */
-function runExperiment() {
-  if (!selA || !selB) return;
+════════════════════════════════════════════════════ */
+function runExperiment(){
+  if (!selA||!selB) return;
   G.experimentN++;
-
-  const result       = evaluateExperiment(selA, selB);
-  const alreadyKnown = result && G.discovered.includes(result.id);
-
-  G.log.push({ n: G.experimentN, a: shortLabel(selA), b: shortLabel(selB), resultId: result ? result.id : null, alreadyKnown });
-
-  if (result && !alreadyKnown) {
-    G.discovered.push(result.id);
-    _pendingDisc = result;
-    saveGame();
-    showDiscovery(result, selA, selB);
-    // tree rendered after overlay dismiss to catch animation
-  } else {
-    saveGame();
-    renderResultPanel(result, alreadyKnown);
-  }
+  const result=evaluateExperiment(selA,selB),alreadyKnown=result&&G.discovered.includes(result.id);
+  G.log.push({n:G.experimentN,a:shortLabel(selA),b:shortLabel(selB),resultId:result?result.id:null,alreadyKnown});
+  if (result&&!alreadyKnown){G.discovered.push(result.id);_pendingDisc=result;saveGame();showDiscovery(result,selA,selB);}
+  else{saveGame();renderResultPanel(result,alreadyKnown);}
   renderLogCount();
-  // refresh log if open
   if (!document.getElementById('log-list').classList.contains('hidden')) renderLogList();
 }
-
-function renderResultPanel(result, alreadyKnown) {
-  const p = document.getElementById('result-panel');
-  p.classList.remove('hidden');
-  if (!result) {
-    const fb = getFailFeedback(selA, selB);
-    const MAP = {
-      quality: { cls:'res-quality', icon:'🌡️', msg:'The combination is right, but the quality falls short. Try higher-value cards.' },
-      warm:    { cls:'res-warm',    icon:'✨',  msg:'Both materials hold undiscovered potential together...' },
-      hint:    { cls:'res-hint',    icon:'💭',  msg:'One of these materials holds undiscovered potential.' },
-      cold:    { cls:'res-cold',    icon:'🪨',  msg:'No reaction. These materials have no known affinity.' },
-    };
-    const { cls, icon, msg } = MAP[fb];
-    p.innerHTML = `<div class="res-none ${cls}">${icon} ${msg}</div>`;
-  } else if (alreadyKnown) {
-    p.innerHTML = `<div class="res-known">
-      <div class="res-known-lbl">Already Known</div>
-      <div class="res-known-name">${result.emoji} ${result.name}</div>
-    </div>`;
-  }
+function renderResultPanel(result,alreadyKnown){
+  const p=document.getElementById('result-panel');p.classList.remove('hidden');
+  if (!result){
+    const fb=getFailFeedback(selA,selB);
+    const MAP={quality:{cls:'res-quality',icon:'🌡️',msg:'The combination is right, but the quality falls short. Try higher-value cards.'},warm:{cls:'res-warm',icon:'✨',msg:'Both materials hold undiscovered potential together...'},hint:{cls:'res-hint',icon:'💭',msg:'One of these materials holds undiscovered potential.'},cold:{cls:'res-cold',icon:'🪨',msg:'No reaction. These materials have no known affinity.'}};
+    const {cls,icon,msg}=MAP[fb];
+    p.innerHTML=`<div class="res-none ${cls}">${icon} ${msg}</div>`;
+  }else if(alreadyKnown){p.innerHTML=`<div class="res-known"><div class="res-known-lbl">Already Known</div><div class="res-known-name">${result.emoji} ${result.name}</div></div>`;}
 }
 
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    HINT ENGINE
-══════════════════════════════════════════════ */
-function getFailFeedback(a, b) {
-  if (!a || !b) return 'cold';
-  const undiscovered = worldRecipes.filter(r => !G.discovered.includes(r.id));
-
-  // Quality: right suit/item combo but threshold not met
-  for (const recipe of undiscovered) {
-    const r = recipe.recipe;
-    if (r.type === 'card_card' && a.type === 'card' && b.type === 'card') {
-      const suits  = [a.suit, b.suit].sort().join(',');
-      const rSuits = [r.suitA, r.suitB].sort().join(',');
-      if (suits === rSuits && (a.value + b.value) < r.minimumTotal) return 'quality';
-    }
-    if (r.type === 'card_item') {
-      let card, item;
-      if (a.type === 'card' && b.type === 'item') { card = a; item = b; }
-      else if (b.type === 'card' && a.type === 'item') { card = b; item = a; }
-      if (card && item && card.suit === r.cardSuit && item.id === r.item && card.value < r.minimumCardValue)
-        return 'quality';
-    }
+════════════════════════════════════════════════════ */
+function getFailFeedback(a,b){
+  if (!a||!b) return 'cold';
+  const und=worldRecipes.filter(r=>!G.discovered.includes(r.id));
+  for (const wr of und){
+    const r=wr.recipe;
+    if (r.type==='card_card'&&a.type==='card'&&b.type==='card'){if([a.suit,b.suit].sort().join(',') === [r.suitA,r.suitB].sort().join(',')&&(a.value+b.value)<r.minimumTotal) return 'quality';}
+    if (r.type==='card_item'){let card,item;if(a.type==='card'&&b.type==='item'){card=a;item=b;}else if(b.type==='card'&&a.type==='item'){card=b;item=a;}if(card&&item&&card.suit===r.cardSuit&&item.id===r.item&&card.value<r.minimumCardValue) return 'quality';}
+    if (r.type==='exact_card_item'){let card,item;if(a.type==='card'&&b.type==='item'){card=a;item=b;}else if(b.type==='card'&&a.type==='item'){card=b;item=a;}if(card&&item&&card.suit===r.cardSuit&&item.id===r.item&&card.value!==r.exactCardValue) return 'quality';}
   }
-
-  // Warm: both inputs are independently useful in undiscovered recipes
-  function relevant(inp) {
-    return undiscovered.some(recipe => {
-      const r = recipe.recipe;
-      if (r.type === 'card_card'  && inp.type === 'card') return inp.suit === r.suitA || inp.suit === r.suitB;
-      if (r.type === 'card_item'  && inp.type === 'card') return inp.suit === r.cardSuit;
-      if (r.type === 'card_item'  && inp.type === 'item') return inp.id  === r.item;
-      if (r.type === 'item_item'  && inp.type === 'item') return inp.id  === r.itemA || inp.id === r.itemB;
-      return false;
-    });
-  }
-  const aRel = relevant(a), bRel = relevant(b);
-  if (aRel && bRel) return 'warm';
-  if (aRel || bRel) return 'hint';
-  return 'cold';
+  function rel(inp){return und.some(wr=>{const r=wr.recipe;if(r.type==='card_card'&&inp.type==='card')return inp.suit===r.suitA||inp.suit===r.suitB;if(r.type==='card_item'&&inp.type==='card')return inp.suit===r.cardSuit;if(r.type==='card_item'&&inp.type==='item')return inp.id===r.item;if(r.type==='item_item'&&inp.type==='item')return inp.id===r.itemA||inp.id===r.itemB;if(r.type==='exact_card_item'&&inp.type==='card')return inp.suit===r.cardSuit;if(r.type==='exact_card_item'&&inp.type==='item')return inp.id===r.item;return false;});}
+  const aR=rel(a),bR=rel(b);
+  return aR&&bR?'warm':aR||bR?'hint':'cold';
 }
-
-function showHint() {
-  // Only hint at reachable (all prerequisites discovered) undiscovered recipes
-  const reachable = worldRecipes.filter(r => {
-    if (G.discovered.includes(r.id)) return false;
-    return getPrereqIds(r).every(pid => pid.startsWith('suit_') || G.discovered.includes(pid));
-  });
-
-  if (!reachable.length) {
-    showHintToast('💡 You\'ve discovered everything currently within reach. Try new combinations!');
-    return;
-  }
-
-  const recipe = reachable[Math.floor(Math.random() * reachable.length)];
-  const r      = recipe.recipe;
-  let clue;
-
-  if (r.type === 'card_card') {
-    const sA = SUIT_NAME[r.suitA], sB = SUIT_NAME[r.suitB];
-    clue = sA === sB
-      ? `Two ${sA} materials can be combined into something new.`
-      : `${sA} + ${sB} materials can be combined into something new.`;
-  } else if (r.type === 'card_item') {
-    const itm = worldRecipes.find(x => x.id === r.item);
-    clue = `${itm.emoji} ${itm.name} reacts with ${SUIT_NAME[r.cardSuit]} materials.`;
-  } else {
-    const iA = worldRecipes.find(x => x.id === r.itemA);
-    const iB = worldRecipes.find(x => x.id === r.itemB);
-    const aK = G.discovered.includes(r.itemA);
-    const bK = G.discovered.includes(r.itemB);
-    if (aK && bK) {
-      clue = `${iA.emoji} ${iA.name} and ${iB.emoji} ${iB.name} can be combined.`;
-    } else if (aK) {
-      clue = `${iA.emoji} ${iA.name} has a hidden application.`;
-    } else {
-      clue = `${iB.emoji} ${iB.name} has a hidden application.`;
-    }
-  }
-  showHintToast('💡 ' + clue);
+function showHint(){
+  const reachable=worldRecipes.filter(r=>{if(G.discovered.includes(r.id))return false;return getPrereqIds(r.recipe).every(p=>p.startsWith('suit_')||G.discovered.includes(p));});
+  if (!reachable.length){showHintToast('💡 You\'ve discovered everything currently within reach!');return;}
+  const wr=reachable[Math.floor(Math.random()*reachable.length)],r=wr.recipe;
+  let a,b;
+  if (r.type==='card_card'){const total=r.minimumTotal,half=Math.ceil(total/2);a=`${Math.min(10,half)}${SUIT_SYM[r.suitA]}`;b=`${Math.min(10,total-Math.min(10,half))}${SUIT_SYM[r.suitB]}`;}
+  else if (r.type==='card_item'){const itm=worldRecipes.find(x=>x.id===r.item);a=`${r.minimumCardValue}${SUIT_SYM[r.cardSuit]}`;b=`${itm.emoji} ${itm.name}`;}
+  else if (r.type==='exact_card_item'){const itm=worldRecipes.find(x=>x.id===r.item);a=`${r.exactCardValue}${SUIT_SYM[r.cardSuit]} (exact)`;b=`${itm.emoji} ${itm.name}`;}
+  else{const iA=worldRecipes.find(x=>x.id===r.itemA),iB=worldRecipes.find(x=>x.id===r.itemB);a=`${iA.emoji} ${iA.name}`;b=`${iB.emoji} ${iB.name}`;}
+  showHintToast(`💡 Try:  ${a}  +  ${b}`);
 }
-
-let _hintTimer = null;
-function showHintToast(text) {
-  let el = document.getElementById('hint-toast');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'hint-toast';
-    document.body.appendChild(el);
-  }
-  el.textContent = text;
-  el.classList.remove('fading', 'hidden');
-  // reset animation
-  el.style.animation = 'none';
-  void el.offsetWidth;
-  el.style.animation = '';
+let _hintTimer=null;
+function showHintToast(text){
+  let el=document.getElementById('hint-toast');
+  if (!el){el=document.createElement('div');el.id='hint-toast';document.body.appendChild(el);}
+  el.textContent=text;el.classList.remove('fading','hidden');
+  el.style.animation='none';void el.offsetWidth;el.style.animation='';
   clearTimeout(_hintTimer);
-  _hintTimer = setTimeout(() => {
-    el.classList.add('fading');
-    setTimeout(() => el.classList.add('hidden'), 600);
-  }, 5500);
+  _hintTimer=setTimeout(()=>{el.classList.add('fading');setTimeout(()=>el.classList.add('hidden'),600);},5500);
 }
 
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    DISCOVERY OVERLAY
-══════════════════════════════════════════════ */
-function showDiscovery(recipe, a, b) {
-  document.getElementById('disc-emoji').textContent  = recipe.emoji;
-  document.getElementById('disc-name').textContent   = recipe.name;
-  document.getElementById('disc-recipe').textContent = `${shortLabel(a)}  +  ${shortLabel(b)}`;
-  document.getElementById('disc-desc').textContent   = recipe.description;
-  document.getElementById('disc-power').textContent  = '⚡ ' + recipe.power;
-  document.getElementById('disc-tags').innerHTML = recipe.tags.map(t =>
-    `<span class="disc-tag">${t}</span>`).join('');
+════════════════════════════════════════════════════ */
+function showDiscovery(recipe,a,b){
+  document.getElementById('disc-emoji').textContent  =recipe.emoji;
+  document.getElementById('disc-name').textContent   =recipe.name;
+  document.getElementById('disc-recipe').textContent =`${shortLabel(a)}  +  ${shortLabel(b)}`;
+  document.getElementById('disc-desc').textContent   =recipe.description;
+  document.getElementById('disc-power').textContent  ='⚡ '+recipe.power;
+  document.getElementById('disc-tags').innerHTML=recipe.tags.map(t=>`<span class="disc-tag">${t}</span>`).join('');
   document.getElementById('disc-ov').classList.remove('hidden');
 }
-
-function continueAfterDisc() {
+function continueAfterDisc(){
   document.getElementById('disc-ov').classList.add('hidden');
   document.getElementById('result-panel').classList.add('hidden');
-  if (_pendingDisc) {
-    renderTechTree(_pendingDisc.id);
-    _pendingDisc = null;
+  if (_pendingDisc){
+    const id=_pendingDisc.id;
+    renderTechTree(id);
+    _pendingDisc=null;
+    if (id==='philosophers_stone') { setTimeout(showWin,400); }
+    else if (id==='prima_materia') {
+      // Reveal the final catalyst after a short delay
+      setTimeout(()=>{
+        const ps=worldRecipes.find(r=>r.id==='philosophers_stone');
+        if (ps) showHintToast(`⚗️ One final catalyst remains — combine ✨ Prima Materia  +  ${ps.recipe.exactCardValue}${SUIT_SYM[ps.recipe.cardSuit]}`);
+      },400);
+    }
   }
 }
+function showWin(){
+  document.getElementById('win-stats').innerHTML=`World <strong>#${G.seed}</strong> &nbsp;·&nbsp; <strong>${G.experimentN}</strong> experiments &nbsp;·&nbsp; <strong>${G.discovered.length}</strong> discoveries`;
+  document.getElementById('win-ov').classList.remove('hidden');
+}
+function winNewWorld(){document.getElementById('win-ov').classList.add('hidden');newWorldPrompt();}
+function winKeepPlaying(){document.getElementById('win-ov').classList.add('hidden');}
 
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    TECH TREE
-══════════════════════════════════════════════ */
-const SUIT_NODES = [
-  { id:'suit_club',    label:'♣', sub:'Organic',  clr:'var(--club-c)'    },
-  { id:'suit_heart',   label:'♥', sub:'Herbs',    clr:'var(--heart-c)'   },
-  { id:'suit_spade',   label:'♠', sub:'Material', clr:'var(--spade-c)'   },
-  { id:'suit_diamond', label:'♦', sub:'Minerals', clr:'var(--diamond-c)' },
-];
+════════════════════════════════════════════════════ */
+const SUIT_NODES=[{id:'suit_club',label:'♣',sub:'Organic',clr:'var(--club-c)'},{id:'suit_heart',label:'♥',sub:'Herbs',clr:'var(--heart-c)'},{id:'suit_spade',label:'♠',sub:'Material',clr:'var(--spade-c)'},{id:'suit_diamond',label:'♦',sub:'Minerals',clr:'var(--diamond-c)'}];
+const NW=88,NH=66,ROW_H=115,PADX=14,PADY=12;
 
-const NW = 88, NH = 66, ROW_H = 115, PADX = 14, PADY = 12;
-
-function renderTechTree(newId) {
-  // Build tier groups
-  const tiers = { 0: SUIT_NODES };
-  for (const id of G.discovered) {
-    const r = worldRecipes.find(x => x.id === id);
-    if (!r) continue;
-    if (!tiers[r.tier]) tiers[r.tier] = [];
-    tiers[r.tier].push(r);
-  }
-
-  const maxTier    = Math.max(...Object.keys(tiers).map(Number));
-  const maxInRow   = Math.max(...Object.values(tiers).map(t => t.length));
-  const containerW = Math.max(350, maxInRow * (NW + 16) + PADX * 2);
-  const containerH = (maxTier + 1) * ROW_H + PADY * 2 + 20;
-
-  const container = document.getElementById('tree-container');
-  container.style.cssText = `position:relative;width:${containerW}px;height:${containerH}px`;
-  container.innerHTML = '';
-
-  const pos = {};   // id → {cx, cy}
-
-  // Create node elements + record positions
-  for (const [tierStr, nodes] of Object.entries(tiers)) {
-    const t  = parseInt(tierStr);
-    const ty = PADY + t * ROW_H;
-    nodes.forEach((n, i) => {
-      const cx = (containerW / (nodes.length + 1)) * (i + 1);
-      const x  = cx - NW / 2;
-      pos[n.id] = { cx, cy: ty + NH / 2 };
-
-      const el = document.createElement('div');
-      el.id    = 'tn-' + n.id;
-
-      if (t === 0) {
-        el.className = 'tree-node suit-node';
-        el.style.cssText = `left:${x}px;top:${ty}px;width:${NW}px;height:${NH}px`;
-        el.innerHTML = `<div class="tn-suit" style="color:${n.clr}">${n.label}</div><div class="tn-sub">${n.sub}</div>`;
-      } else {
-        const isNew = n.id === newId;
-        el.className = 'tree-node item-node' + (isNew ? ' new-node' : '');
-        el.style.cssText = `left:${x}px;top:${ty}px;width:${NW}px;height:${NH}px`;
-        el.title = n.description || n.name;
-        el.innerHTML = `
-          <div class="tn-emoji">${n.emoji}</div>
-          <div class="tn-name">${n.name}</div>
-          <div class="tn-tier">Tier ${n.tier}</div>`;
-      }
+function renderTechTree(newId){
+  const tiers={0:SUIT_NODES};
+  for (const id of G.discovered){const r=worldRecipes.find(x=>x.id===id);if(!r) continue;if(!tiers[r.tier])tiers[r.tier]=[];tiers[r.tier].push(r);}
+  const maxTier=Math.max(...Object.keys(tiers).map(Number));
+  const maxInRow=Math.max(...Object.values(tiers).map(t=>t.length));
+  const CW=Math.max(350,maxInRow*(NW+16)+PADX*2), CH=(maxTier+1)*ROW_H+PADY*2+20;
+  const container=document.getElementById('tree-container');
+  container.style.cssText=`position:relative;width:${CW}px;height:${CH}px`;
+  container.innerHTML='';
+  const pos={};
+  for (const [ts,nodes] of Object.entries(tiers)){
+    const t=parseInt(ts),ty=PADY+t*ROW_H;
+    nodes.forEach((n,i)=>{
+      const cx=(CW/(nodes.length+1))*(i+1),x=cx-NW/2;
+      pos[n.id]={cx,cy:ty+NH/2};
+      const el=document.createElement('div');el.id='tn-'+n.id;
+      if(t===0){el.className='tree-node suit-node';el.style.cssText=`left:${x}px;top:${ty}px;width:${NW}px;height:${NH}px`;el.innerHTML=`<div class="tn-suit" style="color:${n.clr}">${n.label}</div><div class="tn-sub">${n.sub}</div>`;}
+      else{el.className='tree-node item-node'+(n.id===newId?' new-node':'');el.style.cssText=`left:${x}px;top:${ty}px;width:${NW}px;height:${NH}px`;el.title=n.description||n.name;el.innerHTML=`<div class="tn-emoji">${n.emoji}</div><div class="tn-name">${n.name}</div><div class="tn-tier">T${n.tier}</div>`;}
       container.appendChild(el);
     });
   }
-
-  // SVG connection lines
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('width', containerW);
-  svg.setAttribute('height', containerH);
-  svg.style.cssText = 'position:absolute;left:0;top:0;pointer-events:none;overflow:visible';
-
-  // defs: subtle glow filter for new connections
-  svg.innerHTML = `<defs>
-    <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="blur"/>
-    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  </defs>`;
-
-  for (const id of G.discovered) {
-    const recipe = worldRecipes.find(r => r.id === id);
-    if (!recipe || !pos[id]) continue;
-    const to   = pos[id];
-    const isNew = id === newId;
-
-    for (const pid of getPrereqIds(recipe)) {
-      const from = pos[pid];
-      if (!from) continue;
-
-      const fy  = from.cy + NH / 2 - 1;
-      const ty2 = to.cy - NH / 2 + 1;
-      const mid = (fy + ty2) / 2;
-
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', `M ${from.cx} ${fy} C ${from.cx} ${mid} ${to.cx} ${mid} ${to.cx} ${ty2}`);
-      path.setAttribute('fill', 'none');
-      path.setAttribute('stroke',       isNew ? 'var(--amber)' : '#4a3a22');
-      path.setAttribute('stroke-width', isNew ? '2'           : '1.5');
-      path.setAttribute('opacity',      isNew ? '0.9'         : '0.7');
-      if (!isNew) path.setAttribute('stroke-dasharray', '5 3');
-      if (isNew)  path.setAttribute('filter', 'url(#glow)');
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('width',CW);svg.setAttribute('height',CH);
+  svg.style.cssText='position:absolute;left:0;top:0;pointer-events:none;overflow:visible';
+  svg.innerHTML='<defs><filter id="glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+  for (const id of G.discovered){
+    const wr=worldRecipes.find(r=>r.id===id);if(!wr||!pos[id]) continue;
+    const to=pos[id],isNew=id===newId;
+    for (const pid of getPrereqIds(wr.recipe)){
+      const from=pos[pid];if(!from) continue;
+      const fy=from.cy+NH/2-1,ty=to.cy-NH/2+1,mid=(fy+ty)/2;
+      const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d',`M ${from.cx} ${fy} C ${from.cx} ${mid} ${to.cx} ${mid} ${to.cx} ${ty}`);
+      path.setAttribute('fill','none');path.setAttribute('stroke',isNew?'var(--amber)':'#4a3a22');
+      path.setAttribute('stroke-width',isNew?'2':'1.5');path.setAttribute('opacity',isNew?'0.9':'0.7');
+      if(!isNew)path.setAttribute('stroke-dasharray','5 3');if(isNew)path.setAttribute('filter','url(#glow)');
       svg.appendChild(path);
     }
   }
-
-  container.insertBefore(svg, container.firstChild);
+  container.insertBefore(svg,container.firstChild);
 }
 
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    LOG
-══════════════════════════════════════════════ */
-function toggleLog() {
-  const list = document.getElementById('log-list');
-  const btn  = document.getElementById('log-toggle');
-  const open = list.classList.toggle('hidden') === false;
-  btn.textContent = `${open ? '▼' : '▶'} Experiment Log (${G.log.length})`;
-  if (open) renderLogList();
-}
-
-function renderLogList() {
-  const list = document.getElementById('log-list');
-  if (!G.log.length) {
-    list.innerHTML = '<div class="no-items">No experiments yet.</div>';
-    return;
-  }
-  list.innerHTML = [...G.log].reverse().map(e => {
-    const rcp = e.resultId ? worldRecipes.find(r => r.id === e.resultId) : null;
-    const rText = rcp
-      ? (e.alreadyKnown ? `Already known: ${rcp.name}` : `✨ ${rcp.emoji} ${rcp.name}`)
-      : 'No discovery.';
-    const cls = rcp ? (e.alreadyKnown ? 'known' : 'disc') : 'none';
-    return `<div class="log-item">
-      <div class="log-n">Experiment #${e.n}</div>
-      <div class="log-inputs">${e.a}  +  ${e.b}</div>
-      <div class="log-result ${cls}">→ ${rText}</div>
-    </div>`;
+════════════════════════════════════════════════════ */
+function toggleLog(){const list=document.getElementById('log-list'),btn=document.getElementById('log-toggle');const open=list.classList.toggle('hidden')===false;btn.textContent=`${open?'▼':'▶'} Experiment Log (${G.log.length})`;if(open)renderLogList();}
+function renderLogList(){
+  const list=document.getElementById('log-list');
+  if(!G.log.length){list.innerHTML='<div class="no-items">No experiments yet.</div>';return;}
+  list.innerHTML=[...G.log].reverse().map(e=>{
+    const rcp=e.resultId?worldRecipes.find(r=>r.id===e.resultId):null;
+    const rText=rcp?(e.alreadyKnown?`Already known: ${rcp.name}`:`✨ ${rcp.emoji} ${rcp.name}`):'No discovery.';
+    const cls=rcp?(e.alreadyKnown?'known':'disc'):'none';
+    return `<div class="log-item"><div class="log-n">Experiment #${e.n}</div><div class="log-inputs">${e.a}  +  ${e.b}</div><div class="log-result ${cls}">→ ${rText}</div></div>`;
   }).join('');
 }
+function renderLogCount(){const c=document.getElementById('log-cnt');if(c)c.textContent=G.log.length;}
 
-function renderLogCount() {
-  const cnt = document.getElementById('log-cnt');
-  if (cnt) cnt.textContent = G.log.length;
-}
-
-/* ══════════════════════════════════════════════
+/* ════════════════════════════════════════════════════
    NEW WORLD
-══════════════════════════════════════════════ */
-function newWorldPrompt() {
-  document.getElementById('nw-seed').value = Math.floor(Math.random() * 99999) + 1;
-  document.getElementById('nw-ov').classList.remove('hidden');
-}
-function closeNW() {
-  document.getElementById('nw-ov').classList.add('hidden');
-}
-function confirmNewWorld() {
-  const seed = parseInt(document.getElementById('nw-seed').value) || (Math.floor(Math.random() * 99999) + 1);
+════════════════════════════════════════════════════ */
+function newWorldPrompt(){document.getElementById('nw-seed').value=Math.floor(Math.random()*99999)+1;document.getElementById('nw-ov').classList.remove('hidden');}
+function closeNW(){document.getElementById('nw-ov').classList.add('hidden');}
+function confirmNewWorld(){
+  const seed=parseInt(document.getElementById('nw-seed').value)||(Math.floor(Math.random()*99999)+1);
   localStorage.removeItem(LS_KEY);
-  G = { seed, discovered: [], log: [], experimentN: 0 };
-  worldRecipes = generateWorld(seed);
-  saveGame();
-  closeNW();
-  selA = null; selB = null;
-  renderInputBtn('a'); renderInputBtn('b'); updateExpBtn();
+  G={seed,discovered:[],log:[],experimentN:0};
+  worldRecipes=generateWorld(seed);saveGame();closeNW();
+  selA=null;selB=null;renderInputBtn('a');renderInputBtn('b');updateExpBtn();
   document.getElementById('result-panel').classList.add('hidden');
-  document.getElementById('world-seed-lbl').textContent = `World #${seed}`;
+  document.getElementById('world-seed-lbl').textContent=`World #${seed}`;
   document.getElementById('log-list').classList.add('hidden');
-  document.getElementById('log-toggle').textContent = `▶ Experiment Log (0)`;
-  renderLogCount();
-  renderTechTree(null);
+  document.getElementById('log-toggle').textContent=`▶ Experiment Log (0)`;
+  renderLogCount();renderTechTree(null);
 }
 
-/* ══════════════════════════════════════════════
-   SETUP / LAUNCH
-══════════════════════════════════════════════ */
-function randomSeed() {
-  document.getElementById('seed-input').value = Math.floor(Math.random() * 99999) + 1;
+/* ════════════════════════════════════════════════════
+   DEBUG PANEL  (secret: click world-seed label 5×)
+════════════════════════════════════════════════════ */
+let _dbgClicks=0,_dbgTimer=null;
+function openDebug(){renderDebugBody();document.getElementById('dbg-ov').classList.remove('hidden');}
+function closeDebug(){document.getElementById('dbg-ov').classList.add('hidden');}
+
+function fmtRecipe(r){
+  const S={club:'♣',heart:'♥',spade:'♠',diamond:'♦'};
+  if(r.type==='card_card') return `${S[r.suitA]}+${S[r.suitB]} ≥${r.minimumTotal}`;
+  if(r.type==='card_item') return `${S[r.cardSuit]}(≥${r.minimumCardValue}) + ${r.item}`;
+  if(r.type==='item_item') return `${r.itemA} + ${r.itemB}`;
+  if(r.type==='exact_card_item') return `${S[r.cardSuit]}(=${r.exactCardValue}) + ${r.item}`;
+  return '?';
 }
 
-function startWorld() {
-  const seed = parseInt(document.getElementById('seed-input').value) || 12345;
-  G = { seed, discovered: [], log: [], experimentN: 0 };
-  worldRecipes = generateWorld(seed);
-  saveGame();
-  launchGame();
+function renderDebugBody(extra){
+  const body=document.getElementById('dbg-body');
+  const valid=validateWorld(worldRecipes);
+  const req=worldRecipes.filter(r=>r.isRequired),opt=worldRecipes.filter(r=>!r.isRequired&&!r.isRare),rar=worldRecipes.filter(r=>r.isRare);
+  body.innerHTML=`
+    <div class="dbg-section"><div class="dbg-title">WORLD INFO</div>
+      <div class="dbg-item">Seed: ${G.seed} | Technologies: ${worldRecipes.length} | Discovered: ${G.discovered.length}</div>
+      <div class="${valid?'dbg-ok':'dbg-warn'}">Validation: ${valid?'✅ WINNABLE':'❌ INVALID — prima_materia unreachable!'}</div>
+    </div>
+    <div class="dbg-section"><div class="dbg-title">REQUIRED PATH (${req.length})</div>
+      ${req.map(r=>`<div class="dbg-required">[T${r.tier}] ${r.emoji} ${r.name} (${r.id}) — ${fmtRecipe(r.recipe)}</div>`).join('')}
+    </div>
+    <div class="dbg-section"><div class="dbg-title">OPTIONAL BRANCHES (${opt.length})</div>
+      ${opt.map(r=>`<div class="dbg-item">[T${r.tier}] ${r.emoji} ${r.name} (${r.id}) — ${fmtRecipe(r.recipe)}</div>`).join('')}
+    </div>
+    <div class="dbg-section"><div class="dbg-title">RARE DISCOVERIES (${rar.length})</div>
+      ${rar.map(r=>`<div class="dbg-rare">[T${r.tier}] ${r.emoji} ${r.name} (${r.id}) — ${fmtRecipe(r.recipe)}</div>`).join('')}
+    </div>${extra||''}`;
 }
 
-function continueGame() {
-  worldRecipes = generateWorld(G.seed);
-  launchGame();
+function dbgRandomWorld(){
+  const seed=Math.floor(Math.random()*99999)+1;
+  G.seed=seed;worldRecipes=generateWorld(seed);
+  document.getElementById('world-seed-lbl').textContent=`World #${seed}`;
+  renderDebugBody(`<div class="dbg-section"><div class="dbg-title">GENERATED</div><div class="dbg-ok">Seed ${seed} loaded (${worldRecipes.length} technologies). Use New World to reset state.</div></div>`);
 }
 
-function launchGame() {
-  document.getElementById('setup').classList.add('hidden');
-  document.getElementById('game').classList.remove('hidden');
-  document.getElementById('world-seed-lbl').textContent = `World #${G.seed}`;
-  renderLogCount();
-  renderTechTree(null);
+function dbgRevealWorld(){
+  const lines=worldRecipes.map(r=>`${r.isRequired?'★':r.isRare?'◆':'·'} [T${r.tier}] ${r.emoji} ${r.name} — ${fmtRecipe(r.recipe)}`).join('\n');
+  renderDebugBody(`<div class="dbg-section"><div class="dbg-title">FULL WORLD (★=required ◆=rare ·=optional)</div><pre style="color:#8ada8a;font-size:.66rem;line-height:1.6;white-space:pre-wrap">${lines}</pre></div>`);
 }
 
-/* ══════════════════════════════════════════════
-   INIT
-══════════════════════════════════════════════ */
-window.addEventListener('load', () => {
-  const hasSave = loadGame();
-
-  if (hasSave) {
-    document.getElementById('seed-input').value = G.seed;
-    document.getElementById('cont-wrap').classList.remove('hidden');
-    document.getElementById('cont-label').textContent = `▶ Continue World #${G.seed}`;
-    document.getElementById('cont-sub').textContent   =
-      `${G.discovered.length} discover${G.discovered.length === 1 ? 'y' : 'ies'} · ${G.experimentN} experiments`;
+function dbgValidate100(){
+  let valid=0,invalid=0,totalTech=0,totalDepth=0;
+  const failures=[];
+  for (let i=1;i<=100;i++){
+    const w=generateWorld(i);const ok=w&&validateWorld(w);
+    if(ok){valid++;totalTech+=w.length;const pm=w.find(r=>r.id==='prima_materia');totalDepth+=pm?pm.tier:0;}
+    else{invalid++;if(failures.length<5)failures.push(i);}
   }
+  const aT=valid>0?(totalTech/valid).toFixed(1):'—',aD=valid>0?(totalDepth/valid).toFixed(1):'—';
+  renderDebugBody(`<div class="dbg-section"><div class="dbg-title">VALIDATE 100 WORLDS (seeds 1-100)</div><div class="${invalid===0?'dbg-ok':'dbg-warn'}">Valid: ${valid}/100 | Invalid: ${invalid}</div><div class="dbg-item">Avg technologies: ${aT} | Avg prima_materia tier: ${aD}</div>${failures.length?`<div class="dbg-warn">Failed seeds: ${failures.join(', ')}${invalid>5?'...':''}</div>`:''}</div>`);
+}
 
-  document.getElementById('seed-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') startWorld();
+/* ════════════════════════════════════════════════════
+   SETUP / LAUNCH / INIT
+════════════════════════════════════════════════════ */
+function randomSeed(){document.getElementById('seed-input').value=Math.floor(Math.random()*99999)+1;}
+function startWorld(){
+  const seed=parseInt(document.getElementById('seed-input').value)||12345;
+  G={seed,discovered:[],log:[],experimentN:0};worldRecipes=generateWorld(seed);saveGame();launchGame();
+}
+function continueGame(){worldRecipes=generateWorld(G.seed);launchGame();}
+function launchGame(){
+  document.getElementById('setup').classList.add('hidden');document.getElementById('game').classList.remove('hidden');
+  document.getElementById('world-seed-lbl').textContent=`World #${G.seed}`;
+  renderLogCount();renderTechTree(null);
+}
+
+window.addEventListener('load',()=>{
+  const hasSave=loadGame();
+  if(hasSave){
+    document.getElementById('seed-input').value=G.seed;
+    document.getElementById('cont-wrap').classList.remove('hidden');
+    document.getElementById('cont-label').textContent=`▶ Continue World #${G.seed}`;
+    document.getElementById('cont-sub').textContent=`${G.discovered.length} discover${G.discovered.length===1?'y':'ies'} · ${G.experimentN} experiments`;
+  }
+  document.getElementById('seed-input').addEventListener('keydown',e=>{if(e.key==='Enter')startWorld();});
+
+  // Secret debug: click world-seed label 5× within 2s
+  document.getElementById('world-seed-lbl').addEventListener('click',()=>{
+    _dbgClicks++;clearTimeout(_dbgTimer);
+    _dbgTimer=setTimeout(()=>{_dbgClicks=0;},2000);
+    if(_dbgClicks>=5){_dbgClicks=0;openDebug();}
   });
 });
 </script>
