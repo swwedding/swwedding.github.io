@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>⛏️ Prehistoric Crafting</title>
+<style>
+:root {
+  --bg:       #0f0c08;
+  --bg2:      #1a1510;
+  --bg3:      #241c12;
+  --stone:    #3a3020;
+  --clay:     #7a5230;
+  --amber:    #c8821a;
+  --gold:     #daa830;
+  --fire:     #e06020;
+  --herb:     #5a8a40;
+  --gem:      #3a7a68;
+  --text:     #ddc898;
+  --dim:      #786048;
+  --dim2:     #a08850;
+  --club-c:   #4a8a3a;
+  --heart-c:  #b04040;
+  --spade-c:  #5878a0;
+  --diamond-c:#a88a28;
+  --r: 8px;
+  --t: .16s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  min-height: 100svh; height: 100svh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.hidden { display: none !important; }
+button { font-family: inherit; cursor: pointer; }
+input  { font-family: inherit; }
+
+/* ── SETUP ── */
+#setup {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem 1.4rem;
+  background: radial-gradient(ellipse at center, #1e1608 0%, #0f0c08 70%);
+}
+.big-title {
+  font-size: clamp(2rem, 9vw, 3.5rem);
+  font-weight: 900; text-align: center; line-height: 1.1;
+  letter-spacing: .08em; color: var(--gold);
+  text-shadow: 0 0 30px rgba(218,168,48,.35), 0 2px 0 rgba(0,0,0,.7);
+  margin-bottom: 1.8rem;
+}
+.setup-card {
+  background: var(--bg2); border: 1.5px solid var(--stone);
+  border-radius: 14px; padding: 1.6rem; width: 100%; max-width: 360px;
+  display: flex; flex-direction: column; gap: .9rem;
+}
+.lbl { font-size: .7rem; text-transform: uppercase; letter-spacing: .15em; color: var(--dim2); margin-bottom: .3rem; }
+.s-input {
+  background: var(--bg3); border: 1.5px solid var(--stone); color: var(--text);
+  font-size: 1.3rem; font-weight: bold; letter-spacing: .06em;
+  padding: .65rem .9rem; border-radius: var(--r); width: 100%; outline: none;
+  transition: border-color var(--t);
+}
+.s-input:focus { border-color: var(--amber); }
+.seed-rng-btn {
+  background: var(--bg3); border: 1.5px solid var(--stone); color: var(--dim2);
+  font-size: .88rem; padding: .6rem; border-radius: var(--r); width: 100%;
+  transition: all var(--t);
+}
+.seed-rng-btn:hover { border-color: var(--amber); color: var(--amber); }
+.setup-start {
+  width: 100%;
+  background: var(--amber); border: none; color: #000;
+  font-size: 1rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
+  padding: .9rem; border-radius: var(--r);
+  box-shadow: 0 0 20px rgba(200,130,26,.35);
+  transition: all var(--t);
+}
+.setup-start:hover { background: var(--gold); }
+.setup-cont {
+  width: 100%;
+  background: var(--clay); border: 1.5px solid var(--amber); color: var(--gold);
+  font-size: .95rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase;
+  padding: .85rem; border-radius: var(--r);
+  transition: all var(--t); display: flex; flex-direction: column; gap: .1rem;
+}
+.setup-cont small { font-size: .65rem; font-weight: 400; letter-spacing: .04em; opacity: .8; }
+.setup-cont:hover { background: var(--amber); color: #000; }
+.or-divider { text-align: center; font-size: .72rem; color: var(--dim); letter-spacing: .14em; }
+
+/* ── GAME ── */
+#game { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+#g-header {
+  flex-shrink: 0;
+  background: var(--bg2); border-bottom: 1px solid var(--stone);
+  padding: .55rem 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.world-title { font-size: .95rem; font-weight: 900; letter-spacing: .08em; color: var(--gold); }
+.world-seed  { font-size: .65rem; color: var(--dim2); letter-spacing: .12em; margin-top: .1rem; }
+.hdr-btns { display: flex; gap: .2rem; }
+.hdr-btn {
+  background: none; border: none; color: var(--dim2); font-size: 1.2rem; padding: .3rem .4rem;
+  transition: color var(--t);
+}
+.hdr-btn:hover { color: var(--text); }
+
+/* ── EXPERIMENT PANEL ── */
+#exp-panel {
+  flex-shrink: 0;
+  background: var(--bg2); border-bottom: 1px solid var(--stone);
+  padding: .85rem 1rem .75rem;
+}
+.exp-lbl { font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--dim2); margin-bottom: .6rem; }
+.exp-row { display: flex; align-items: stretch; gap: .4rem; margin-bottom: .65rem; }
+.input-btn {
+  flex: 1; min-height: 68px;
+  background: var(--bg3); border: 2px solid var(--stone); color: var(--dim);
+  border-radius: var(--r); font-size: .85rem; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; transition: border-color var(--t);
+}
+.input-btn:hover { border-color: var(--amber); }
+.input-btn.has-val { border-color: var(--clay); color: var(--text); }
+.ib-rank  { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+.ib-sub   { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; }
+.ib-emoji { font-size: 1.4rem; line-height: 1; }
+.ib-name  { font-size: .75rem; font-weight: bold; padding: 0 4px; }
+.plus-sep { display: flex; align-items: center; padding: 0 .2rem; color: var(--dim); font-size: 1.2rem; }
+.exp-btn {
+  width: 100%;
+  background: var(--stone); border: 2px solid var(--stone); color: var(--dim2);
+  font-size: .95rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
+  padding: .7rem; border-radius: var(--r); transition: all var(--t);
+}
+.exp-btn:not(:disabled):hover { background: var(--clay); border-color: var(--amber); color: var(--gold); }
+.exp-btn:disabled { opacity: .35; cursor: not-allowed; }
+.exp-btn.ready {
+  background: linear-gradient(135deg, var(--clay), #9a6040);
+  border-color: var(--amber); color: var(--gold);
+  box-shadow: 0 0 14px rgba(200,130,26,.25);
+}
+
+/* ── RESULT PANEL ── */
+#result-panel {
+  flex-shrink: 0;
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--stone);
+  text-align: center;
+}
+.res-none { font-size: .95rem; color: var(--dim2); letter-spacing: .08em; }
+.res-known {
+  background: var(--bg3); border: 1px solid var(--stone); border-radius: var(--r);
+  padding: .65rem 1rem;
+}
+.res-known-lbl  { font-size: .65rem; text-transform: uppercase; letter-spacing: .14em; color: var(--dim); }
+.res-known-name { font-size: 1rem; font-weight: bold; color: var(--amber); margin-top: .15rem; }
+
+/* ── SCROLL BODY ── */
+#game-body { flex: 1; overflow-y: auto; min-height: 0; }
+#game-body::-webkit-scrollbar { width: 4px; }
+#game-body::-webkit-scrollbar-thumb { background: var(--stone); }
+
+/* ── TECH TREE ── */
+#tree-section { padding: .85rem 1rem 1.2rem; }
+.section-title {
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--dim2);
+  margin-bottom: .7rem;
+}
+#tree-scroll {
+  overflow: auto; position: relative;
+  background: var(--bg2); border: 1px solid var(--stone); border-radius: var(--r);
+  min-height: 160px;
+}
+#tree-scroll::-webkit-scrollbar { height: 4px; width: 4px; }
+#tree-scroll::-webkit-scrollbar-thumb { background: var(--stone); }
+#tree-container { position: relative; }
+
+/* Tree nodes */
+.tree-node {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 8px; text-align: center; gap: 3px; padding: 6px 4px;
+  transition: border-color .3s, box-shadow .3s;
+}
+.suit-node {
+  background: var(--bg3); border: 1.5px solid var(--stone);
+}
+.tn-suit { font-size: 1.3rem; line-height: 1; font-weight: bold; }
+.tn-sub  { font-size: .56rem; text-transform: uppercase; letter-spacing: .08em; color: var(--dim2); }
+.item-node {
+  background: var(--bg3); border: 1.5px solid var(--clay);
+}
+.item-node.new-node {
+  animation: node-appear .55s cubic-bezier(.175,.885,.32,1.275) forwards;
+  border-color: var(--gold);
+  box-shadow: 0 0 16px rgba(218,168,48,.5);
+}
+@keyframes node-appear {
+  from { transform: scale(0) rotate(-10deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0); opacity: 1; }
+}
+.tn-emoji { font-size: 1.25rem; line-height: 1; }
+.tn-name  { font-size: .54rem; font-weight: bold; color: var(--text); line-height: 1.2; }
+.tn-tier  { font-size: .48rem; color: var(--dim); text-transform: uppercase; letter-spacing: .06em; }
+
+/* ── DISCOVERY LOG SECTION ── */
+#log-section { padding: 0 1rem 1.2rem; }
+#log-toggle {
+  background: none; border: none; color: var(--dim2); font-size: .7rem;
+  text-transform: uppercase; letter-spacing: .14em;
+  display: flex; align-items: center; gap: .3rem; transition: color var(--t);
+}
+#log-toggle:hover { color: var(--text); }
+#log-list { margin-top: .6rem; display: flex; flex-direction: column; gap: .4rem; }
+.log-item {
+  background: var(--bg2); border: 1px solid var(--stone);
+  border-radius: var(--r); padding: .55rem .75rem;
+}
+.log-n { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--dim); }
+.log-inputs { font-size: .8rem; color: var(--dim2); font-family: monospace; margin: .15rem 0; }
+.log-result { font-size: .84rem; }
+.log-result.disc { color: var(--gold); font-weight: bold; }
+.log-result.none { color: var(--dim); }
+.log-result.known { color: var(--amber); }
+
+/* ── INPUT PICKER SHEET ── */
+#picker-ov {
+  position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 100;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+}
+#picker-drw {
+  background: var(--bg2); border-top: 2px solid var(--stone);
+  border-radius: 16px 16px 0 0;
+  width: 100%; max-width: 560px;
+  max-height: 75svh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.picker-hdr {
+  display: flex; align-items: center; padding: .75rem 1rem;
+  border-bottom: 1px solid var(--stone); flex-shrink: 0;
+}
+.picker-tabs { display: flex; gap: .4rem; flex: 1; }
+.ptab {
+  background: none; border: 1.5px solid var(--stone); color: var(--dim2);
+  font-size: .82rem; font-weight: bold; padding: .42rem .85rem;
+  border-radius: 20px; transition: all var(--t);
+}
+.ptab.active { border-color: var(--amber); color: var(--amber); }
+.pick-close {
+  background: none; border: none; color: var(--dim2); font-size: 1.25rem; padding: .2rem .4rem;
+  transition: color var(--t);
+}
+.pick-close:hover { color: var(--text); }
+.picker-body { flex: 1; overflow-y: auto; padding: .75rem 1rem 1rem; }
+.picker-body::-webkit-scrollbar { width: 3px; }
+.picker-body::-webkit-scrollbar-thumb { background: var(--stone); }
+
+/* card grid */
+.suit-sec { margin-bottom: .9rem; }
+.suit-hdr {
+  font-size: .65rem; text-transform: uppercase; letter-spacing: .14em;
+  margin-bottom: .4rem;
+}
+.suit-hdr.club    { color: var(--club-c); }
+.suit-hdr.heart   { color: var(--heart-c); }
+.suit-hdr.spade   { color: var(--spade-c); }
+.suit-hdr.diamond { color: var(--diamond-c); }
+.card-grid { display: flex; flex-wrap: wrap; gap: .35rem; }
+.card-tile {
+  background: var(--bg3); border: 1.5px solid var(--stone);
+  border-radius: 6px; padding: .45rem .35rem; min-width: 44px; text-align: center;
+  cursor: pointer; transition: border-color var(--t);
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+}
+.card-tile:hover { border-color: var(--amber); }
+.ct-rank { font-size: .95rem; font-weight: 900; line-height: 1; }
+.ct-suit { font-size: .7rem; line-height: 1; }
+.card-tile.club    .ct-rank, .card-tile.club    .ct-suit { color: var(--club-c); }
+.card-tile.heart   .ct-rank, .card-tile.heart   .ct-suit { color: var(--heart-c); }
+.card-tile.spade   .ct-rank, .card-tile.spade   .ct-suit { color: var(--spade-c); }
+.card-tile.diamond .ct-rank, .card-tile.diamond .ct-suit { color: var(--diamond-c); }
+
+/* item grid */
+.item-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+.item-tile {
+  background: var(--bg3); border: 1.5px solid var(--clay);
+  border-radius: 8px; padding: .6rem .5rem; text-align: center;
+  cursor: pointer; transition: border-color var(--t); flex: 1; min-width: 80px; max-width: 110px;
+}
+.item-tile:hover { border-color: var(--amber); }
+.it-emoji { font-size: 1.25rem; display: block; }
+.it-name  { font-size: .68rem; color: var(--text); margin-top: .15rem; }
+.no-items { color: var(--dim2); font-size: .85rem; text-align: center; padding: 1.2rem; }
+
+/* ── DISCOVERY OVERLAY ── */
+#disc-ov {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.92);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem 1.5rem; gap: .9rem; text-align: center;
+  overflow-y: auto;
+}
+.disc-banner {
+  font-size: clamp(.78rem, 2.5vw, .9rem);
+  text-transform: uppercase; letter-spacing: .3em; color: var(--amber);
+  animation: dfi .5s ease;
+}
+.disc-emoji {
+  font-size: clamp(4rem, 18vw, 6.5rem); line-height: 1;
+  animation: dpop .65s .08s both cubic-bezier(.175,.885,.32,1.275);
+  filter: drop-shadow(0 0 22px rgba(255,140,50,.5));
+}
+.disc-name {
+  font-size: clamp(1.5rem, 7vw, 2.4rem);
+  font-weight: 900; color: var(--gold); letter-spacing: .06em;
+  animation: dfi .5s .15s both;
+}
+.disc-recipe {
+  font-size: .8rem; color: var(--dim2); letter-spacing: .06em; font-family: monospace;
+  animation: dfi .5s .22s both;
+}
+.disc-desc {
+  font-size: .9rem; color: var(--text); line-height: 1.6;
+  max-width: 320px; font-style: italic;
+  animation: dfi .5s .28s both;
+}
+.disc-power {
+  font-size: .76rem; color: var(--amber); max-width: 320px; line-height: 1.5;
+  animation: dfi .5s .34s both;
+}
+.disc-tags {
+  display: flex; flex-wrap: wrap; gap: .3rem; justify-content: center;
+  animation: dfi .5s .38s both;
+}
+.disc-tag {
+  background: var(--bg3); border: 1px solid var(--stone);
+  border-radius: 20px; padding: .18rem .55rem;
+  font-size: .6rem; color: var(--dim2); text-transform: uppercase; letter-spacing: .08em;
+}
+.disc-continue {
+  background: var(--amber); border: none; color: #000;
+  font-size: .9rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
+  padding: .8rem 2.2rem; border-radius: var(--r);
+  animation: dfi .5s .45s both;
+  transition: background var(--t);
+}
+.disc-continue:hover { background: var(--gold); }
+@keyframes dfi {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes dpop {
+  from { transform: scale(0) rotate(-20deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* ── NEW WORLD MODAL ── */
+#nw-ov {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 300;
+  display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+}
+#nw-card {
+  background: var(--bg2); border: 1.5px solid var(--stone); border-radius: 14px;
+  padding: 1.5rem; width: 100%; max-width: 340px;
+  display: flex; flex-direction: column; gap: .85rem;
+}
+#nw-card h3 { font-size: 1rem; font-weight: bold; color: var(--amber); }
+#nw-card p  { font-size: .82rem; color: var(--dim2); line-height: 1.65; }
+.nw-btns { display: flex; gap: .5rem; }
+.nw-cancel {
+  flex: 1; background: none; border: 1.5px solid var(--stone); color: var(--dim2);
+  font-size: .88rem; padding: .65rem; border-radius: var(--r); transition: all var(--t);
+}
+.nw-cancel:hover { border-color: var(--dim2); color: var(--text); }
+.nw-confirm {
+  flex: 1; background: var(--clay); border: 1.5px solid var(--amber); color: var(--gold);
+  font-size: .88rem; font-weight: bold; padding: .65rem; border-radius: var(--r); transition: all var(--t);
+}
+.nw-confirm:hover { background: var(--amber); color: #000; }
+
+@media (max-width: 380px) {
+  .card-tile { min-width: 38px; padding: .38rem .28rem; }
+  .ct-rank { font-size: .85rem; }
+}
+
+/* ── HINT TOAST ── */
+#hint-toast {
+  position: fixed; bottom: 1.6rem; left: 50%; transform: translateX(-50%);
+  background: var(--bg2); border: 1.5px solid var(--amber);
+  border-radius: 20px; padding: .75rem 1.3rem;
+  font-size: .88rem; color: var(--text); max-width: min(88vw, 360px);
+  box-shadow: 0 4px 24px rgba(0,0,0,.55);
+  z-index: 400; text-align: center; line-height: 1.55;
+  animation: hint-in .3s ease;
+  transition: opacity .55s ease;
+}
+#hint-toast.fading { opacity: 0; }
+@keyframes hint-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(18px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── RESULT WARMTH COLOURS ── */
+.res-quality { color: var(--amber); }
+.res-warm    { color: #7aba50; }
+.res-hint    { color: var(--dim2); }
+.res-cold    { color: var(--dim); }
+</style>
+</head>
+<body>
+
+<!-- ══ SETUP ══ -->
+<div id="setup">
+  <div class="big-title">⛏️<br>PREHISTORIC<br>CRAFTING</div>
+  <div class="setup-card">
+    <div id="cont-wrap" class="hidden">
+      <button class="setup-cont" id="cont-btn" onclick="continueGame()">
+        <span id="cont-label">▶ Continue</span>
+        <small id="cont-sub"></small>
+      </button>
+      <div class="or-divider">— or start a new world —</div>
+    </div>
+    <div>
+      <div class="lbl">World Seed</div>
+      <input type="number" id="seed-input" class="s-input" value="12345" min="1" max="999999" />
+    </div>
+    <button class="seed-rng-btn" onclick="randomSeed()">🎲 Random Seed</button>
+    <button class="setup-start" onclick="startWorld()">⛏ Begin New World</button>
+  </div>
+</div>
+
+<!-- ══ GAME ══ -->
+<div id="game" class="hidden">
+  <div id="g-header">
+    <div>
+      <div class="world-title">⛏️ PREHISTORIC CRAFTING</div>
+      <div class="world-seed" id="world-seed-lbl"></div>
+    </div>
+    <div class="hdr-btns">
+      <button class="hdr-btn" onclick="showHint()"       title="Hint">💡</button>
+      <button class="hdr-btn" onclick="newWorldPrompt()" title="New World">🌍</button>
+    </div>
+  </div>
+
+  <div id="exp-panel">
+    <div class="exp-lbl">Experiment</div>
+    <div class="exp-row">
+      <button class="input-btn" id="btn-a" onclick="openPicker('a')">
+        <span style="color:var(--dim);font-size:.8rem">Select A</span>
+      </button>
+      <div class="plus-sep">+</div>
+      <button class="input-btn" id="btn-b" onclick="openPicker('b')">
+        <span style="color:var(--dim);font-size:.8rem">Select B</span>
+      </button>
+    </div>
+    <button class="exp-btn" id="exp-btn" onclick="runExperiment()" disabled>⚗️ Experiment</button>
+  </div>
+
+  <div id="result-panel" class="hidden"></div>
+
+  <div id="game-body">
+    <div id="tree-section">
+      <div class="section-title">🌳 Technology Tree</div>
+      <div id="tree-scroll">
+        <div id="tree-container"></div>
+      </div>
+    </div>
+
+    <div id="log-section">
+      <button id="log-toggle" onclick="toggleLog()">▶ Experiment Log (<span id="log-cnt">0</span>)</button>
+      <div id="log-list" class="hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PICKER ══ -->
+<div id="picker-ov" class="hidden" onclick="closePicker()">
+  <div id="picker-drw" onclick="event.stopPropagation()">
+    <div class="picker-hdr">
+      <div class="picker-tabs">
+        <button class="ptab active" id="ptab-cards" onclick="showPickTab('cards')">🃏 Raw Cards</button>
+        <button class="ptab"        id="ptab-items" onclick="showPickTab('items')">⚗️ Known Items</button>
+      </div>
+      <button class="pick-close" onclick="closePicker()">✕</button>
+    </div>
+    <div class="picker-body" id="picker-body"></div>
+  </div>
+</div>
+
+<!-- ══ DISCOVERY ══ -->
+<div id="disc-ov" class="hidden">
+  <div class="disc-banner">✨ Discovery! ✨</div>
+  <div class="disc-emoji" id="disc-emoji"></div>
+  <div class="disc-name"   id="disc-name"></div>
+  <div class="disc-recipe" id="disc-recipe"></div>
+  <div class="disc-desc"   id="disc-desc"></div>
+  <div class="disc-power"  id="disc-power"></div>
+  <div class="disc-tags"   id="disc-tags"></div>
+  <button class="disc-continue" onclick="continueAfterDisc()">Continue →</button>
+</div>
+
+<!-- ══ NEW WORLD ══ -->
+<div id="nw-ov" class="hidden">
+  <div id="nw-card">
+    <h3>🌍 Start a New World?</h3>
+    <p>All discoveries and logs will be erased. Enter a new seed, or keep the current one.</p>
+    <div>
+      <div class="lbl">New Seed</div>
+      <input type="number" id="nw-seed" class="s-input" style="margin-top:.3rem" />
+    </div>
+    <div class="nw-btns">
+      <button class="nw-cancel"  onclick="closeNW()">Cancel</button>
+      <button class="nw-confirm" onclick="confirmNewWorld()">Start Fresh</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   BASE RECIPE LIBRARY
+   Tiers are topological (max prereq tier + 1)
+   so no same-row edges in the tech tree.
+══════════════════════════════════════════════ */
+const BASE_RECIPES = [
+  /* ─── TIER 1: card + card ─── */
+  {
+    id:'sharp_stone', name:'Sharp Stone', emoji:'🗡️', tier:1, category:'tool',
+    tags:['sharp','cutting','stone','tool'],
+    recipe:{ type:'card_card', suitA:'spade', suitB:'spade', minimumTotal:10 },
+    description:'You learned to fracture flint against itself, producing a keen cutting edge.',
+    power:'Unlocks knife and spear crafting.'
+  },
+  {
+    id:'grinding_stone', name:'Grinding Stone', emoji:'🪨', tier:1, category:'tool',
+    tags:['stone','grinding','tool','processing'],
+    recipe:{ type:'card_card', suitA:'spade', suitB:'spade', minimumTotal:16 },
+    description:'Two heavy stones worked together create a smooth grinding surface.',
+    power:'Unlocks food processing and furnace building.'
+  },
+  {
+    id:'fire', name:'Fire', emoji:'🔥', tier:1, category:'force',
+    tags:['heat','energy','transformation','light'],
+    recipe:{ type:'card_card', suitA:'spade', suitB:'club', minimumTotal:11 },
+    description:'Rapid friction between hard stone and dry wood produces the first flame.',
+    power:'Unlocks cooking, light, and heat technologies.'
+  },
+  {
+    id:'cordage', name:'Cordage', emoji:'🧶', tier:1, category:'material',
+    tags:['binding','fiber','flexible','tool'],
+    recipe:{ type:'card_card', suitA:'club', suitB:'club', minimumTotal:8 },
+    description:'Twisted plant fibers become strong, flexible rope.',
+    power:'Unlocks binding and construction technologies.'
+  },
+  {
+    id:'poultice', name:'Poultice', emoji:'🌿', tier:1, category:'medicine',
+    tags:['medicine','herb','healing','paste'],
+    recipe:{ type:'card_card', suitA:'heart', suitB:'club', minimumTotal:8 },
+    description:'Crushed herbs mixed with organic material soothes wounds and reduces fever.',
+    power:'Unlocks medicine technologies.'
+  },
+  {
+    id:'clay', name:'Clay', emoji:'🟤', tier:1, category:'material',
+    tags:['earth','malleable','raw','container-material'],
+    recipe:{ type:'card_card', suitA:'spade', suitB:'diamond', minimumTotal:9 },
+    description:'Mineral-rich earth mixed with water becomes workable clay.',
+    power:'Unlocks vessel and building technologies.'
+  },
+
+  /* ─── TIER 2: card + item ─── */
+  {
+    id:'stone_knife', name:'Stone Knife', emoji:'🔪', tier:2, category:'tool',
+    tags:['sharp','cutting','tool','weapon'],
+    recipe:{ type:'card_item', cardSuit:'club', minimumCardValue:3, item:'sharp_stone' },
+    description:'A flint edge wrapped in organic cordage to form a handle.',
+    power:'Unlocks hide working and advanced cutting.'
+  },
+  {
+    id:'spear', name:'Spear', emoji:'🏹', tier:2, category:'weapon',
+    tags:['sharp','shaft','weapon','hunting','tool'],
+    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:5, item:'sharp_stone' },
+    description:'A sharp stone point lashed to a long, sturdy shaft becomes a spear.',
+    power:'Unlocks hunting technologies.'
+  },
+  {
+    id:'cooked_food', name:'Cooked Food', emoji:'🍖', tier:2, category:'food',
+    tags:['food','heat','nutrition','cooked'],
+    recipe:{ type:'card_item', cardSuit:'club', minimumCardValue:3, item:'fire' },
+    description:'Heat transforms raw organic matter into safer, more nutritious food.',
+    power:'Unlocks food preservation technologies.'
+  },
+  {
+    id:'torch', name:'Torch', emoji:'🕯️', tier:2, category:'tool',
+    tags:['fire','light','tool','heat'],
+    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:3, item:'fire' },
+    description:'A shaft of resinous timber set ablaze carries fire anywhere you go.',
+    power:'Unlocks night activities and extended warmth.'
+  },
+  {
+    id:'basket', name:'Basket', emoji:'🧺', tier:2, category:'container',
+    tags:['container','weaving','storage','fiber'],
+    recipe:{ type:'card_item', cardSuit:'club', minimumCardValue:5, item:'cordage' },
+    description:'Woven plant cordage shaped into a vessel for carrying and storing.',
+    power:'Unlocks food gathering and storage.'
+  },
+  {
+    id:'shelter', name:'Shelter', emoji:'🛖', tier:2, category:'structure',
+    tags:['structure','protection','construction','organic'],
+    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:6, item:'cordage' },
+    description:'Heavy timber lashed with cordage forms a weatherproof structure.',
+    power:'Unlocks long-term settlement technologies.'
+  },
+  {
+    id:'clay_vessel', name:'Clay Vessel', emoji:'🫙', tier:2, category:'container',
+    tags:['container','clay','storage','vessel'],
+    recipe:{ type:'card_item', cardSuit:'spade', minimumCardValue:4, item:'clay' },
+    description:'Shaped and sun-dried clay hardens into a simple storage vessel.',
+    power:'Unlocks liquid storage and medicine.'
+  },
+  {
+    id:'furnace', name:'Furnace', emoji:'🔆', tier:2, category:'structure',
+    tags:['heat','structure','smelting','advanced'],
+    recipe:{ type:'item_item', itemA:'fire', itemB:'grinding_stone' },
+    description:'Stone slabs arranged around a fire create an enclosed heat chamber.',
+    power:'Unlocks metallurgy and advanced material working.'
+  },
+
+  /* ─── TIER 3: item + item (and one card+item) ─── */
+  {
+    id:'pottery', name:'Pottery', emoji:'🏺', tier:3, category:'container',
+    tags:['container','heat-resistant','storage','craft'],
+    recipe:{ type:'item_item', itemA:'fire', itemB:'clay_vessel' },
+    description:'Firing clay vessels creates durable, heat-safe pottery.',
+    power:'Unlocks cooking vessels and advanced chemistry.'
+  },
+  {
+    id:'hunting', name:'Hunting', emoji:'🎯', tier:3, category:'skill',
+    tags:['skill','food','weapon','survival','technique'],
+    recipe:{ type:'item_item', itemA:'spear', itemB:'torch' },
+    description:'Armed with spear and torch, you can track and take large prey at night.',
+    power:'Unlocks animal materials and advanced food sources.'
+  },
+  {
+    id:'food_preservation', name:'Food Preservation', emoji:'🥫', tier:3, category:'skill',
+    tags:['food','storage','technique','survival'],
+    recipe:{ type:'item_item', itemA:'cooked_food', itemB:'basket' },
+    description:'Storing prepared food in sealed containers keeps it edible on long journeys.',
+    power:'Unlocks settlement and trade technologies.'
+  },
+  {
+    id:'medicine', name:'Medicine', emoji:'💊', tier:3, category:'skill',
+    tags:['healing','herb','advanced','knowledge'],
+    recipe:{ type:'item_item', itemA:'poultice', itemB:'clay_vessel' },
+    description:'Precise herb preparations stored in clay vessels become potent remedies.',
+    power:'Unlocks advanced healing and alchemy.'
+  },
+  {
+    id:'metallurgy', name:'Metallurgy', emoji:'⚙️', tier:3, category:'skill',
+    tags:['metal','heat','advanced-material','craft'],
+    recipe:{ type:'card_item', cardSuit:'diamond', minimumCardValue:7, item:'furnace' },
+    description:'High-quality ore smelted in the furnace yields workable metal.',
+    power:'Unlocks advanced tools, weapons, and Prima Materia.'
+  },
+
+  /* ─── TIER 4 ─── */
+  {
+    id:'distillation', name:'Distillation', emoji:'⚗️', tier:4, category:'skill',
+    tags:['liquid','purification','advanced','chemistry'],
+    recipe:{ type:'item_item', itemA:'pottery', itemB:'fire' },
+    description:'Heating liquids through sealed pottery concentrates and purifies their essence.',
+    power:'Unlocks alchemy and advanced chemistry.'
+  },
+
+  /* ─── TIER 5 ─── */
+  {
+    id:'alchemy', name:'Alchemy', emoji:'🧪', tier:5, category:'knowledge',
+    tags:['transformation','advanced','chemistry','knowledge'],
+    recipe:{ type:'item_item', itemA:'distillation', itemB:'medicine' },
+    description:'The fusion of material science and deep biological knowledge transcends craft.',
+    power:'Unlocks Prima Materia — the final discovery.'
+  },
+
+  /* ─── TIER 6 ─── */
+  {
+    id:'prima_materia', name:'Prima Materia', emoji:'✨', tier:6, category:'knowledge',
+    tags:['ultimate','transformation','pure','essence'],
+    recipe:{ type:'item_item', itemA:'alchemy', itemB:'metallurgy' },
+    description:'The primordial substance from which all matter springs forth. The world bends to your knowledge.',
+    power:'You have mastered the ancient arts. There is nothing left to discover.'
+  },
+];
+
+/* ══════════════════════════════════════════════
+   SEEDED RNG  (LCG)
+══════════════════════════════════════════════ */
+function seededRng(seed) {
+  let s = (seed >>> 0) || 1;
+  return function () {
+    s = (Math.imul(1664525, s) + 1013904223) >>> 0;
+    return s / 0x100000000;
+  };
+}
+
+/* ══════════════════════════════════════════════
+   WORLD GENERATION
+   Slight threshold variance per seed (±2 total, ±1 card value)
+══════════════════════════════════════════════ */
+let worldRecipes = [];
+
+function generateWorld(seed) {
+  const rng = seededRng(seed);
+  return BASE_RECIPES.map(r => {
+    const copy = JSON.parse(JSON.stringify(r));
+    const roll = rng();                            // 0..1
+    const dv   = Math.floor(roll * 5) - 2;        // -2..+2
+    if (copy.recipe.type === 'card_card') {
+      copy.recipe.minimumTotal = Math.max(4, copy.recipe.minimumTotal + dv);
+    } else if (copy.recipe.type === 'card_item') {
+      const delta = dv >= 2 ? 1 : dv <= -2 ? -1 : 0;
+      copy.recipe.minimumCardValue = Math.max(2, Math.min(9, copy.recipe.minimumCardValue + delta));
+    }
+    return copy;
+  });
+}
+
+/* ══════════════════════════════════════════════
+   GAME STATE
+══════════════════════════════════════════════ */
+let G = { seed: 12345, discovered: [], log: [], experimentN: 0 };
+
+/* ══════════════════════════════════════════════
+   PERSISTENCE
+══════════════════════════════════════════════ */
+const LS_KEY = 'pcraft_v1';
+
+function saveGame() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(G)); } catch {}
+}
+function loadGame() {
+  try {
+    const d = JSON.parse(localStorage.getItem(LS_KEY));
+    if (d && d.seed) {
+      G = d;
+      if (!Array.isArray(G.discovered))  G.discovered  = [];
+      if (!Array.isArray(G.log))         G.log          = [];
+      if (!G.experimentN)                G.experimentN  = 0;
+      return true;
+    }
+  } catch {}
+  return false;
+}
+
+/* ══════════════════════════════════════════════
+   RECIPE ENGINE
+══════════════════════════════════════════════ */
+function getPrereqIds(recipe) {
+  const r = recipe.recipe;
+  if (r.type === 'card_card') {
+    return r.suitA === r.suitB ? ['suit_' + r.suitA] : ['suit_' + r.suitA, 'suit_' + r.suitB];
+  }
+  if (r.type === 'card_item')  return ['suit_' + r.cardSuit, r.item];
+  if (r.type === 'item_item')  return [r.itemA, r.itemB];
+  return [];
+}
+
+function matchesRecipe(a, b, recipe) {
+  const r = recipe.recipe;
+  if (r.type === 'card_card') {
+    if (a.type !== 'card' || b.type !== 'card') return false;
+    const suits  = [a.suit, b.suit].sort().join(',');
+    const rSuits = [r.suitA, r.suitB].sort().join(',');
+    if (suits !== rSuits) return false;
+    return (a.value + b.value) >= r.minimumTotal;
+  }
+  if (r.type === 'card_item') {
+    let card, item;
+    if      (a.type === 'card' && b.type === 'item') { card = a; item = b; }
+    else if (b.type === 'card' && a.type === 'item') { card = b; item = a; }
+    else return false;
+    return card.suit === r.cardSuit && card.value >= r.minimumCardValue && item.id === r.item;
+  }
+  if (r.type === 'item_item') {
+    if (a.type !== 'item' || b.type !== 'item') return false;
+    const ids  = [a.id, b.id].sort().join(',');
+    const rIds = [r.itemA, r.itemB].sort().join(',');
+    return ids === rIds;
+  }
+  return false;
+}
+
+function evaluateExperiment(a, b) {
+  const matches = worldRecipes.filter(r => matchesRecipe(a, b, r));
+  if (!matches.length) return null;
+  // Prefer highest threshold recipe to resolve card_card overlaps (e.g. grinding_stone > sharp_stone)
+  matches.sort((x, y) => {
+    const tx = x.recipe.minimumTotal || x.recipe.minimumCardValue || 0;
+    const ty = y.recipe.minimumTotal || y.recipe.minimumCardValue || 0;
+    return ty - tx;
+  });
+  return matches[0];
+}
+
+/* ══════════════════════════════════════════════
+   INPUT STATE
+══════════════════════════════════════════════ */
+let selA = null;
+let selB = null;
+let _pickerFor   = 'a';
+let _pickerTab   = 'cards';
+let _pendingDisc = null;
+
+const SUIT_SYM  = { club:'♣', heart:'♥', spade:'♠', diamond:'♦' };
+const SUIT_NAME = { club:'Organic', heart:'Herbs', spade:'Material', diamond:'Minerals' };
+const SUIT_DESC = {
+  club:    '♣ Organic / Wood / Bone / Fiber',
+  heart:   '♥ Herbs / Medicine / Plants',
+  spade:   '♠ Stone / Wood / Clay / Structure',
+  diamond: '♦ Ore / Gems / Minerals',
+};
+
+function shortLabel(sel) {
+  if (!sel) return '—';
+  if (sel.type === 'card') return `${sel.value}${SUIT_SYM[sel.suit]}`;
+  const r = worldRecipes.find(x => x.id === sel.id);
+  return r ? `${r.emoji} ${r.name}` : sel.id;
+}
+
+function renderInputBtn(which) {
+  const sel = which === 'a' ? selA : selB;
+  const el  = document.getElementById('btn-' + which);
+  if (!sel) {
+    el.innerHTML = `<span style="color:var(--dim);font-size:.78rem">Select ${which.toUpperCase()}</span>`;
+    el.classList.remove('has-val');
+    return;
+  }
+  el.classList.add('has-val');
+  if (sel.type === 'card') {
+    const sc = sel.suit;
+    el.innerHTML = `
+      <div class="ib-rank" style="color:var(--${sc}-c)">${sel.value}${SUIT_SYM[sc]}</div>
+      <div class="ib-sub"  style="color:var(--${sc}-c)">${SUIT_NAME[sc]}</div>`;
+  } else {
+    const r = worldRecipes.find(x => x.id === sel.id);
+    el.innerHTML = `<div class="ib-emoji">${r.emoji}</div><div class="ib-name">${r.name}</div>`;
+  }
+}
+
+function updateExpBtn() {
+  const ready = selA !== null && selB !== null;
+  const btn   = document.getElementById('exp-btn');
+  btn.disabled = !ready;
+  btn.classList.toggle('ready', ready);
+}
+
+/* ══════════════════════════════════════════════
+   INPUT PICKER
+══════════════════════════════════════════════ */
+function openPicker(which) {
+  _pickerFor = which;
+  _pickerTab = 'cards';
+  document.getElementById('ptab-cards').classList.add('active');
+  document.getElementById('ptab-items').classList.remove('active');
+  renderPickerBody();
+  document.getElementById('picker-ov').classList.remove('hidden');
+}
+function closePicker() {
+  document.getElementById('picker-ov').classList.add('hidden');
+}
+function showPickTab(tab) {
+  _pickerTab = tab;
+  document.getElementById('ptab-cards').classList.toggle('active', tab === 'cards');
+  document.getElementById('ptab-items').classList.toggle('active', tab === 'items');
+  renderPickerBody();
+}
+
+function renderPickerBody() {
+  const body = document.getElementById('picker-body');
+  if (_pickerTab === 'cards') {
+    const suits = ['club','heart','spade','diamond'];
+    body.innerHTML = suits.map(s => `
+      <div class="suit-sec">
+        <div class="suit-hdr ${s}">${SUIT_DESC[s]}</div>
+        <div class="card-grid">
+          ${[2,3,4,5,6,7,8,9,10].map(v => `
+            <div class="card-tile ${s}" onclick="pickCard('${s}',${v})">
+              <div class="ct-rank">${v}</div>
+              <div class="ct-suit">${SUIT_SYM[s]}</div>
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+  } else {
+    if (!G.discovered.length) {
+      body.innerHTML = '<div class="no-items">No discoveries yet.<br>Experiment with raw cards first!</div>';
+      return;
+    }
+    const items = G.discovered.map(id => worldRecipes.find(r => r.id === id)).filter(Boolean);
+    body.innerHTML = `<div class="item-grid">${items.map(r => `
+      <div class="item-tile" onclick="pickItem('${r.id}')">
+        <span class="it-emoji">${r.emoji}</span>
+        <div class="it-name">${r.name}</div>
+      </div>`).join('')}</div>`;
+  }
+}
+
+function pickCard(suit, value) {
+  if (_pickerFor === 'a') selA = { type:'card', suit, value };
+  else                    selB = { type:'card', suit, value };
+  renderInputBtn(_pickerFor);
+  updateExpBtn();
+  closePicker();
+}
+function pickItem(id) {
+  if (_pickerFor === 'a') selA = { type:'item', id };
+  else                    selB = { type:'item', id };
+  renderInputBtn(_pickerFor);
+  updateExpBtn();
+  closePicker();
+}
+
+/* ══════════════════════════════════════════════
+   EXPERIMENT
+══════════════════════════════════════════════ */
+function runExperiment() {
+  if (!selA || !selB) return;
+  G.experimentN++;
+
+  const result       = evaluateExperiment(selA, selB);
+  const alreadyKnown = result && G.discovered.includes(result.id);
+
+  G.log.push({ n: G.experimentN, a: shortLabel(selA), b: shortLabel(selB), resultId: result ? result.id : null, alreadyKnown });
+
+  if (result && !alreadyKnown) {
+    G.discovered.push(result.id);
+    _pendingDisc = result;
+    saveGame();
+    showDiscovery(result, selA, selB);
+    // tree rendered after overlay dismiss to catch animation
+  } else {
+    saveGame();
+    renderResultPanel(result, alreadyKnown);
+  }
+  renderLogCount();
+  // refresh log if open
+  if (!document.getElementById('log-list').classList.contains('hidden')) renderLogList();
+}
+
+function renderResultPanel(result, alreadyKnown) {
+  const p = document.getElementById('result-panel');
+  p.classList.remove('hidden');
+  if (!result) {
+    const fb = getFailFeedback(selA, selB);
+    const MAP = {
+      quality: { cls:'res-quality', icon:'🌡️', msg:'The combination is right, but the quality falls short. Try higher-value cards.' },
+      warm:    { cls:'res-warm',    icon:'✨',  msg:'Both materials hold undiscovered potential together...' },
+      hint:    { cls:'res-hint',    icon:'💭',  msg:'One of these materials holds undiscovered potential.' },
+      cold:    { cls:'res-cold',    icon:'🪨',  msg:'No reaction. These materials have no known affinity.' },
+    };
+    const { cls, icon, msg } = MAP[fb];
+    p.innerHTML = `<div class="res-none ${cls}">${icon} ${msg}</div>`;
+  } else if (alreadyKnown) {
+    p.innerHTML = `<div class="res-known">
+      <div class="res-known-lbl">Already Known</div>
+      <div class="res-known-name">${result.emoji} ${result.name}</div>
+    </div>`;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   HINT ENGINE
+══════════════════════════════════════════════ */
+function getFailFeedback(a, b) {
+  if (!a || !b) return 'cold';
+  const undiscovered = worldRecipes.filter(r => !G.discovered.includes(r.id));
+
+  // Quality: right suit/item combo but threshold not met
+  for (const recipe of undiscovered) {
+    const r = recipe.recipe;
+    if (r.type === 'card_card' && a.type === 'card' && b.type === 'card') {
+      const suits  = [a.suit, b.suit].sort().join(',');
+      const rSuits = [r.suitA, r.suitB].sort().join(',');
+      if (suits === rSuits && (a.value + b.value) < r.minimumTotal) return 'quality';
+    }
+    if (r.type === 'card_item') {
+      let card, item;
+      if (a.type === 'card' && b.type === 'item') { card = a; item = b; }
+      else if (b.type === 'card' && a.type === 'item') { card = b; item = a; }
+      if (card && item && card.suit === r.cardSuit && item.id === r.item && card.value < r.minimumCardValue)
+        return 'quality';
+    }
+  }
+
+  // Warm: both inputs are independently useful in undiscovered recipes
+  function relevant(inp) {
+    return undiscovered.some(recipe => {
+      const r = recipe.recipe;
+      if (r.type === 'card_card'  && inp.type === 'card') return inp.suit === r.suitA || inp.suit === r.suitB;
+      if (r.type === 'card_item'  && inp.type === 'card') return inp.suit === r.cardSuit;
+      if (r.type === 'card_item'  && inp.type === 'item') return inp.id  === r.item;
+      if (r.type === 'item_item'  && inp.type === 'item') return inp.id  === r.itemA || inp.id === r.itemB;
+      return false;
+    });
+  }
+  const aRel = relevant(a), bRel = relevant(b);
+  if (aRel && bRel) return 'warm';
+  if (aRel || bRel) return 'hint';
+  return 'cold';
+}
+
+function showHint() {
+  // Only hint at reachable (all prerequisites discovered) undiscovered recipes
+  const reachable = worldRecipes.filter(r => {
+    if (G.discovered.includes(r.id)) return false;
+    return getPrereqIds(r).every(pid => pid.startsWith('suit_') || G.discovered.includes(pid));
+  });
+
+  if (!reachable.length) {
+    showHintToast('💡 You\'ve discovered everything currently within reach. Try new combinations!');
+    return;
+  }
+
+  const recipe = reachable[Math.floor(Math.random() * reachable.length)];
+  const r      = recipe.recipe;
+  let clue;
+
+  if (r.type === 'card_card') {
+    const sA = SUIT_NAME[r.suitA], sB = SUIT_NAME[r.suitB];
+    clue = sA === sB
+      ? `Two ${sA} materials can be combined into something new.`
+      : `${sA} + ${sB} materials can be combined into something new.`;
+  } else if (r.type === 'card_item') {
+    const itm = worldRecipes.find(x => x.id === r.item);
+    clue = `${itm.emoji} ${itm.name} reacts with ${SUIT_NAME[r.cardSuit]} materials.`;
+  } else {
+    const iA = worldRecipes.find(x => x.id === r.itemA);
+    const iB = worldRecipes.find(x => x.id === r.itemB);
+    const aK = G.discovered.includes(r.itemA);
+    const bK = G.discovered.includes(r.itemB);
+    if (aK && bK) {
+      clue = `${iA.emoji} ${iA.name} and ${iB.emoji} ${iB.name} can be combined.`;
+    } else if (aK) {
+      clue = `${iA.emoji} ${iA.name} has a hidden application.`;
+    } else {
+      clue = `${iB.emoji} ${iB.name} has a hidden application.`;
+    }
+  }
+  showHintToast('💡 ' + clue);
+}
+
+let _hintTimer = null;
+function showHintToast(text) {
+  let el = document.getElementById('hint-toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'hint-toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = text;
+  el.classList.remove('fading', 'hidden');
+  // reset animation
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = '';
+  clearTimeout(_hintTimer);
+  _hintTimer = setTimeout(() => {
+    el.classList.add('fading');
+    setTimeout(() => el.classList.add('hidden'), 600);
+  }, 5500);
+}
+
+/* ══════════════════════════════════════════════
+   DISCOVERY OVERLAY
+══════════════════════════════════════════════ */
+function showDiscovery(recipe, a, b) {
+  document.getElementById('disc-emoji').textContent  = recipe.emoji;
+  document.getElementById('disc-name').textContent   = recipe.name;
+  document.getElementById('disc-recipe').textContent = `${shortLabel(a)}  +  ${shortLabel(b)}`;
+  document.getElementById('disc-desc').textContent   = recipe.description;
+  document.getElementById('disc-power').textContent  = '⚡ ' + recipe.power;
+  document.getElementById('disc-tags').innerHTML = recipe.tags.map(t =>
+    `<span class="disc-tag">${t}</span>`).join('');
+  document.getElementById('disc-ov').classList.remove('hidden');
+}
+
+function continueAfterDisc() {
+  document.getElementById('disc-ov').classList.add('hidden');
+  document.getElementById('result-panel').classList.add('hidden');
+  if (_pendingDisc) {
+    renderTechTree(_pendingDisc.id);
+    _pendingDisc = null;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   TECH TREE
+══════════════════════════════════════════════ */
+const SUIT_NODES = [
+  { id:'suit_club',    label:'♣', sub:'Organic',  clr:'var(--club-c)'    },
+  { id:'suit_heart',   label:'♥', sub:'Herbs',    clr:'var(--heart-c)'   },
+  { id:'suit_spade',   label:'♠', sub:'Material', clr:'var(--spade-c)'   },
+  { id:'suit_diamond', label:'♦', sub:'Minerals', clr:'var(--diamond-c)' },
+];
+
+const NW = 88, NH = 66, ROW_H = 115, PADX = 14, PADY = 12;
+
+function renderTechTree(newId) {
+  // Build tier groups
+  const tiers = { 0: SUIT_NODES };
+  for (const id of G.discovered) {
+    const r = worldRecipes.find(x => x.id === id);
+    if (!r) continue;
+    if (!tiers[r.tier]) tiers[r.tier] = [];
+    tiers[r.tier].push(r);
+  }
+
+  const maxTier    = Math.max(...Object.keys(tiers).map(Number));
+  const maxInRow   = Math.max(...Object.values(tiers).map(t => t.length));
+  const containerW = Math.max(350, maxInRow * (NW + 16) + PADX * 2);
+  const containerH = (maxTier + 1) * ROW_H + PADY * 2 + 20;
+
+  const container = document.getElementById('tree-container');
+  container.style.cssText = `position:relative;width:${containerW}px;height:${containerH}px`;
+  container.innerHTML = '';
+
+  const pos = {};   // id → {cx, cy}
+
+  // Create node elements + record positions
+  for (const [tierStr, nodes] of Object.entries(tiers)) {
+    const t  = parseInt(tierStr);
+    const ty = PADY + t * ROW_H;
+    nodes.forEach((n, i) => {
+      const cx = (containerW / (nodes.length + 1)) * (i + 1);
+      const x  = cx - NW / 2;
+      pos[n.id] = { cx, cy: ty + NH / 2 };
+
+      const el = document.createElement('div');
+      el.id    = 'tn-' + n.id;
+
+      if (t === 0) {
+        el.className = 'tree-node suit-node';
+        el.style.cssText = `left:${x}px;top:${ty}px;width:${NW}px;height:${NH}px`;
+        el.innerHTML = `<div class="tn-suit" style="color:${n.clr}">${n.label}</div><div class="tn-sub">${n.sub}</div>`;
+      } else {
+        const isNew = n.id === newId;
+        el.className = 'tree-node item-node' + (isNew ? ' new-node' : '');
+        el.style.cssText = `left:${x}px;top:${ty}px;width:${NW}px;height:${NH}px`;
+        el.title = n.description || n.name;
+        el.innerHTML = `
+          <div class="tn-emoji">${n.emoji}</div>
+          <div class="tn-name">${n.name}</div>
+          <div class="tn-tier">Tier ${n.tier}</div>`;
+      }
+      container.appendChild(el);
+    });
+  }
+
+  // SVG connection lines
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', containerW);
+  svg.setAttribute('height', containerH);
+  svg.style.cssText = 'position:absolute;left:0;top:0;pointer-events:none;overflow:visible';
+
+  // defs: subtle glow filter for new connections
+  svg.innerHTML = `<defs>
+    <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`;
+
+  for (const id of G.discovered) {
+    const recipe = worldRecipes.find(r => r.id === id);
+    if (!recipe || !pos[id]) continue;
+    const to   = pos[id];
+    const isNew = id === newId;
+
+    for (const pid of getPrereqIds(recipe)) {
+      const from = pos[pid];
+      if (!from) continue;
+
+      const fy  = from.cy + NH / 2 - 1;
+      const ty2 = to.cy - NH / 2 + 1;
+      const mid = (fy + ty2) / 2;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M ${from.cx} ${fy} C ${from.cx} ${mid} ${to.cx} ${mid} ${to.cx} ${ty2}`);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke',       isNew ? 'var(--amber)' : '#4a3a22');
+      path.setAttribute('stroke-width', isNew ? '2'           : '1.5');
+      path.setAttribute('opacity',      isNew ? '0.9'         : '0.7');
+      if (!isNew) path.setAttribute('stroke-dasharray', '5 3');
+      if (isNew)  path.setAttribute('filter', 'url(#glow)');
+      svg.appendChild(path);
+    }
+  }
+
+  container.insertBefore(svg, container.firstChild);
+}
+
+/* ══════════════════════════════════════════════
+   LOG
+══════════════════════════════════════════════ */
+function toggleLog() {
+  const list = document.getElementById('log-list');
+  const btn  = document.getElementById('log-toggle');
+  const open = list.classList.toggle('hidden') === false;
+  btn.textContent = `${open ? '▼' : '▶'} Experiment Log (${G.log.length})`;
+  if (open) renderLogList();
+}
+
+function renderLogList() {
+  const list = document.getElementById('log-list');
+  if (!G.log.length) {
+    list.innerHTML = '<div class="no-items">No experiments yet.</div>';
+    return;
+  }
+  list.innerHTML = [...G.log].reverse().map(e => {
+    const rcp = e.resultId ? worldRecipes.find(r => r.id === e.resultId) : null;
+    const rText = rcp
+      ? (e.alreadyKnown ? `Already known: ${rcp.name}` : `✨ ${rcp.emoji} ${rcp.name}`)
+      : 'No discovery.';
+    const cls = rcp ? (e.alreadyKnown ? 'known' : 'disc') : 'none';
+    return `<div class="log-item">
+      <div class="log-n">Experiment #${e.n}</div>
+      <div class="log-inputs">${e.a}  +  ${e.b}</div>
+      <div class="log-result ${cls}">→ ${rText}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderLogCount() {
+  const cnt = document.getElementById('log-cnt');
+  if (cnt) cnt.textContent = G.log.length;
+}
+
+/* ══════════════════════════════════════════════
+   NEW WORLD
+══════════════════════════════════════════════ */
+function newWorldPrompt() {
+  document.getElementById('nw-seed').value = Math.floor(Math.random() * 99999) + 1;
+  document.getElementById('nw-ov').classList.remove('hidden');
+}
+function closeNW() {
+  document.getElementById('nw-ov').classList.add('hidden');
+}
+function confirmNewWorld() {
+  const seed = parseInt(document.getElementById('nw-seed').value) || (Math.floor(Math.random() * 99999) + 1);
+  localStorage.removeItem(LS_KEY);
+  G = { seed, discovered: [], log: [], experimentN: 0 };
+  worldRecipes = generateWorld(seed);
+  saveGame();
+  closeNW();
+  selA = null; selB = null;
+  renderInputBtn('a'); renderInputBtn('b'); updateExpBtn();
+  document.getElementById('result-panel').classList.add('hidden');
+  document.getElementById('world-seed-lbl').textContent = `World #${seed}`;
+  document.getElementById('log-list').classList.add('hidden');
+  document.getElementById('log-toggle').textContent = `▶ Experiment Log (0)`;
+  renderLogCount();
+  renderTechTree(null);
+}
+
+/* ══════════════════════════════════════════════
+   SETUP / LAUNCH
+══════════════════════════════════════════════ */
+function randomSeed() {
+  document.getElementById('seed-input').value = Math.floor(Math.random() * 99999) + 1;
+}
+
+function startWorld() {
+  const seed = parseInt(document.getElementById('seed-input').value) || 12345;
+  G = { seed, discovered: [], log: [], experimentN: 0 };
+  worldRecipes = generateWorld(seed);
+  saveGame();
+  launchGame();
+}
+
+function continueGame() {
+  worldRecipes = generateWorld(G.seed);
+  launchGame();
+}
+
+function launchGame() {
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  document.getElementById('world-seed-lbl').textContent = `World #${G.seed}`;
+  renderLogCount();
+  renderTechTree(null);
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  const hasSave = loadGame();
+
+  if (hasSave) {
+    document.getElementById('seed-input').value = G.seed;
+    document.getElementById('cont-wrap').classList.remove('hidden');
+    document.getElementById('cont-label').textContent = `▶ Continue World #${G.seed}`;
+    document.getElementById('cont-sub').textContent   =
+      `${G.discovered.length} discover${G.discovered.length === 1 ? 'y' : 'ies'} · ${G.experimentN} experiments`;
+  }
+
+  document.getElementById('seed-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') startWorld();
+  });
+});
+</script>
+</body>
+</html>
