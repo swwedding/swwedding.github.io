@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>BRAINROT CASINO 🎰</title>
+<style>
+:root {
+  --bg:    #06060f;
+  --bg2:   #0d0d1f;
+  --pink:  #ff1493;
+  --cyan:  #00e5ff;
+  --green: #00ff88;
+  --gold:  #ffd700;
+  --red:   #ff3355;
+  --text:  #f0f0ff;
+  --dim:   #555;
+  --dim2:  #888;
+  --r:     12px;
+  --t:     .18s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  min-height: 100%; height: 100svh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.hidden { display: none !important; }
+button { font-family: inherit; cursor: pointer; }
+input  { font-family: inherit; }
+
+/* ── SETUP ── */
+#setup {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  align-items: center; padding: 2rem 1.2rem 3rem;
+  gap: 1.6rem;
+}
+.neon-title {
+  font-size: clamp(2rem, 10vw, 3.5rem);
+  font-weight: 900; letter-spacing: .1em;
+  text-align: center; line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold), 0 0 50px rgba(255,215,0,.4);
+  animation: title-glow 3s ease-in-out infinite alternate;
+}
+@keyframes title-glow {
+  from { text-shadow: 0 0 20px var(--gold), 0 0 40px rgba(255,215,0,.3); }
+  to   { text-shadow: 0 0 30px var(--gold), 0 0 80px rgba(255,215,0,.6), 0 0 120px rgba(255,215,0,.2); }
+}
+.setup-block { width: 100%; max-width: 460px; }
+.s-lbl { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--cyan); margin-bottom: .5rem; }
+.preset-row { display: grid; grid-template-columns: repeat(4,1fr); gap: .5rem; }
+.preset-btn {
+  background: var(--bg2); border: 2px solid var(--dim); color: var(--text);
+  font-size: .9rem; font-weight: 700; padding: .7rem .3rem;
+  border-radius: var(--r); text-align: center;
+  transition: all var(--t);
+}
+.preset-btn small { display: block; font-size: .6rem; font-weight: 400; color: var(--dim2); }
+.preset-btn.active { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 10px rgba(0,229,255,.3); }
+.player-list { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .5rem; }
+.player-row { display: flex; gap: .4rem; align-items: center; }
+.p-input {
+  flex: 1; background: var(--bg2); border: 1.5px solid var(--dim);
+  color: var(--text); font-size: 1rem; padding: .55rem .8rem;
+  border-radius: 8px; outline: none; transition: border-color var(--t);
+}
+.p-input:focus { border-color: var(--pink); }
+.rm-btn { background: none; border: none; color: var(--dim); font-size: 1.3rem; padding: .2rem .5rem; transition: color var(--t); }
+.rm-btn:hover { color: var(--pink); }
+.add-btn {
+  width: 100%; background: none; border: 1.5px dashed var(--dim);
+  color: var(--dim); font-size: .9rem; padding: .6rem;
+  border-radius: 8px; transition: all var(--t);
+}
+.add-btn:hover { border-color: var(--green); color: var(--green); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.big-start {
+  width: 100%; max-width: 460px;
+  background: var(--green); border: none; color: #000;
+  font-size: 1.4rem; font-weight: 900; letter-spacing: .1em;
+  padding: 1rem; border-radius: var(--r); text-transform: uppercase;
+  box-shadow: 0 0 30px rgba(0,255,136,.5);
+  transition: all var(--t);
+}
+.big-start:hover { transform: scale(1.02); box-shadow: 0 0 50px rgba(0,255,136,.7); }
+.big-start:active { transform: scale(.97); }
+
+/* ── GAME ── */
+#game { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+
+#g-header {
+  flex-shrink: 0;
+  background: var(--bg2); border-bottom: 1px solid #1a1a3a;
+  padding: .45rem 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#g-header .title { font-size: 1rem; font-weight: 900; letter-spacing: .07em; color: var(--gold); }
+.hdr-btns { display: flex; gap: .4rem; }
+.icon-btn { background: none; border: none; font-size: 1.2rem; color: var(--dim2); transition: color var(--t); }
+.icon-btn:hover { color: var(--text); }
+
+#scoreboard {
+  flex-shrink: 0;
+  background: var(--bg2); border-bottom: 1px solid #1a1a3a;
+  padding: .4rem .8rem;
+  display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; align-items: center;
+  min-height: 42px;
+}
+.sc-chip {
+  display: flex; align-items: center; gap: .35rem;
+  background: #111130; border: 1px solid #2a2a4a;
+  border-radius: 999px; padding: .22rem .7rem;
+  font-size: .88rem; transition: all .3s;
+}
+.sc-chip.leader { border-color: var(--gold); box-shadow: 0 0 8px rgba(255,215,0,.4); }
+.sc-chip .sn { color: var(--text); }
+.sc-chip .sv { color: var(--gold); font-weight: bold; margin-left: .1rem; }
+
+#g-main {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column;
+  align-items: center; gap: .8rem; padding: .8rem .8rem 4rem;
+}
+#g-main::-webkit-scrollbar { width: 4px; }
+#g-main::-webkit-scrollbar-thumb { background: #2a2a4a; }
+
+#phase-lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .2em; color: var(--dim2); }
+
+/* ── SLOT MACHINE ── */
+#slots-wrap { width: 100%; display: flex; justify-content: center; }
+#slots { display: flex; gap: 7px; justify-content: center; align-items: stretch; max-width: 500px; width: 100%; }
+
+.slot {
+  flex: 1; min-width: 0;
+  border: 2px solid var(--cyan);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,229,255,.25);
+  transition: border-color .3s, box-shadow .3s;
+  position: relative;
+}
+.slot.spinning { box-shadow: 0 0 20px rgba(0,229,255,.7); }
+.slot.locked {
+  border-color: var(--green);
+  animation: reel-lock .6s ease forwards;
+}
+@keyframes reel-lock {
+  0%   { box-shadow: 0 0 0 rgba(0,255,136,0); }
+  35%  { box-shadow: 0 0 35px rgba(0,255,136,1); }
+  100% { box-shadow: 0 0 12px rgba(0,255,136,.4); }
+}
+.slot.spinning .card-face { filter: blur(1.5px); }
+.slot .card-face { filter: none; transition: filter .15s; }
+
+/* ── CARD FACE ── */
+.card-face {
+  width: 100%; aspect-ratio: 5/7;
+  background: #1c1c35;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 5% 6%;
+  user-select: none;
+}
+.card-face.red   { --sc: var(--red); }
+.card-face.blk   { --sc: #c8d8ff; }
+.card-face.joker { --sc: var(--gold); background: #1a1800; }
+.card-face.back  { --sc: var(--dim); background: #0e0e25; justify-content: center; align-items: center; }
+
+.cc { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1; }
+.cc.br { transform: rotate(180deg); align-self: flex-end; }
+.cr  { font-size: clamp(.65rem, 2.8vw, .9rem); font-weight: 900; color: var(--sc); font-family: sans-serif; }
+.cs  { font-size: clamp(.6rem, 2.5vw, .8rem); color: var(--sc); }
+.csl { font-size: clamp(1.3rem, 6vw, 2.2rem); color: var(--sc); text-align: center; flex: 1; display: flex; align-items: center; justify-content: center; }
+.back-pattern { font-size: clamp(1.5rem, 7vw, 2.5rem); opacity: .15; }
+
+/* ── ACTION AREA ── */
+#action-area { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: .7rem; }
+
+#pot-score { text-align: center; font-size: .95rem; color: var(--dim2); }
+#pot-score strong { color: var(--gold); font-size: 1.4rem; }
+
+.spin-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #00cc66, #00ff88);
+  border: none; color: #000;
+  font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 900; letter-spacing: .12em;
+  padding: .9rem; border-radius: var(--r); text-transform: uppercase;
+  box-shadow: 0 0 28px rgba(0,255,136,.55);
+  transition: all var(--t);
+}
+.spin-btn:hover:not(:disabled) { transform: scale(1.02); box-shadow: 0 0 45px rgba(0,255,136,.75); }
+.spin-btn:active:not(:disabled) { transform: scale(.97); }
+.spin-btn:disabled { opacity: .38; cursor: not-allowed; transform: none; box-shadow: none; }
+
+#who-hit-area { width: 100%; display: flex; flex-direction: column; gap: .6rem; }
+.wh-lbl { font-size: 1rem; font-weight: bold; text-align: center; color: var(--cyan); text-transform: uppercase; letter-spacing: .1em; }
+#hit-btns { display: flex; flex-direction: column; gap: .55rem; }
+
+.hit-btn {
+  width: 100%;
+  background: var(--bg2); border: 2px solid var(--gold); color: var(--gold);
+  font-size: 1.05rem; font-weight: 900; padding: .85rem;
+  border-radius: var(--r); letter-spacing: .05em; text-transform: uppercase;
+  transition: all var(--t);
+}
+.hit-btn:hover:not(:disabled) { background: rgba(255,215,0,.1); box-shadow: 0 0 16px rgba(255,215,0,.4); }
+.hit-btn:active:not(:disabled) { transform: scale(.98); }
+.hit-btn.scored { border-color: var(--green); color: var(--green); background: rgba(0,255,136,.08); }
+.hit-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.proceed-btn {
+  width: 100%;
+  background: var(--pink); border: none; color: #fff;
+  font-size: 1rem; font-weight: 900; padding: .8rem;
+  border-radius: var(--r); letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 0 20px rgba(255,20,147,.4);
+  transition: all var(--t);
+}
+.proceed-btn:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(255,20,147,.6); }
+
+.no-hit-btn {
+  width: 100%;
+  background: none; border: 1.5px solid var(--dim); color: var(--dim2);
+  font-size: .95rem; padding: .75rem;
+  border-radius: var(--r); letter-spacing: .05em; text-transform: uppercase;
+  transition: all var(--t);
+}
+.no-hit-btn:hover { border-color: var(--dim2); color: var(--text); }
+
+.undo-lnk { background: none; border: none; color: var(--dim2); font-size: .82rem; text-decoration: underline; transition: color var(--t); align-self: center; }
+.undo-lnk:hover { color: var(--pink); }
+
+#reset-box {
+  width: 100%;
+  background: #0d0d20; border: 2px solid var(--pink);
+  border-radius: var(--r); padding: 1.4rem; text-align: center;
+  box-shadow: 0 0 24px rgba(255,20,147,.3);
+  display: flex; flex-direction: column; gap: .7rem;
+}
+#reset-box h2 { font-size: 1.4rem; font-weight: 900; color: var(--pink); text-transform: uppercase; letter-spacing: .1em; }
+#reset-box p  { font-size: .88rem; color: var(--dim2); line-height: 1.7; }
+#reset-box p strong { color: var(--text); }
+.reset-done-btn {
+  background: var(--pink); border: none; color: #fff;
+  font-size: 1rem; font-weight: 900; padding: .85rem;
+  border-radius: var(--r); text-transform: uppercase; letter-spacing: .07em;
+  box-shadow: 0 0 18px rgba(255,20,147,.5);
+  transition: all var(--t);
+}
+.reset-done-btn:hover { transform: scale(1.02); }
+
+/* ── SCORE POP ── */
+#score-pop {
+  position: fixed; top: 28%; left: 50%; transform: translateX(-50%);
+  font-size: 3.5rem; font-weight: 900; color: var(--gold);
+  text-shadow: 0 0 20px var(--gold);
+  pointer-events: none; opacity: 0;
+  z-index: 90; white-space: nowrap;
+}
+
+/* ── DING OVERLAY ── */
+#ding-ov {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(255,20,147,.12);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .5rem; pointer-events: none;
+  animation: ding-bg .4s ease;
+}
+@keyframes ding-bg {
+  0%   { background: rgba(255,20,147,.55); }
+  100% { background: rgba(255,20,147,.12); }
+}
+.ding-big {
+  font-size: clamp(3rem, 14vw, 5rem); font-weight: 900;
+  color: var(--pink);
+  text-shadow: 0 0 30px var(--pink), 0 0 60px var(--pink);
+  letter-spacing: .08em;
+  animation: ding-pop .5s cubic-bezier(.175,.885,.32,1.275);
+}
+.ding-sub {
+  font-size: clamp(1rem, 4.5vw, 1.6rem); font-weight: bold;
+  color: #fff; letter-spacing: .08em;
+  text-shadow: 0 0 10px rgba(255,255,255,.4);
+  animation: ding-pop .5s .1s both cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes ding-pop {
+  from { transform: scale(1.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ── HISTORY ── */
+#hist-section { width: 100%; max-width: 500px; border-top: 1px solid #1a1a3a; padding-top: .75rem; }
+#hist-toggle {
+  background: none; border: none; color: var(--dim2); font-size: .8rem;
+  text-transform: uppercase; letter-spacing: .1em; display: flex; align-items: center; gap: .3rem;
+  transition: color var(--t);
+}
+#hist-toggle:hover { color: var(--text); }
+#hist-list { margin-top: .6rem; display: flex; flex-direction: column; gap: .45rem; }
+.h-item {
+  background: var(--bg2); border: 1px solid #1a1a3a;
+  border-radius: 8px; padding: .55rem .75rem; font-size: .8rem;
+}
+.h-num   { font-size: .65rem; color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.h-cards { color: var(--cyan); font-family: monospace; margin: .2rem 0; font-size: .85rem; }
+.h-ding  { color: var(--pink); font-size: .75rem; }
+.h-res   { color: var(--gold); }
+.h-none  { color: var(--dim2); }
+.h-rst   { color: var(--pink); font-size: .72rem; }
+
+/* ── SETTINGS ── */
+#set-ov { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 200; display: none; }
+#set-ov.open { display: block; }
+#set-drw {
+  position: fixed; top: 0; right: -340px; width: 320px; height: 100%;
+  background: #0d0d20; border-left: 2px solid var(--cyan);
+  overflow-y: auto; z-index: 201; padding: 1.4rem;
+  transition: right .3s ease;
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+#set-drw.open { right: 0; }
+#set-drw::-webkit-scrollbar { width: 3px; }
+#set-drw::-webkit-scrollbar-thumb { background: var(--dim); }
+.set-title { font-size: 1rem; font-weight: bold; color: var(--cyan); text-transform: uppercase; letter-spacing: .1em; }
+.set-row { display: flex; flex-direction: column; gap: .4rem; }
+.set-lbl { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--dim2); }
+.set-input {
+  background: #1a1a35; border: 1.5px solid var(--dim); color: var(--text);
+  font-size: 1rem; padding: .5rem .7rem; border-radius: 8px; outline: none; width: 100%;
+}
+.set-input:focus { border-color: var(--cyan); }
+.set-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+.set-toggle span { font-size: .9rem; }
+.tog-track { width: 46px; height: 26px; background: var(--dim); border-radius: 13px; position: relative; transition: background var(--t); flex-shrink: 0; }
+.tog-track.on { background: var(--green); }
+.tog-thumb { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: left var(--t); }
+.tog-track.on .tog-thumb { left: 23px; }
+.set-close { background: none; border: none; color: var(--dim2); font-size: 1.5rem; align-self: flex-end; transition: color var(--t); }
+.set-close:hover { color: var(--text); }
+.danger-btn {
+  width: 100%; background: none; border: 1.5px solid #aa2030; color: #aa2030;
+  font-size: .9rem; font-weight: bold; padding: .7rem;
+  border-radius: var(--r); text-transform: uppercase; letter-spacing: .07em; transition: all var(--t);
+}
+.danger-btn:hover { background: rgba(170,32,48,.15); }
+
+/* ── WIN ── */
+#win {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,.92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.4rem; padding: 2rem; text-align: center;
+}
+.win-jp {
+  font-size: clamp(2.5rem, 11vw, 4rem); font-weight: 900; color: var(--gold);
+  letter-spacing: .1em; text-transform: uppercase;
+  animation: jp-pulse .8s ease-in-out infinite alternate;
+}
+@keyframes jp-pulse {
+  from { text-shadow: 0 0 20px var(--gold), 0 0 40px rgba(255,215,0,.4); }
+  to   { text-shadow: 0 0 40px var(--gold), 0 0 80px rgba(255,215,0,.8), 0 0 120px rgba(255,215,0,.3); }
+}
+.win-name { font-size: clamp(1.4rem, 6vw, 2rem); font-weight: bold; }
+.win-sub  { font-size: 1rem; color: var(--dim2); letter-spacing: .1em; }
+.win-btns { display: flex; flex-direction: column; gap: .7rem; width: 100%; max-width: 300px; }
+.win-new { background: var(--gold); border: none; color: #000; font-size: 1.1rem; font-weight: 900; padding: .9rem; border-radius: var(--r); text-transform: uppercase; letter-spacing: .07em; transition: all var(--t); }
+.win-new:hover { transform: scale(1.03); }
+.win-keep { background: none; border: 2px solid var(--dim); color: var(--dim2); font-size: .95rem; padding: .8rem; border-radius: var(--r); text-transform: uppercase; letter-spacing: .07em; transition: all var(--t); }
+.win-keep:hover { border-color: var(--dim2); color: var(--text); }
+
+/* ── CONFETTI ── */
+#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 299; display: none; }
+
+/* ── RESPONSIVE ── */
+@media (min-width: 600px) {
+  .cr { font-size: .9rem; }
+  .cs { font-size: .8rem; }
+  .csl { font-size: 2.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ SETUP ══ -->
+<div id="setup">
+  <div class="neon-title">🎰 BRAINROT<br>CASINO</div>
+
+  <div class="setup-block">
+    <div class="s-lbl">Players</div>
+    <div class="player-list" id="p-list"></div>
+    <button class="add-btn" onclick="addP()">+ Add Player</button>
+  </div>
+
+  <div class="setup-block">
+    <div class="s-lbl">Number of Slots (N) — everyone is dealt N cards</div>
+    <div class="preset-row">
+      <button class="preset-btn" data-n="3" onclick="pickN(3)">3<small>Easy</small></button>
+      <button class="preset-btn active" data-n="4" onclick="pickN(4)">4<small>Normal</small></button>
+      <button class="preset-btn" data-n="5" onclick="pickN(5)">5<small>Hard</small></button>
+      <button class="preset-btn" data-n="0" onclick="pickN(0)">?<small>Custom</small></button>
+    </div>
+    <input type="number" id="custom-n" class="p-input" min="1" max="10" placeholder="Enter slots" style="margin-top:.5rem;display:none;max-width:140px"/>
+  </div>
+
+  <div class="setup-block row2">
+    <div>
+      <div class="s-lbl">Win Score</div>
+      <input type="number" id="su-target" class="p-input" value="100" min="10"/>
+    </div>
+    <div>
+      <div class="s-lbl">Ding % per spin</div>
+      <input type="number" id="su-prob" class="p-input" value="5" min="1" max="100"/>
+    </div>
+  </div>
+
+  <button class="big-start" onclick="startGame()">🎰 START GAME</button>
+</div>
+
+<!-- ══ GAME ══ -->
+<div id="game" class="hidden">
+  <div id="g-header">
+    <div class="title">🎰 BRAINROT CASINO</div>
+    <div class="hdr-btns">
+      <button class="icon-btn" id="wake-btn" onclick="toggleWake()" title="Keep screen awake">🔆</button>
+      <button class="icon-btn" onclick="openSettings()">⚙️</button>
+    </div>
+  </div>
+
+  <div id="scoreboard"></div>
+
+  <div id="g-main">
+    <div id="phase-lbl">Ready to spin</div>
+
+    <div id="slots-wrap"><div id="slots"></div></div>
+
+    <div id="action-area">
+      <div id="pot-score" class="hidden"></div>
+
+      <button class="spin-btn" id="spin-btn" onclick="doSpin()">🎰 SPIN</button>
+
+      <div id="who-hit-area" class="hidden">
+        <div class="wh-lbl">🃏 Who Hit?</div>
+        <div id="hit-btns"></div>
+        <button class="proceed-btn hidden" id="proceed-btn" onclick="proceedReset()">→ Reset The Table</button>
+        <button class="no-hit-btn" id="no-hit-btn" onclick="noHit()">No One Hit — Spin Again</button>
+        <button class="undo-lnk hidden" id="undo-btn" onclick="undoHit()">↩ Undo Last Hit</button>
+      </div>
+
+      <div id="reset-box" class="hidden">
+        <h2>🔄 Reset The Table</h2>
+        <p>Return <strong>all</strong> cards to the deck.<br>
+           Shuffle all 54 cards.<br>
+           Deal <strong id="n-txt">4</strong> cards to everyone.</p>
+        <button class="reset-done-btn" onclick="resetDone()">✅ Reset Complete — Next Spin</button>
+      </div>
+    </div>
+
+    <div id="hist-section">
+      <button id="hist-toggle" onclick="toggleHist()">▶ History (<span id="hist-cnt">0</span> spins)</button>
+      <div id="hist-list" class="hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WIN ══ -->
+<div id="win" class="hidden">
+  <div class="win-jp">🎰 JACKPOT!</div>
+  <div class="win-name" id="win-name"></div>
+  <div class="win-sub">BRAINROT CASINO</div>
+  <div class="win-btns">
+    <button class="win-new" onclick="newGame()">🆕 New Game</button>
+    <button class="win-keep" onclick="keepPlaying()">Keep Playing</button>
+  </div>
+</div>
+
+<!-- ══ DING ══ -->
+<div id="ding-ov" class="hidden">
+  <div class="ding-big">🔔 DING!</div>
+  <div class="ding-sub">EVERYONE DRAW 1 CARD</div>
+</div>
+
+<div id="score-pop"></div>
+<canvas id="confetti"></canvas>
+
+<!-- ══ SETTINGS ══ -->
+<div id="set-ov" onclick="closeSettings()"></div>
+<div id="set-drw">
+  <button class="set-close" onclick="closeSettings()">✕</button>
+  <div class="set-title">⚙ Settings</div>
+
+  <div class="set-row">
+    <div class="set-lbl">Win Score</div>
+    <input type="number" class="set-input" id="s-target" min="10" oninput="G.tgt=+this.value||100;save()"/>
+  </div>
+  <div class="set-row">
+    <div class="set-lbl">Ding % per spin</div>
+    <input type="number" class="set-input" id="s-prob" min="1" max="100" oninput="G.prob=+this.value/100;save()"/>
+  </div>
+  <div class="set-row">
+    <div class="set-lbl">Sound</div>
+    <div class="set-toggle" onclick="toggleSound()">
+      <span>Casino sounds</span>
+      <div class="tog-track" id="snd-tog"><div class="tog-thumb"></div></div>
+    </div>
+  </div>
+  <div class="set-row">
+    <div class="set-lbl">Players</div>
+    <div class="player-list" id="set-plist"></div>
+    <button class="add-btn" onclick="addSetP()">+ Add Player</button>
+  </div>
+  <button class="danger-btn" onclick="confirmReset()">🗑 Reset All Scores</button>
+</div>
+
+<script>
+/* ═══════════════════════════════════
+   DECK
+═══════════════════════════════════ */
+const SUITS = ['♣','♦','♥','♠'];
+const RANKS = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+const DECK  = [];
+for (const s of SUITS) for (const r of RANKS) DECK.push({r, s, j:0});
+DECK.push({r:'JOKER', s:'', j:1, jt:'red'});
+DECK.push({r:'JOKER', s:'', j:2, jt:'blk'});
+// j=0 normal, j=1 red joker, j=2 black joker
+
+const rnd = () => DECK[Math.floor(Math.random()*54)];
+
+function cardVal(c) {
+  if (c.j) return 0;
+  return {'2':5,'3':5,'4':5,'5':5,'6':5,'7':5,'8':5,'9':5,'10':10,'J':10,'Q':10,'K':10,'A':15}[c.r]||0;
+}
+function calcScore(result) {
+  if (result.every(c=>c.j)) return 100;
+  const jokers = result.filter(c=>c.j).length;
+  const base   = result.filter(c=>!c.j).reduce((s,c)=>s+cardVal(c),0);
+  return base * Math.pow(2, jokers);
+}
+function cardKey(c) { return c.j ? `JOKER_${c.jt}` : `${c.r}${c.s}`; }
+function cardLbl(c) { return c.j ? '🃏 JOKER' : `${c.r}${c.s}`; }
+
+/* ═══════════════════════════════════
+   STATE
+═══════════════════════════════════ */
+const G = {
+  phase: 'setup',   // setup|idle|spinning|result|resetting|won
+  players: [],      // [{name, score}]
+  N: 4,
+  tgt: 100,         // target score
+  prob: 0.05,       // ding probability
+  snd: true,        // sound on
+  result: [],       // current slot result
+  didDing: false,
+  hitPlayers: [],   // player indices who hit this spin
+  lastUndo: null,
+  history: [],
+  spinN: 0,
+};
+
+function save() { try { localStorage.setItem('bc', JSON.stringify(G)); } catch{} }
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem('bc'));
+    if (d) { Object.assign(G, d); if (!Array.isArray(G.hitPlayers)) G.hitPlayers=[]; }
+  } catch{}
+}
+
+/* ═══════════════════════════════════
+   AUDIO
+═══════════════════════════════════ */
+let _ac = null;
+function AC() {
+  if (!_ac) _ac = new (window.AudioContext||window.webkitAudioContext)();
+  if (_ac.state==='suspended') _ac.resume();
+  return _ac;
+}
+function tone(freq, dur, type='sine', vol=0.38) {
+  if (!G.snd) return;
+  try {
+    const c=AC(), o=c.createOscillator(), g=c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(vol, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime+dur);
+    o.start(); o.stop(c.currentTime+dur);
+  } catch{}
+}
+function playDing()   { [880,1100,1320].forEach((f,i)=>setTimeout(()=>tone(f,.65,'sine',.44),i*110)); }
+function playTick()   { tone(600+Math.random()*500,.05,'square',.07); }
+function playScore()  { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.22,'sine',.36),i*75)); }
+function playJP()     { [523,659,784,880,988,1047,1319,1568,2093].forEach((f,i)=>setTimeout(()=>tone(f,.35,'sine',.38),i*90)); }
+function playStop()   { tone(440,.12,'triangle',.28); }
+
+/* ═══════════════════════════════════
+   CARD HTML
+═══════════════════════════════════ */
+function cardHTML(c) {
+  if (!c || c.blank) {
+    return `<div class="card-face back"><div class="back-pattern">🂠🂠<br>🂠🂠</div></div>`;
+  }
+  if (c.j) {
+    const col = c.jt==='red' ? 'color:#ff4466' : 'color:#aac8ff';
+    return `<div class="card-face joker">
+      <div class="cc"><div class="cr" style="${col}">★</div></div>
+      <div class="csl">🃏</div>
+      <div class="cc br"><div class="cr" style="${col}">★</div></div>
+    </div>`;
+  }
+  const isRed = c.s==='♥'||c.s==='♦';
+  const cl    = isRed ? 'red' : 'blk';
+  return `<div class="card-face ${cl}">
+    <div class="cc"><div class="cr">${c.r}</div><div class="cs">${c.s}</div></div>
+    <div class="csl">${c.s}</div>
+    <div class="cc br"><div class="cr">${c.r}</div><div class="cs">${c.s}</div></div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════
+   RENDER
+═══════════════════════════════════ */
+function renderSB() {
+  const sb = document.getElementById('scoreboard');
+  const max = Math.max(0,...G.players.map(p=>p.score));
+  sb.innerHTML = G.players.map((p,i)=>{
+    const lead = G.players.length>1 && p.score===max && p.score>0;
+    return `<div class="sc-chip${lead?' leader':''}">
+      <span class="sn">${p.name}</span><span class="sv">${p.score}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderSlots(result) {
+  const el = document.getElementById('slots');
+  el.innerHTML = (result||[]).map((c,i)=>`<div class="slot" id="sl-${i}">${cardHTML(c)}</div>`).join('');
+}
+
+function renderPhase() {
+  const pl   = document.getElementById('phase-lbl');
+  const spin = document.getElementById('spin-btn');
+  const who  = document.getElementById('who-hit-area');
+  const rst  = document.getElementById('reset-box');
+  const pot  = document.getElementById('pot-score');
+
+  spin.classList.add('hidden'); who.classList.add('hidden');
+  rst.classList.add('hidden');  pot.classList.add('hidden');
+
+  if (G.phase==='idle') {
+    spin.classList.remove('hidden'); spin.disabled=false;
+    pl.textContent = '🎰 Ready to spin';
+  } else if (G.phase==='spinning') {
+    spin.classList.remove('hidden'); spin.disabled=true;
+    pl.textContent = '🎲 Spinning…';
+  } else if (G.phase==='result') {
+    const sc = calcScore(G.result);
+    pot.classList.remove('hidden');
+    pot.innerHTML = G.result.every(c=>c.j)
+      ? `<strong>⚠️ ALL JOKERS — 100pt JACKPOT</strong> (if enough Jokers held)`
+      : `Potential: <strong>${sc} pts</strong>`;
+    who.classList.remove('hidden');
+    renderHitBtns();
+    pl.textContent = G.didDing ? '🔔 DING! Cards drawn' : '🃏 Result';
+  } else if (G.phase==='resetting') {
+    const sc = calcScore(G.result);
+    pot.classList.remove('hidden');
+    pot.innerHTML = `Spin score: <strong>${sc} pts</strong>`;
+    rst.classList.remove('hidden');
+    document.getElementById('n-txt').textContent = G.N;
+    pl.textContent = '🔄 Reset The Table';
+  }
+}
+
+function renderHitBtns() {
+  const div    = document.getElementById('hit-btns');
+  const proc   = document.getElementById('proceed-btn');
+  const undo   = document.getElementById('undo-btn');
+  const noHitB = document.getElementById('no-hit-btn');
+
+  div.innerHTML = G.players.map((p,i)=>{
+    const scored = G.hitPlayers.includes(i);
+    return `<button class="hit-btn${scored?' scored':''}" 
+              onclick="playerHit(${i})"
+              ${scored?'disabled':''}>
+      ${scored?'✅':'🎰'} ${p.name.toUpperCase()} HIT
+    </button>`;
+  }).join('');
+
+  const anyHit = G.hitPlayers.length>0;
+  proc.classList.toggle('hidden', !anyHit);
+  noHitB.classList.toggle('hidden', anyHit);
+  undo.classList.toggle('hidden', G.lastUndo===null);
+}
+
+function renderHist() {
+  const list = document.getElementById('hist-list');
+  const cnt  = document.getElementById('hist-cnt');
+  cnt.textContent = G.history.length;
+  if (!G.history.length) {
+    list.innerHTML = '<div style="color:var(--dim2);font-size:.82rem;padding:.4rem 0">No spins yet.</div>';
+    return;
+  }
+  list.innerHTML = [...G.history].reverse().map(h=>`
+    <div class="h-item">
+      <div class="h-num">Spin ${h.n}</div>
+      <div class="h-cards">${h.cards.map(cardLbl).join(' / ')}</div>
+      ${h.ding?'<div class="h-ding">🔔 DING — everyone drew 1</div>':''}
+      ${h.hits.length
+        ? `<div class="h-res">${h.hits.map(x=>`${G.players[x]?.name||'?'} HIT +${h.sc}`).join(', ')}</div>`
+        : '<div class="h-none">No hit</div>'
+      }
+      ${h.rst?'<div class="h-rst">↩ Table reset</div>':''}
+    </div>`).join('');
+}
+
+function renderAll() { renderSB(); renderPhase(); renderHist(); }
+
+/* ═══════════════════════════════════
+   SETUP
+═══════════════════════════════════ */
+let _N = 4;
+
+function addP(name='') {
+  const list = document.getElementById('p-list');
+  const idx  = list.children.length;
+  const row  = document.createElement('div');
+  row.className = 'player-row';
+  row.innerHTML = `<input class="p-input" placeholder="Player ${idx+1}" value="${name}"/>
+    <button class="rm-btn" onclick="this.parentElement.remove()">✕</button>`;
+  list.appendChild(row);
+}
+
+function pickN(n) {
+  document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
+  const ci = document.getElementById('custom-n');
+  if (n===0) {
+    ci.style.display=''; _N=+ci.value||4;
+    document.querySelector('[data-n="0"]').classList.add('active');
+  } else {
+    ci.style.display='none'; _N=n;
+    document.querySelector(`[data-n="${n}"]`).classList.add('active');
+  }
+}
+document.getElementById('custom-n').addEventListener('input', e=>{ _N=+e.target.value||4; });
+
+function startGame() {
+  const names = [...document.querySelectorAll('#p-list .p-input')]
+    .map(el=>el.value.trim()).filter(Boolean);
+  if (!names.length) { alert('Add at least one player!'); return; }
+
+  G.players   = names.map(name=>({name, score:0}));
+  G.N         = _N;
+  G.tgt       = +document.getElementById('su-target').value||100;
+  G.prob      = +document.getElementById('su-prob').value/100||0.05;
+  G.phase     = 'idle';
+  G.result    = Array(G.N).fill({blank:true});
+  G.hitPlayers= []; G.lastUndo=null;
+  G.history   = []; G.spinN=0; G.didDing=false;
+
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  renderSlots(G.result);
+  renderAll();
+  save();
+}
+
+/* ═══════════════════════════════════
+   SPIN
+═══════════════════════════════════ */
+let _ivs = [];
+function clearIvs() { _ivs.forEach(clearInterval); _ivs=[]; }
+
+function doSpin() {
+  if (G.phase!=='idle') return;
+  G.phase='spinning'; G.hitPlayers=[]; G.lastUndo=null;
+  G.didDing = Math.random()<G.prob;
+  G.result  = Array(G.N).fill(null).map(()=>rnd());
+  G.spinN++;
+
+  renderPhase();
+  clearIvs();
+
+  const stopAt = i => 1600 + i*340;
+
+  G.result.forEach((finalCard, i) => {
+    const el = () => document.getElementById(`sl-${i}`);
+    if (el()) el().classList.add('spinning');
+
+    const iv = setInterval(()=>{
+      const e = el();
+      if (e) { e.innerHTML=cardHTML(rnd()); }
+      if (G.snd) playTick();
+    }, 75);
+    _ivs.push(iv);
+
+    setTimeout(()=>{
+      clearInterval(iv);
+      const e = el();
+      if (e) { e.innerHTML=cardHTML(finalCard); e.classList.remove('spinning'); e.classList.add('locked'); }
+      playStop();
+      if (i===G.N-1) afterSpin();
+    }, stopAt(i));
+  });
+
+  // Ding overlay fires ~400ms before last reel stops
+  if (G.didDing) {
+    setTimeout(()=>{
+      const ov = document.getElementById('ding-ov');
+      ov.classList.remove('hidden');
+      playDing();
+      if (navigator.vibrate) navigator.vibrate([100,50,100,50,200]);
+      setTimeout(()=>ov.classList.add('hidden'), 2400);
+    }, Math.max(300, stopAt(G.N-1)-500));
+  }
+}
+
+function afterSpin() {
+  setTimeout(()=>{
+    document.querySelectorAll('.slot.locked').forEach(e=>e.classList.remove('locked'));
+  }, 700);
+
+  G.phase='result';
+  G.history.push({ n:G.spinN, cards:[...G.result], sc:calcScore(G.result), ding:G.didDing, hits:[], rst:false });
+  save();
+  renderAll();
+}
+
+/* ═══════════════════════════════════
+   SCORING
+═══════════════════════════════════ */
+function playerHit(idx) {
+  if (G.phase!=='result') return;
+  if (G.hitPlayers.includes(idx)) return;
+
+  const sc = calcScore(G.result);
+  G.lastUndo = { idx, sc };
+  G.hitPlayers.push(idx);
+  G.players[idx].score += sc;
+
+  const h = G.history[G.history.length-1];
+  if (h) h.hits.push(idx);
+
+  showPop(`+${sc}`);
+  playScore();
+  if (navigator.vibrate) navigator.vibrate(180);
+
+  renderSB();
+  renderHitBtns();
+  save();
+
+  if (G.players[idx].score >= G.tgt) { setTimeout(()=>triggerWin(idx), 400); }
+}
+
+function proceedReset() {
+  if (!G.hitPlayers.length) return;
+  G.phase='resetting';
+  const h = G.history[G.history.length-1];
+  if (h) h.rst=true;
+  save(); renderPhase();
+}
+
+function noHit() {
+  G.phase='idle'; save(); renderAll();
+}
+
+function undoHit() {
+  if (!G.lastUndo) return;
+  const {idx, sc} = G.lastUndo;
+  G.players[idx].score -= sc;
+  G.hitPlayers = G.hitPlayers.filter(i=>i!==idx);
+  const h = G.history[G.history.length-1];
+  if (h) h.hits = h.hits.filter(i=>i!==idx);
+  G.lastUndo = null;
+  renderSB(); renderHitBtns(); save();
+}
+
+function resetDone() {
+  G.phase='idle'; G.hitPlayers=[]; G.lastUndo=null;
+  G.result=Array(G.N).fill({blank:true});
+  save(); renderSlots(G.result); renderPhase();
+}
+
+function showPop(txt) {
+  const el = document.getElementById('score-pop');
+  el.textContent = txt;
+  el.style.cssText = 'opacity:1;transform:translateX(-50%) scale(1.2);transition:none';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    el.style.cssText = 'opacity:0;transform:translateX(-50%) translateY(-50px) scale(.8);transition:all 1.1s ease';
+  }));
+}
+
+/* ═══════════════════════════════════
+   WIN
+═══════════════════════════════════ */
+function triggerWin(idx) {
+  G.phase='won'; save();
+  document.getElementById('win-name').textContent = `${G.players[idx].name} WINS!`;
+  document.getElementById('win').classList.remove('hidden');
+  playJP(); startConfetti();
+  if (navigator.vibrate) navigator.vibrate([100,50,100,50,400]);
+}
+
+function newGame() {
+  document.getElementById('win').classList.add('hidden');
+  document.getElementById('game').classList.add('hidden');
+  document.getElementById('setup').classList.remove('hidden');
+  stopConfetti(); localStorage.removeItem('bc');
+  Object.assign(G,{phase:'setup',players:[],result:[],hitPlayers:[],lastUndo:null,history:[],spinN:0});
+  initSetup();
+}
+
+function keepPlaying() {
+  document.getElementById('win').classList.add('hidden');
+  stopConfetti(); G.phase='idle'; save();
+  G.result=Array(G.N).fill({blank:true}); renderSlots(G.result); renderAll();
+}
+
+/* ═══════════════════════════════════
+   SETTINGS
+═══════════════════════════════════ */
+function openSettings() {
+  document.getElementById('set-ov').classList.add('open');
+  document.getElementById('set-drw').classList.add('open');
+  document.getElementById('s-target').value = G.tgt;
+  document.getElementById('s-prob').value   = Math.round(G.prob*100);
+  document.getElementById('snd-tog').classList.toggle('on', G.snd);
+  renderSetP();
+}
+function closeSettings() {
+  document.getElementById('set-ov').classList.remove('open');
+  document.getElementById('set-drw').classList.remove('open');
+}
+function toggleSound() {
+  G.snd = !G.snd;
+  document.getElementById('snd-tog').classList.toggle('on', G.snd);
+  save();
+}
+function renderSetP() {
+  document.getElementById('set-plist').innerHTML = G.players.map((p,i)=>`
+    <div class="player-row">
+      <input class="p-input" value="${p.name}" oninput="G.players[${i}].name=this.value;save();renderSB()"/>
+      <button class="rm-btn" onclick="rmSetP(${i})">✕</button>
+    </div>`).join('');
+}
+function addSetP() {
+  G.players.push({name:`Player ${G.players.length+1}`, score:0});
+  save(); renderSB(); renderSetP();
+  if (G.phase==='result') renderHitBtns();
+}
+function rmSetP(i) {
+  if (G.players.length<=1) { alert('Need at least one player.'); return; }
+  G.players.splice(i,1);
+  G.hitPlayers = G.hitPlayers.filter(x=>x!==i).map(x=>x>i?x-1:x);
+  save(); renderSB(); renderSetP();
+  if (G.phase==='result') renderHitBtns();
+}
+function confirmReset() {
+  if (!confirm('Reset all scores and history?')) return;
+  G.players.forEach(p=>p.score=0);
+  G.history=[]; G.spinN=0; G.hitPlayers=[];
+  G.phase='idle'; G.result=Array(G.N).fill({blank:true});
+  save(); closeSettings(); renderSlots(G.result); renderAll();
+}
+
+/* ═══════════════════════════════════
+   HISTORY TOGGLE
+═══════════════════════════════════ */
+function toggleHist() {
+  const l = document.getElementById('hist-list');
+  const b = document.getElementById('hist-toggle');
+  const nowVisible = l.classList.toggle('hidden') === false;
+  b.textContent = `${nowVisible?'▼':'▶'} History (${G.history.length} spins)`;
+  if (nowVisible) renderHist();
+}
+
+/* ═══════════════════════════════════
+   SCREEN WAKE LOCK
+═══════════════════════════════════ */
+let _wake = null;
+async function toggleWake() {
+  const btn = document.getElementById('wake-btn');
+  if (_wake) { try { await _wake.release(); } catch{} _wake=null; btn.style.opacity='.5'; return; }
+  try {
+    _wake = await navigator.wakeLock.request('screen');
+    btn.style.opacity='1'; btn.title='Screen stays awake (tap to release)';
+    _wake.addEventListener('release', ()=>{ _wake=null; btn.style.opacity='.5'; });
+  } catch { btn.title='Wake lock not supported'; }
+}
+
+/* ═══════════════════════════════════
+   CONFETTI
+═══════════════════════════════════ */
+let _cf = null, _cfP = [];
+function startConfetti() {
+  const cv = document.getElementById('confetti');
+  cv.width=innerWidth; cv.height=innerHeight; cv.style.display='block';
+  _cfP = [];
+  const cols=['#ff1493','#00e5ff','#ffd700','#00ff88','#ff4466','#a855f7'];
+  for (let i=0;i<130;i++) _cfP.push({
+    x:Math.random()*cv.width, y:-10,
+    r:Math.random()*6+3, c:cols[Math.floor(Math.random()*cols.length)],
+    vx:(Math.random()-.5)*4, vy:Math.random()*3+1,
+    rot:Math.random()*360, rv:(Math.random()-.5)*6,
+    sq:Math.random()>.5,
+  });
+  function draw() {
+    const ctx=cv.getContext('2d');
+    ctx.clearRect(0,0,cv.width,cv.height);
+    let alive=false;
+    for (const p of _cfP) {
+      p.x+=p.vx; p.y+=p.vy; p.rot+=p.rv; p.vy+=.04;
+      if(p.y<cv.height+20) alive=true;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.c;
+      if(p.sq) ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);
+      else { ctx.beginPath(); ctx.arc(0,0,p.r,0,Math.PI*2); ctx.fill(); }
+      ctx.restore();
+    }
+    _cf = alive ? requestAnimationFrame(draw) : stopConfetti();
+  }
+  if(_cf) cancelAnimationFrame(_cf);
+  _cf = requestAnimationFrame(draw);
+}
+function stopConfetti() {
+  if(_cf){cancelAnimationFrame(_cf);_cf=null;}
+  const cv=document.getElementById('confetti');
+  if(cv){cv.getContext('2d').clearRect(0,0,cv.width,cv.height);cv.style.display='none';}
+}
+
+/* ═══════════════════════════════════
+   INIT
+═══════════════════════════════════ */
+function initSetup() {
+  const l=document.getElementById('p-list'); l.innerHTML='';
+  ['Player 1','Player 2'].forEach(n=>addP(n));
+  pickN(4);
+}
+
+window.addEventListener('load',()=>{
+  load();
+  if (G.phase!=='setup' && G.players.length>0) {
+    document.getElementById('setup').classList.add('hidden');
+    document.getElementById('game').classList.remove('hidden');
+    // Guard against stale spinning state on reload
+    if (G.phase==='spinning') G.phase='idle';
+    if (!G.result||G.result.length!==G.N) G.result=Array(G.N).fill({blank:true});
+    renderSlots(G.result); renderAll();
+    if (G.phase==='won') {
+      const leader = G.players.reduce((a,b)=>b.score>a.score?b:a, G.players[0]);
+      document.getElementById('win-name').textContent=`${leader.name} WINS!`;
+      document.getElementById('win').classList.remove('hidden');
+    }
+  } else {
+    G.phase='setup'; initSetup();
+  }
+  document.getElementById('wake-btn').style.opacity = _wake ? '1' : '.5';
+});
+</script>
+</body>
+</html>
