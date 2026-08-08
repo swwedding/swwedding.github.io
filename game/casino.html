@@ -55,7 +55,7 @@ input  { font-family: inherit; }
 }
 .setup-block { width: 100%; max-width: 460px; }
 .s-lbl { font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; color: var(--cyan); margin-bottom: .5rem; }
-.preset-row { display: grid; grid-template-columns: repeat(4,1fr); gap: .5rem; }
+.preset-row { display: grid; grid-template-columns: repeat(6,1fr); gap: .5rem; }
 .preset-btn {
   background: var(--bg2); border: 2px solid var(--dim); color: var(--text);
   font-size: .9rem; font-weight: 700; padding: .7rem .3rem;
@@ -400,6 +400,8 @@ input  { font-family: inherit; }
   <div class="setup-block">
     <div class="s-lbl">Number of Slots (N) — everyone is dealt N cards</div>
     <div class="preset-row">
+      <button class="preset-btn" data-n="1" onclick="pickN(1)">1<small>Solo</small></button>
+      <button class="preset-btn" data-n="2" onclick="pickN(2)">2<small>Duo</small></button>
       <button class="preset-btn" data-n="3" onclick="pickN(3)">3<small>Easy</small></button>
       <button class="preset-btn active" data-n="4" onclick="pickN(4)">4<small>Normal</small></button>
       <button class="preset-btn" data-n="5" onclick="pickN(5)">5<small>Hard</small></button>
