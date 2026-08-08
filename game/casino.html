@@ -442,15 +442,14 @@ input  { font-family: inherit; }
     <div id="action-area">
       <div id="pot-score" class="hidden"></div>
 
-      <button class="spin-btn" id="spin-btn" onclick="doSpin()">🎰 SPIN</button>
-
       <div id="who-hit-area" class="hidden">
         <div class="wh-lbl">🃏 Who Hit?</div>
         <div id="hit-btns"></div>
         <button class="proceed-btn hidden" id="proceed-btn" onclick="proceedReset()">→ Reset The Table</button>
-        <button class="no-hit-btn" id="no-hit-btn" onclick="noHit()">No One Hit — Spin Again</button>
         <button class="undo-lnk hidden" id="undo-btn" onclick="undoHit()">↩ Undo Last Hit</button>
       </div>
+
+      <button class="spin-btn" id="spin-btn" onclick="doSpin()">🎰 SPIN</button>
 
       <div id="reset-box" class="hidden">
         <h2>🔄 Reset The Table</h2>
@@ -529,6 +528,8 @@ DECK.push({r:'JOKER', s:'', j:1, jt:'red'});
 DECK.push({r:'JOKER', s:'', j:2, jt:'blk'});
 // j=0 normal, j=1 red joker, j=2 black joker
 
+const ANIMALS = ['🐸','🦆','🐮','🐷','🐔','🦊','🐺','🦁','🐯','🐻','🦝','🦦','🐙','🦀','🐡','🦧','🐧','🦙','🦜','🐊'];
+
 const rnd = () => DECK[Math.floor(Math.random()*54)];
 
 function cardVal(c) {
@@ -536,13 +537,15 @@ function cardVal(c) {
   return {'2':5,'3':5,'4':5,'5':5,'6':5,'7':5,'8':5,'9':5,'10':10,'J':10,'Q':10,'K':10,'A':15}[c.r]||0;
 }
 function calcScore(result) {
-  if (result.every(c=>c.j)) return 100;
-  const jokers = result.filter(c=>c.j).length;
-  const base   = result.filter(c=>!c.j).reduce((s,c)=>s+cardVal(c),0);
+  const cards = result.filter(c=>!c.animal);
+  if (!cards.length) return 0;
+  if (cards.every(c=>c.j)) return 100;
+  const jokers = cards.filter(c=>c.j).length;
+  const base   = cards.filter(c=>!c.j).reduce((s,c)=>s+cardVal(c),0);
   return base * Math.pow(2, jokers);
 }
 function cardKey(c) { return c.j ? `JOKER_${c.jt}` : `${c.r}${c.s}`; }
-function cardLbl(c) { return c.j ? '🃏 JOKER' : `${c.r}${c.s}`; }
+function cardLbl(c) { if (c.animal) return c.animal; return c.j ? '🃏 JOKER' : `${c.r}${c.s}`; }
 
 /* ═══════════════════════════════════
    STATE
@@ -595,6 +598,24 @@ function playTick()   { tone(600+Math.random()*500,.05,'square',.07); }
 function playScore()  { [523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.22,'sine',.36),i*75)); }
 function playJP()     { [523,659,784,880,988,1047,1319,1568,2093].forEach((f,i)=>setTimeout(()=>tone(f,.35,'sine',.38),i*90)); }
 function playStop()   { tone(440,.12,'triangle',.28); }
+function playAnimal(emoji) {
+  if (!G.snd) return;
+  try {
+    const cp = emoji.codePointAt(0)||128;
+    const base = 180 + (cp % 19)*22;
+    const c = AC();
+    [[base*1.6,.07],[base,.13],[base*2.2,.07],[base*.65,.16]].forEach(([f,d],i)=>{
+      const o=c.createOscillator(), g=c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type='sawtooth';
+      o.frequency.value=f;
+      const t=c.currentTime+i*.12;
+      g.gain.setValueAtTime(.22,t);
+      g.gain.exponentialRampToValueAtTime(.001,t+d+.06);
+      o.start(t); o.stop(t+d+.07);
+    });
+  } catch{}
+}
 
 /* ═══════════════════════════════════
    CARD HTML
@@ -602,6 +623,11 @@ function playStop()   { tone(440,.12,'triangle',.28); }
 function cardHTML(c) {
   if (!c || c.blank) {
     return `<div class="card-face back"><div class="back-pattern">🂠🂠<br>🂠🂠</div></div>`;
+  }
+  if (c.animal) {
+    return `<div class="card-face back" style="justify-content:center;align-items:center;background:#151525;border-color:var(--gold)">
+      <div style="font-size:clamp(2rem,9vw,3.2rem);filter:drop-shadow(0 0 8px rgba(255,215,0,.8))">${c.animal}</div>
+    </div>`;
   }
   if (c.j) {
     const col = c.jt==='red' ? 'color:#ff4466' : 'color:#aac8ff';
@@ -657,13 +683,16 @@ function renderPhase() {
     pl.textContent = '🎲 Spinning…';
   } else if (G.phase==='result') {
     const sc = calcScore(G.result);
+    const cards = G.result.filter(c=>!c.animal);
     pot.classList.remove('hidden');
-    pot.innerHTML = G.result.every(c=>c.j)
+    pot.innerHTML = cards.length && cards.every(c=>c.j)
       ? `<strong>⚠️ ALL JOKERS — 100pt JACKPOT</strong> (if enough Jokers held)`
-      : `Potential: <strong>${sc} pts</strong>`;
+      : sc ? `Potential: <strong>${sc} pts</strong>`
+           : `<span style="color:var(--gold)">🐾 All animals — no points!</span>`;
     who.classList.remove('hidden');
     renderHitBtns();
     pl.textContent = G.didDing ? '🔔 DING! Cards drawn' : '🃏 Result';
+    if (!G.hitPlayers.length) { spin.classList.remove('hidden'); spin.disabled=false; }
   } else if (G.phase==='resetting') {
     const sc = calcScore(G.result);
     pot.classList.remove('hidden');
@@ -675,10 +704,9 @@ function renderPhase() {
 }
 
 function renderHitBtns() {
-  const div    = document.getElementById('hit-btns');
-  const proc   = document.getElementById('proceed-btn');
-  const undo   = document.getElementById('undo-btn');
-  const noHitB = document.getElementById('no-hit-btn');
+  const div  = document.getElementById('hit-btns');
+  const proc = document.getElementById('proceed-btn');
+  const undo = document.getElementById('undo-btn');
 
   div.innerHTML = G.players.map((p,i)=>{
     const scored = G.hitPlayers.includes(i);
@@ -691,8 +719,12 @@ function renderHitBtns() {
 
   const anyHit = G.hitPlayers.length>0;
   proc.classList.toggle('hidden', !anyHit);
-  noHitB.classList.toggle('hidden', anyHit);
   undo.classList.toggle('hidden', G.lastUndo===null);
+  if (G.phase==='result') {
+    const spinEl = document.getElementById('spin-btn');
+    spinEl.classList.toggle('hidden', anyHit);
+    spinEl.disabled = anyHit;
+  }
 }
 
 function renderHist() {
@@ -774,10 +806,11 @@ let _ivs = [];
 function clearIvs() { _ivs.forEach(clearInterval); _ivs=[]; }
 
 function doSpin() {
+  if (G.phase==='result') { G.phase='idle'; }
   if (G.phase!=='idle') return;
   G.phase='spinning'; G.hitPlayers=[]; G.lastUndo=null;
   G.didDing = Math.random()<G.prob;
-  G.result  = Array(G.N).fill(null).map(()=>rnd());
+  G.result  = Array(G.N).fill(null).map(()=>Math.random()<0.15 ? {animal:ANIMALS[Math.floor(Math.random()*ANIMALS.length)]} : rnd());
   G.spinN++;
 
   renderPhase();
@@ -826,6 +859,7 @@ function afterSpin() {
   G.history.push({ n:G.spinN, cards:[...G.result], sc:calcScore(G.result), ding:G.didDing, hits:[], rst:false });
   save();
   renderAll();
+  G.result.forEach((c,i)=>{ if (c.animal) setTimeout(()=>playAnimal(c.animal), i*220); });
 }
 
 /* ═══════════════════════════════════
